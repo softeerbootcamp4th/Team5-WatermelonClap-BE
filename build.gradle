@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.watermelon'
@@ -17,6 +18,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	asciidoctorExt
 }
 
 repositories {
@@ -31,8 +33,35 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+test {
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	configurations 'asciidoctorExt'
+	dependsOn test
+}
+
+bootJar {
+	//build/docs/asciidoc 에 .html 생성
+	dependsOn asciidoctor
+
+	// build/docs/asciidoc 에서 static/docs 로 복사 (jar 파일 내부에 적용됨)
+	//공식 문서에는 ${asciidoctor.outputDir}/html5 이렇게 되어 있는데 html5 를 없애야 동작함.
+	from ("${asciidoctor.outputDir}") {
+		into 'static/docs'
+	}
 }

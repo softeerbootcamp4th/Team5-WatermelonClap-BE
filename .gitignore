@@ -58,3 +58,12 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 node_modules
+
+# lock
+*.lock
+
+# xml
+*.xml
+
+# bin
+*.bin
