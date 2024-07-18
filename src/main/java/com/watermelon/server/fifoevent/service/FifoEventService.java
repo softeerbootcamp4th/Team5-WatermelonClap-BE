@@ -2,6 +2,7 @@ package com.watermelon.server.fifoevent.service;
 
 
 import com.watermelon.server.fifoevent.domain.FifoEvent;
+import com.watermelon.server.fifoevent.dto.request.RequestFiFoEventDto;
 import com.watermelon.server.fifoevent.dto.response.ResponseQuizDto;
 import com.watermelon.server.fifoevent.repository.FifoEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
@@ -23,5 +24,9 @@ public class FifoEventService {
         Optional<FifoEvent> fifoEvent = fifoEventRepository.findByDate(LocalDateTime.now());
         if(!fifoEvent.isPresent()){return null;}
         return ResponseQuizDto.from(fifoEvent.get().getQuiz());
+    }
+    public void makeEvent(RequestFiFoEventDto requestFiFoEventDto){
+        FifoEvent newFifoEvent = FifoEvent.makeFifoEvent(requestFiFoEventDto);
+        fifoEventRepository.save(newFifoEvent);
     }
 }

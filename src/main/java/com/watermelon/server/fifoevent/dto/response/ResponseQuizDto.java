@@ -8,10 +8,10 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ResponseQuizDto {
-    private String problem;
+    private String question;
 
 
     public static ResponseQuizDto from(Quiz quiz) {
-        return new ResponseQuizDto(quiz.getProblem());
+        return new ResponseQuizDto(quiz.getQuestion());
     }
 }

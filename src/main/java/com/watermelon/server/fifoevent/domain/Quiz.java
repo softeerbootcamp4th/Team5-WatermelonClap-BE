@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @Entity
+@Builder
+@RequiredArgsConstructor
 public class Quiz {
     @Id @GeneratedValue
     private Long id;
@@ -15,7 +17,14 @@ public class Quiz {
     @OneToOne
     private FifoEvent fifoEvent;
 
-    private String problem;
+    private String question;
     private String answer;
+
+    public static Quiz makeQuiz(String question,String answer){
+        return Quiz.builder()
+                .question(question)
+                .answer(answer)
+                .build();
+    }
 
 }
