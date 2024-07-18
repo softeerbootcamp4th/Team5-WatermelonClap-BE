@@ -15,6 +15,7 @@ public class ShareClick extends BaseEntity {
     @JoinColumn
     private ShareUrl shareUrl;
 
+
     private String ip;
 
 }
