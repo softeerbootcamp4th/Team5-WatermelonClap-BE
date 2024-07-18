@@ -21,6 +21,7 @@ public class FifoEventService {
 
     public ResponseQuizDto getQuiz(){
         Optional<FifoEvent> fifoEvent = fifoEventRepository.findByDate(LocalDateTime.now());
+        if(!fifoEvent.isPresent()){return null;}
         return ResponseQuizDto.from(fifoEvent.get().getQuiz());
     }
 }

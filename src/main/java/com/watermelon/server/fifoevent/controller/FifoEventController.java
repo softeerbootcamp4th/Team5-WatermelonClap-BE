@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/event/fifo")
 public class FifoEventController {
 
+
     private final FifoEventService fifoEventService;
 
 
