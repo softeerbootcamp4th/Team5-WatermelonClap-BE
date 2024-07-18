@@ -30,7 +30,10 @@ class FifoEventServiceTest {
 
     @BeforeEach
     public void makeFifoEvent(){
+        makeTestFifoEvent();
+    }
 
+    private void makeTestFifoEvent() {
         RequestFiFoEventDto requestFiFoEventDto = RequestFiFoEventDto.builder()
                 .startTime(LocalDateTime.now())
                 .question("test-question")

@@ -7,7 +7,6 @@ import com.watermelon.server.fifoevent.dto.response.ResponseQuizDto;
 import com.watermelon.server.fifoevent.repository.FifoEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +20,7 @@ public class FifoEventService {
 
 
     public ResponseQuizDto getQuiz(){
-        Optional<FifoEvent> fifoEvent = fifoEventRepository.findByDate(LocalDateTime.now());
+        Optional<FifoEvent> fifoEvent = fifoEventRepository.findByDateBetween(LocalDateTime.now());
         if(!fifoEvent.isPresent()){return null;}
         return ResponseQuizDto.from(fifoEvent.get().getQuiz());
     }
