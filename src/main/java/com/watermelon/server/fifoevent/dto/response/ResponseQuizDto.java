@@ -2,11 +2,12 @@ package com.watermelon.server.fifoevent.dto.response;
 
 
 import com.watermelon.server.fifoevent.domain.Quiz;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
+@AllArgsConstructor
 public class ResponseQuizDto {
     private String question;
 

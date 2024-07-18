@@ -3,9 +3,7 @@ package com.watermelon.server.fifoevent.domain;
 import com.watermelon.server.BaseEntity;
 import com.watermelon.server.fifoevent.dto.request.RequestFiFoEventDto;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder
 @RequiredArgsConstructor
 public class FifoEvent extends BaseEntity {
 
@@ -37,10 +34,12 @@ public class FifoEvent extends BaseEntity {
 
     public static FifoEvent makeFifoEvent(RequestFiFoEventDto requestFiFoEventDto){
         Quiz quiz = Quiz.makeQuiz(requestFiFoEventDto.getQuestion(), requestFiFoEventDto.getAnswer());
-        return FifoEvent.builder()
-                .maxWinnerCount(requestFiFoEventDto.getMaxWinnerCount())
-                .startTime(requestFiFoEventDto.getStatTime())
-                .quiz(quiz)
-                .build();
+        return new FifoEvent(requestFiFoEventDto.getMaxWinnerCount(),requestFiFoEventDto.getStartTime(),quiz);
+    }
+
+    FifoEvent(int maxWinnerCount,LocalDateTime startTime,Quiz quiz){
+        this.maxWinnerCount = maxWinnerCount;
+        this.startTime = startTime;
+        this.quiz = quiz;
     }
 }

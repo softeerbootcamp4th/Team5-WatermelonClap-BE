@@ -2,13 +2,10 @@ package com.watermelon.server.fifoevent.domain;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
-@Builder
 @RequiredArgsConstructor
 public class Quiz {
     @Id @GeneratedValue
@@ -27,4 +24,9 @@ public class Quiz {
                 .build();
     }
 
+    @Builder
+    public Quiz(String answer, String question) {
+        this.answer = answer;
+        this.question = question;
+    }
 }

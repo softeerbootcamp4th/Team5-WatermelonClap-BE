@@ -29,4 +29,5 @@ public class FifoEventService {
         FifoEvent newFifoEvent = FifoEvent.makeFifoEvent(requestFiFoEventDto);
         fifoEventRepository.save(newFifoEvent);
     }
+
 }
