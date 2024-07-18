@@ -8,17 +8,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 //@DataJpaTest
@@ -48,11 +42,14 @@ class FifoEventServiceTest {
 
     @Test
     public void makeQuizTest(){
-
         //then
         Assertions.assertThat(fifoEventRepository.findAll().size()).isEqualTo(1);
         Assertions.assertThat(quizRepository.findAll().size()).isEqualTo(1);
-
+    }
+    @Test
+    public void deleteEventWithQuiz(){
+        fifoEventRepository.deleteAll();
+        Assertions.assertThat(quizRepository.findAll().size()).isEqualTo(0);
     }
 
 }
