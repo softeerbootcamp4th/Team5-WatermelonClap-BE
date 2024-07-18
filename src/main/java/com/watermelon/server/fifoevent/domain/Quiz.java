@@ -2,7 +2,11 @@ package com.watermelon.server.fifoevent.domain;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
 @Entity
 public class Quiz {
     @Id @GeneratedValue
@@ -13,4 +17,5 @@ public class Quiz {
 
     private String problem;
     private String answer;
+
 }
