@@ -25,6 +25,7 @@ public class FifoEventService {
         return ResponseQuizDto.from(fifoEvent.get().getQuiz());
     }
     public void makeEvent(RequestFiFoEventDto requestFiFoEventDto){
+        System.out.println(requestFiFoEventDto);
         FifoEvent newFifoEvent = FifoEvent.makeFifoEvent(requestFiFoEventDto);
         fifoEventRepository.save(newFifoEvent);
     }

@@ -28,6 +28,4 @@ class FifoEventControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document("event/fifo"));
     }
-
-
 }

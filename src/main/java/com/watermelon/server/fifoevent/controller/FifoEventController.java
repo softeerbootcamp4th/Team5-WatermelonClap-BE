@@ -22,6 +22,9 @@ public class FifoEventController {
     public ResponseQuizDto getQuiz(){
         return fifoEventService.getQuiz();
     }
+    @PostMapping(path = "/apply")
+    public
+
 
 
 

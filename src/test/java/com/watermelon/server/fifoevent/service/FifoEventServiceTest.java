@@ -30,10 +30,7 @@ class FifoEventServiceTest {
 
     @BeforeEach
     public void makeFifoEvent(){
-        makeTestFifoEvent();
-    }
 
-    private void makeTestFifoEvent() {
         RequestFiFoEventDto requestFiFoEventDto = RequestFiFoEventDto.builder()
                 .startTime(LocalDateTime.now())
                 .question("test-question")
@@ -52,7 +49,7 @@ class FifoEventServiceTest {
     @Test
     public void deleteEventWithQuiz(){
         fifoEventRepository.deleteAll();
-        Assertions.assertThat(quizRepository.findAll().size()).isEqualTo(0);
+        Assertions.assertThat(fifoEventRepository.findAll().size()).isEqualTo(0);
     }
 
 }
