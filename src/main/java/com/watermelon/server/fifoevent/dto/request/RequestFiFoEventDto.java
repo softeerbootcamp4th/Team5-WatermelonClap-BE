@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RequestFiFoEventDto {
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String question;
     private String answer;
     private int maxWinnerCount;

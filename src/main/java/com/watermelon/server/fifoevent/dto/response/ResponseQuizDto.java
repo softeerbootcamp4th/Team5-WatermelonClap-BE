@@ -10,9 +10,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ResponseQuizDto {
     private String question;
+    private Long fifoEventId;
 
 
-    public static ResponseQuizDto from(Quiz quiz) {
-        return new ResponseQuizDto(quiz.getQuestion());
+    public static ResponseQuizDto from(Quiz quiz,Long fifoEventId) {
+        return new ResponseQuizDto(quiz.getQuestion(),fifoEventId);
     }
 }

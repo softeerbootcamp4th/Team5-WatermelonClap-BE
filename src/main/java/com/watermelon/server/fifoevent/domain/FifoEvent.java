@@ -25,20 +25,27 @@ public class FifoEvent extends BaseEntity {
 
     @OneToMany(mappedBy = "fifoEvent")
     private List<FifoWinner> fifoWinner = new ArrayList<>();
-
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String title;
     private int maxWinnerCount;
     private int winnerCount;
 
-    public static FifoEvent makeFifoEvent(RequestFiFoEventDto requestFiFoEventDto){
-        Quiz quiz = Quiz.makeQuiz(requestFiFoEventDto.getQuestion(), requestFiFoEventDto.getAnswer());
-        return new FifoEvent(requestFiFoEventDto.getMaxWinnerCount(),requestFiFoEventDto.getStartTime(),quiz);
+    public boolean isWinnerAddable(){
+        if(winnerCount<maxWinnerCount) return true;
+        return false;
     }
 
-    FifoEvent(int maxWinnerCount,LocalDateTime startTime,Quiz quiz){
+    public static FifoEvent makeFifoEvent(RequestFiFoEventDto requestFiFoEventDto){
+        Quiz quiz = Quiz.makeQuiz(requestFiFoEventDto.getQuestion(), requestFiFoEventDto.getAnswer());
+        return new FifoEvent(requestFiFoEventDto.getMaxWinnerCount(),requestFiFoEventDto.getStartTime(),requestFiFoEventDto.getEndTime(),quiz);
+    }
+    public boolean isTimeInEventTime(LocalDateTime time){
+        if(time.isAfter(startTime)&&time.isBefore(endTime)){ return true;}
+        return false;
+    }
+    FifoEvent(int maxWinnerCount,LocalDateTime startTime,LocalDateTime endTime,Quiz quiz){
         this.maxWinnerCount = maxWinnerCount;
+        this.endTime = endTime;
         this.startTime = startTime;
         this.quiz = quiz;
     }

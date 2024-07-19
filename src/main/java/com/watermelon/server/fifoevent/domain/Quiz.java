@@ -29,4 +29,7 @@ public class Quiz {
         this.answer = answer;
         this.question = question;
     }
+    public boolean isCorrect(String answer){
+        return answer.equals(this.answer);
+    }
 }

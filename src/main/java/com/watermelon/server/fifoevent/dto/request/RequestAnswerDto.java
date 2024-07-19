@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestAnswerDto {
     private String answer;
+    private Long fifoEventId;
 }
