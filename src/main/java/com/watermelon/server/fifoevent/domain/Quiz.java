@@ -5,10 +5,10 @@ import com.watermelon.server.fifoevent.dto.request.RequestQuizDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Getter
 @Entity
-@Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Quiz {
     @Id @GeneratedValue
     private Long id;

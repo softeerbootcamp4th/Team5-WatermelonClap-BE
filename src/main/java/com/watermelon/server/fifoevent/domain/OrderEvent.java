@@ -17,13 +17,13 @@ public class OrderEvent extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private OrderEventReward orderEventReward;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "fifoEvent")
+    @OneToMany(mappedBy = "orderEvent")
     private List<OrderEventWinner> orderEventWinner = new ArrayList<>();
     private LocalDateTime startDate;
     private LocalDateTime endDate;

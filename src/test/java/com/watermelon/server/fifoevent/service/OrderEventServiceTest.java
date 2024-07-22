@@ -2,6 +2,8 @@ package com.watermelon.server.fifoevent.service;
 
 import com.watermelon.server.ServerApplication;
 import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
+import com.watermelon.server.fifoevent.dto.request.RequestOrderRewardDto;
+import com.watermelon.server.fifoevent.dto.request.RequestQuizDto;
 import com.watermelon.server.fifoevent.repository.OrderEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
 import org.assertj.core.api.Assertions;
@@ -28,13 +30,27 @@ class OrderEventServiceTest {
     @Autowired
     private QuizRepository quizRepository;
 
+
+
+
     @BeforeEach
-    public void makeOrderEvent(){
+    public void makeOrderEvents(){
+        RequestQuizDto requestQuizDto =RequestQuizDto.builder()
+                .description("testDescription")
+                .answer("testAnswer")
+                .imgSrc("testImg")
+                .title("testTitle")
+                .build();
+        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
+                .name("testName")
+                .imgSrc("testImg")
+                .build();
 
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
-                .startTime(LocalDateTime.now())
-                .description("test-question")
-                .answer("test-answer")
+                .requestOrderRewardDto(requestOrderRewardDto)
+                .requestQuizDto(requestQuizDto)
+                .startTime(LocalDateTime.now().minusHours(10))
+                .endTime(LocalDateTime.now().plusHours(10))
                 .maxWinnerCount(100)
                 .build();
         orderEventService.makeEvent(requestOrderEventDto);

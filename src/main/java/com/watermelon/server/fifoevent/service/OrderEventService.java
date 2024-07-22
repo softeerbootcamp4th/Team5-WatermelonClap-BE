@@ -37,7 +37,6 @@ public class OrderEventService {
 
 
     public void makeEvent(RequestOrderEventDto requestOrderEventDto){
-        System.out.println(requestOrderEventDto);
         OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(newOrderEvent);
     }
