@@ -57,6 +57,7 @@ public class FifoEventService {
         }
 
         //선착순 토큰 발급
+        fifoEvent.addWinner();
         return ResponseQuizResultDto.answerRightResult(UUID.randomUUID().toString());
 
 

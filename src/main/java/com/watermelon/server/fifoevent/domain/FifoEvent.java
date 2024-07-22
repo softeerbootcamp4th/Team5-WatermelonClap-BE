@@ -34,6 +34,9 @@ public class FifoEvent extends BaseEntity {
         if(winnerCount<maxWinnerCount) return true;
         return false;
     }
+    public void addWinner(){
+        this.winnerCount++;
+    }
 
     public static FifoEvent makeFifoEvent(RequestFiFoEventDto requestFiFoEventDto){
         Quiz quiz = Quiz.makeQuiz(requestFiFoEventDto.getQuestion(), requestFiFoEventDto.getAnswer());

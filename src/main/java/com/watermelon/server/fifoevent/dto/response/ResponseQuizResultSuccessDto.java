@@ -1,7 +1,6 @@
 package com.watermelon.server.fifoevent.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Getter;
 
 @Getter
