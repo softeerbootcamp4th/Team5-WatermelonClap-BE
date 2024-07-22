@@ -33,7 +33,7 @@ class OrderEventServiceTest {
 
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
                 .startTime(LocalDateTime.now())
-                .question("test-question")
+                .description("test-question")
                 .answer("test-answer")
                 .maxWinnerCount(100)
                 .build();

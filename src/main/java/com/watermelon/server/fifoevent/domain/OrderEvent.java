@@ -39,17 +39,19 @@ public class OrderEvent extends BaseEntity {
     }
 
     public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
-        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getQuestion(), requestOrderEventDto.getAnswer());
-        return new OrderEvent(requestOrderEventDto.getMaxWinnerCount(), requestOrderEventDto.getStartTime(), requestOrderEventDto.getEndTime(),quiz);
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
+        OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
+        return new OrderEvent(requestOrderEventDto.getMaxWinnerCount(), requestOrderEventDto.getStartTime(), requestOrderEventDto.getEndTime(),quiz,reward);
     }
     public boolean isTimeInEventTime(LocalDateTime time){
         if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}
         return false;
     }
-    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz){
+    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz,OrderEventReward orderEventReward){
         this.maxWinnerCount = maxWinnerCount;
         this.endDate = endDate;
         this.startDate = startDate;
         this.quiz = quiz;
+        this.orderEventReward = orderEventReward;
     }
 }
