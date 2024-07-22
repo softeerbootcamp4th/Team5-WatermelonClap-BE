@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ServerApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class FifoEventControllerTest {
+class OrderEventControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

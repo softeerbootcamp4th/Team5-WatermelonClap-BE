@@ -12,7 +12,7 @@ public class Quiz {
     private Long id;
 
     @OneToOne
-    private FifoEvent fifoEvent;
+    private OrderEvent orderEvent;
 
     private String question;
     private String answer;

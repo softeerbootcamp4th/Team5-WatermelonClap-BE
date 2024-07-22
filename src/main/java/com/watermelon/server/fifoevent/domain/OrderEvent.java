@@ -1,7 +1,7 @@
 package com.watermelon.server.fifoevent.domain;
 
 import com.watermelon.server.BaseEntity;
-import com.watermelon.server.fifoevent.dto.request.RequestFiFoEventDto;
+import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,19 +12,19 @@ import java.util.List;
 @Entity
 @Getter
 @RequiredArgsConstructor
-public class FifoEvent extends BaseEntity {
+public class OrderEvent extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
 
     @OneToOne
-    private FifoReward fifoReward;
+    private OrderEventReward orderEventReward;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Quiz quiz;
 
     @OneToMany(mappedBy = "fifoEvent")
-    private List<FifoWinner> fifoWinner = new ArrayList<>();
+    private List<OrderEventWinner> orderEventWinner = new ArrayList<>();
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int maxWinnerCount;
@@ -38,15 +38,15 @@ public class FifoEvent extends BaseEntity {
         this.winnerCount++;
     }
 
-    public static FifoEvent makeFifoEvent(RequestFiFoEventDto requestFiFoEventDto){
-        Quiz quiz = Quiz.makeQuiz(requestFiFoEventDto.getQuestion(), requestFiFoEventDto.getAnswer());
-        return new FifoEvent(requestFiFoEventDto.getMaxWinnerCount(),requestFiFoEventDto.getStartTime(),requestFiFoEventDto.getEndTime(),quiz);
+    public static OrderEvent makeFifoEvent(RequestOrderEventDto requestOrderEventDto){
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getQuestion(), requestOrderEventDto.getAnswer());
+        return new OrderEvent(requestOrderEventDto.getMaxWinnerCount(), requestOrderEventDto.getStartTime(), requestOrderEventDto.getEndTime(),quiz);
     }
     public boolean isTimeInEventTime(LocalDateTime time){
         if(time.isAfter(startTime)&&time.isBefore(endTime)){ return true;}
         return false;
     }
-    FifoEvent(int maxWinnerCount,LocalDateTime startTime,LocalDateTime endTime,Quiz quiz){
+    OrderEvent(int maxWinnerCount, LocalDateTime startTime, LocalDateTime endTime, Quiz quiz){
         this.maxWinnerCount = maxWinnerCount;
         this.endTime = endTime;
         this.startTime = startTime;

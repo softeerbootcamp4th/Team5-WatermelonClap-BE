@@ -1,14 +1,13 @@
 package com.watermelon.server.fifoevent.service;
 
 
-import com.watermelon.server.fifoevent.domain.FifoEvent;
+import com.watermelon.server.fifoevent.domain.OrderEvent;
 import com.watermelon.server.fifoevent.domain.Quiz;
 import com.watermelon.server.fifoevent.dto.request.RequestAnswerDto;
-import com.watermelon.server.fifoevent.dto.request.RequestFiFoEventDto;
+import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
 import com.watermelon.server.fifoevent.dto.response.ResponseQuizDto;
 import com.watermelon.server.fifoevent.dto.response.ResponseQuizResultDto;
-import com.watermelon.server.fifoevent.dto.response.ResponseQuizResultSuccessDto;
-import com.watermelon.server.fifoevent.repository.FifoEventRepository;
+import com.watermelon.server.fifoevent.repository.OrderEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,31 +18,31 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FifoEventService {
-    private final FifoEventRepository fifoEventRepository;
+public class OrderEventService {
+    private final OrderEventRepository orderEventRepository;
     private final QuizRepository quizRepository;
 
 
     public ResponseQuizDto getQuiz(){
-        Optional<FifoEvent> fifoEventOptional = fifoEventRepository.findByDateBetween(LocalDateTime.now());
+        Optional<OrderEvent> fifoEventOptional = orderEventRepository.findByDateBetween(LocalDateTime.now());
         if(!fifoEventOptional.isPresent()){return null;}
-        FifoEvent fifoEvent = fifoEventOptional.get();
-        return ResponseQuizDto.from(fifoEvent.getQuiz(),fifoEvent.getId());
+        OrderEvent orderEvent = fifoEventOptional.get();
+        return ResponseQuizDto.from(orderEvent.getQuiz(), orderEvent.getId());
     }
-    public void makeEvent(RequestFiFoEventDto requestFiFoEventDto){
-        System.out.println(requestFiFoEventDto);
-        FifoEvent newFifoEvent = FifoEvent.makeFifoEvent(requestFiFoEventDto);
-        fifoEventRepository.save(newFifoEvent);
+    public void makeEvent(RequestOrderEventDto requestOrderEventDto){
+        System.out.println(requestOrderEventDto);
+        OrderEvent newOrderEvent = OrderEvent.makeFifoEvent(requestOrderEventDto);
+        orderEventRepository.save(newOrderEvent);
     }
     public ResponseQuizResultDto applyFifoEvent(RequestAnswerDto requestAnswerDto){
-        Optional<FifoEvent> fifoEventOptional = fifoEventRepository.findById(requestAnswerDto.getFifoEventId());
-        FifoEvent fifoEvent = fifoEventOptional.get();
+        Optional<OrderEvent> fifoEventOptional = orderEventRepository.findById(requestAnswerDto.getFifoEventId());
+        OrderEvent orderEvent = fifoEventOptional.get();
 
         // 시간 틀림
-        if(!fifoEvent.isTimeInEventTime(LocalDateTime.now())){
+        if(!orderEvent.isTimeInEventTime(LocalDateTime.now())){
             return ResponseQuizResultDto.eventTimeOutResult();
         }
-        Quiz quiz = fifoEvent.getQuiz();
+        Quiz quiz = orderEvent.getQuiz();
 
 
         //정답 틀림
@@ -52,12 +51,12 @@ public class FifoEventService {
         }
 
         //선착순 틀림
-        if(!fifoEvent.isWinnerAddable()){
+        if(!orderEvent.isWinnerAddable()){
             return ResponseQuizResultDto.noMoreWinnerResult();
         }
 
         //선착순 토큰 발급
-        fifoEvent.addWinner();
+        orderEvent.addWinner();
         return ResponseQuizResultDto.answerRightResult(UUID.randomUUID().toString());
 
 

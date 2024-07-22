@@ -4,7 +4,7 @@ package com.watermelon.server.fifoevent.domain;
 import jakarta.persistence.*;
 
 @Entity
-public class FifoWinner {
+public class OrderEventWinner {
     @Id @GeneratedValue
     private Long id;
 
@@ -12,6 +12,6 @@ public class FifoWinner {
 
     @ManyToOne
     @JoinColumn
-    private FifoEvent fifoEvent;
+    private OrderEvent orderEvent;
 
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestFiFoEventDto {
+public class RequestOrderEventDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String question;

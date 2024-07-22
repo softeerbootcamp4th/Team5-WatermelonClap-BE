@@ -1,8 +1,8 @@
 package com.watermelon.server.fifoevent.service;
 
 import com.watermelon.server.ServerApplication;
-import com.watermelon.server.fifoevent.dto.request.RequestFiFoEventDto;
-import com.watermelon.server.fifoevent.repository.FifoEventRepository;
+import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
+import com.watermelon.server.fifoevent.repository.OrderEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,37 +19,37 @@ import java.time.LocalDateTime;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource("classpath:application-local-db.yml")
 @SpringBootTest(classes = ServerApplication.class)
-class FifoEventServiceTest {
+class OrderEventServiceTest {
 
     @Autowired
-    private FifoEventService fifoEventService;
+    private OrderEventService orderEventService;
     @Autowired
-    private FifoEventRepository fifoEventRepository;
+    private OrderEventRepository orderEventRepository;
     @Autowired
     private QuizRepository quizRepository;
 
     @BeforeEach
     public void makeFifoEvent(){
 
-        RequestFiFoEventDto requestFiFoEventDto = RequestFiFoEventDto.builder()
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
                 .startTime(LocalDateTime.now())
                 .question("test-question")
                 .answer("test-answer")
                 .maxWinnerCount(100)
                 .build();
-        fifoEventService.makeEvent(requestFiFoEventDto);
+        orderEventService.makeEvent(requestOrderEventDto);
     }
 
     @Test
     public void makeQuizTest(){
         //then
-        Assertions.assertThat(fifoEventRepository.findAll().size()).isEqualTo(1);
+        Assertions.assertThat(orderEventRepository.findAll().size()).isEqualTo(1);
         Assertions.assertThat(quizRepository.findAll().size()).isEqualTo(1);
     }
     @Test
     public void deleteEventWithQuiz(){
-        fifoEventRepository.deleteAll();
-        Assertions.assertThat(fifoEventRepository.findAll().size()).isEqualTo(0);
+        orderEventRepository.deleteAll();
+        Assertions.assertThat(orderEventRepository.findAll().size()).isEqualTo(0);
     }
 
 }

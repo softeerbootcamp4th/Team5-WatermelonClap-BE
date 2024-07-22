@@ -7,13 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class FifoReward {
+public class OrderEventReward {
 
     @Id @GeneratedValue
     private Long id;
 
     @OneToOne
-    private FifoEvent fifoEvent;
+    private OrderEvent orderEvent;
 
     private String title;
     private String rewardImage;
