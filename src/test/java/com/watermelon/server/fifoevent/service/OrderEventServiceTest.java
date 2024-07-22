@@ -29,7 +29,7 @@ class OrderEventServiceTest {
     private QuizRepository quizRepository;
 
     @BeforeEach
-    public void makeFifoEvent(){
+    public void makeOrderEvent(){
 
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
                 .startTime(LocalDateTime.now())

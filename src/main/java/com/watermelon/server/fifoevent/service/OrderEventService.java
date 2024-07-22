@@ -2,10 +2,11 @@ package com.watermelon.server.fifoevent.service;
 
 
 import com.watermelon.server.fifoevent.domain.OrderEvent;
+import com.watermelon.server.fifoevent.domain.OrderEventStatus;
 import com.watermelon.server.fifoevent.domain.Quiz;
 import com.watermelon.server.fifoevent.dto.request.RequestAnswerDto;
 import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
-import com.watermelon.server.fifoevent.dto.response.ResponseQuizDto;
+import com.watermelon.server.fifoevent.dto.response.ResponseOrderEventDto;
 import com.watermelon.server.fifoevent.dto.response.ResponseQuizResultDto;
 import com.watermelon.server.fifoevent.repository.OrderEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,15 +26,19 @@ public class OrderEventService {
     private final QuizRepository quizRepository;
 
 
-    public ResponseQuizDto getQuiz(){
-        Optional<OrderEvent> fifoEventOptional = orderEventRepository.findByDateBetween(LocalDateTime.now());
-        if(!fifoEventOptional.isPresent()){return null;}
-        OrderEvent orderEvent = fifoEventOptional.get();
-        return ResponseQuizDto.from(orderEvent.getQuiz(), orderEvent.getId());
+    public List<ResponseOrderEventDto> getOrderEvents(){
+        List<OrderEvent> orderEvents = orderEventRepository.findAll();
+        List<ResponseOrderEventDto> responseOrderEventDtos = new ArrayList<>();
+        for (OrderEvent orderEvent : orderEvents) {
+            responseOrderEventDtos.add(ResponseOrderEventDto.from(orderEvent, OrderEventStatus.UPCOMING));
+        }
+        return responseOrderEventDtos;
     }
+
+
     public void makeEvent(RequestOrderEventDto requestOrderEventDto){
         System.out.println(requestOrderEventDto);
-        OrderEvent newOrderEvent = OrderEvent.makeFifoEvent(requestOrderEventDto);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(newOrderEvent);
     }
     public ResponseQuizResultDto applyFifoEvent(RequestAnswerDto requestAnswerDto){

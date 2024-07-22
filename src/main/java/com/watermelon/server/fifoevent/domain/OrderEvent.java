@@ -25,8 +25,8 @@ public class OrderEvent extends BaseEntity {
 
     @OneToMany(mappedBy = "fifoEvent")
     private List<OrderEventWinner> orderEventWinner = new ArrayList<>();
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int maxWinnerCount;
     private int winnerCount;
 
@@ -38,18 +38,18 @@ public class OrderEvent extends BaseEntity {
         this.winnerCount++;
     }
 
-    public static OrderEvent makeFifoEvent(RequestOrderEventDto requestOrderEventDto){
+    public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getQuestion(), requestOrderEventDto.getAnswer());
         return new OrderEvent(requestOrderEventDto.getMaxWinnerCount(), requestOrderEventDto.getStartTime(), requestOrderEventDto.getEndTime(),quiz);
     }
     public boolean isTimeInEventTime(LocalDateTime time){
-        if(time.isAfter(startTime)&&time.isBefore(endTime)){ return true;}
+        if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}
         return false;
     }
-    OrderEvent(int maxWinnerCount, LocalDateTime startTime, LocalDateTime endTime, Quiz quiz){
+    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz){
         this.maxWinnerCount = maxWinnerCount;
-        this.endTime = endTime;
-        this.startTime = startTime;
+        this.endDate = endDate;
+        this.startDate = startDate;
         this.quiz = quiz;
     }
 }

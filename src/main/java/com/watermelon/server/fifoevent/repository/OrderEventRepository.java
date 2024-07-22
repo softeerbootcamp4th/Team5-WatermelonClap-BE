@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface OrderEventRepository extends JpaRepository<OrderEvent,Long> {
 
-    @Query("SELECT e FROM OrderEvent e WHERE e.startTime <= :date AND e.endTime >= :date")
+    @Query("SELECT e FROM OrderEvent e WHERE e.startDate <= :date AND e.endDate >= :date")
     Optional<OrderEvent> findByDateBetween(@Param("date") LocalDateTime date);
 }

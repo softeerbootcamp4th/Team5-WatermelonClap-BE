@@ -8,12 +8,20 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class ResponseQuizDto {
-    private String question;
-    private Long fifoEventId;
+    private Long quizId;
+    private String description;
+    private String imgSrc;
+    private String title;
 
 
-    public static ResponseQuizDto from(Quiz quiz,Long fifoEventId) {
-        return new ResponseQuizDto(quiz.getQuestion(),fifoEventId);
+    public static ResponseQuizDto from(Quiz quiz) {
+        return ResponseQuizDto.builder()
+                .quizId(quiz.getId())
+                .description(quiz.getDescription())
+                .imgSrc(quiz.getImgSrc())
+                .title(quiz.getTitle())
+                .build();
     }
 }

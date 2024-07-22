@@ -14,20 +14,22 @@ public class Quiz {
     @OneToOne
     private OrderEvent orderEvent;
 
-    private String question;
+    private String description;
     private String answer;
+    private String imgSrc;
+    private String title;
 
     public static Quiz makeQuiz(String question,String answer){
         return Quiz.builder()
-                .question(question)
+                .description(question)
                 .answer(answer)
                 .build();
     }
-
+    
     @Builder
-    public Quiz(String answer, String question) {
+    public Quiz(String answer, String description) {
         this.answer = answer;
-        this.question = question;
+        this.description = description;
     }
     public boolean isCorrect(String answer){
         return answer.equals(this.answer);
