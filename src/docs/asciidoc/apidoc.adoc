@@ -1,3 +1,7 @@
-= index
+== index
 
 operation::index[]
+
+== fifo_event
+
+operation::event/fifo[]
