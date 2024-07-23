@@ -2,7 +2,10 @@ package com.watermelon.server.orderevent.controller;
 
 
 import com.watermelon.server.orderevent.dto.request.RequestOrderEventDto;
+import com.watermelon.server.orderevent.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.orderevent.dto.response.ResponseOrderEventDto;
+import com.watermelon.server.orderevent.error.NotDuringEventPeriodException;
+import com.watermelon.server.orderevent.error.WrongOrderEventFormatException;
 import com.watermelon.server.orderevent.service.OrderEventCommandService;
 import com.watermelon.server.orderevent.service.OrderEventQueryService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,12 @@ public class OrderEventController {
     @GetMapping(path = "/{eventId}")
     public ResponseOrderEventDto getOrderEvent(@PathVariable Long orderEventId){
         return orderEventQueryService.getOrderEvent(orderEventId);
+    }
+
+    @PostMapping(path = "/{eventId/{quizId}")
+    public ResponseApplyTicketDto getApplyTicket(@PathVariable Long orderEventId, @PathVariable Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
+
+        return orderEventCommandService.getApplyTicket(orderEventId,quizId);
     }
 
     @PostMapping
