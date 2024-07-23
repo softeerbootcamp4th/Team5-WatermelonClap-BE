@@ -20,14 +20,15 @@ public class ResponseOrderEventDto {
     private ResponseRewardDto reward;
 
 
-    public static ResponseOrderEventDto from(OrderEvent orderEvent,OrderEventStatus orderEventStatus) {
+    public static ResponseOrderEventDto from(OrderEvent orderEvent) {
         ResponseQuizDto responseQuizDto = null;
-        if(orderEventStatus.equals(OrderEventStatus.OPEN)|| orderEventStatus.equals(OrderEventStatus.CLOSED)){
+        if(orderEvent.getOrderEventStatus().equals(OrderEventStatus.OPEN)
+                || orderEvent.getOrderEventStatus().equals(OrderEventStatus.CLOSED)){
             responseQuizDto = ResponseQuizDto.from(orderEvent.getQuiz());
         }
         return ResponseOrderEventDto.builder()
                 .eventId(orderEvent.getId())
-                .status(orderEventStatus)
+                .status(orderEvent.getOrderEventStatus())
                 .reward(ResponseRewardDto.fromReward(orderEvent.getOrderEventReward()))
                 .startDate(orderEvent.getStartDate())
                 .quiz(responseQuizDto)

@@ -2,7 +2,6 @@ package com.watermelon.server.fifoevent.service;
 
 
 import com.watermelon.server.fifoevent.domain.OrderEvent;
-import com.watermelon.server.fifoevent.domain.OrderEventStatus;
 import com.watermelon.server.fifoevent.domain.Quiz;
 import com.watermelon.server.fifoevent.dto.request.RequestAnswerDto;
 import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
@@ -11,7 +10,10 @@ import com.watermelon.server.fifoevent.dto.response.ResponseQuizResultDto;
 import com.watermelon.server.fifoevent.repository.OrderEventRepository;
 import com.watermelon.server.fifoevent.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderEventService {
+    private static final Logger log = LoggerFactory.getLogger(OrderEventService.class);
     private final OrderEventRepository orderEventRepository;
     private final QuizRepository quizRepository;
 
@@ -29,17 +32,24 @@ public class OrderEventService {
     public List<ResponseOrderEventDto> getOrderEvents(){
         List<OrderEvent> orderEvents = orderEventRepository.findAll();
         List<ResponseOrderEventDto> responseOrderEventDtos = new ArrayList<>();
-        for (OrderEvent orderEvent : orderEvents) {
-            responseOrderEventDtos.add(ResponseOrderEventDto.from(orderEvent, OrderEventStatus.UPCOMING));
-        }
+        orderEvents.forEach(orderEvent -> responseOrderEventDtos.add(ResponseOrderEventDto.from(orderEvent)));
         return responseOrderEventDtos;
     }
 
-
-    public void makeEvent(RequestOrderEventDto requestOrderEventDto){
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
-        orderEventRepository.save(newOrderEvent);
+    @Transactional
+    public void changeOrderStatusByTime(){
+        List<OrderEvent> orderEvents = orderEventRepository.findAll();
+        orderEvents.forEach(orderEvent -> {orderEvent.changeOrderEventStatusByTime(LocalDateTime.now());});
     }
+
+    @Transactional
+    public OrderEvent makeEvent(RequestOrderEventDto requestOrderEventDto){
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        return orderEventRepository.save(newOrderEvent);
+    }
+
+
+
     public ResponseQuizResultDto applyFifoEvent(RequestAnswerDto requestAnswerDto){
         Optional<OrderEvent> fifoEventOptional = orderEventRepository.findById(requestAnswerDto.getFifoEventId());
         OrderEvent orderEvent = fifoEventOptional.get();

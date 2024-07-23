@@ -4,6 +4,8 @@ import com.watermelon.server.BaseEntity;
 import com.watermelon.server.fifoevent.dto.request.RequestOrderEventDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderEvent extends BaseEntity {
 
+    private static final Logger log = LoggerFactory.getLogger(OrderEvent.class);
     @Id @GeneratedValue
     private Long id;
 
@@ -29,6 +32,9 @@ public class OrderEvent extends BaseEntity {
     private LocalDateTime endDate;
     private int maxWinnerCount;
     private int winnerCount;
+
+    @Setter
+    private OrderEventStatus orderEventStatus;
 
     public boolean isWinnerAddable(){
         if(winnerCount<maxWinnerCount) return true;
@@ -53,5 +59,22 @@ public class OrderEvent extends BaseEntity {
         this.startDate = startDate;
         this.quiz = quiz;
         this.orderEventReward = orderEventReward;
+        this.orderEventStatus = OrderEventStatus.UPCOMING;
+    }
+
+    public void changeOrderEventStatusByTime(LocalDateTime now){
+        if(orderEventStatus.equals(OrderEventStatus.END)||orderEventStatus.equals(OrderEventStatus.CLOSED)) return;
+        if(orderEventStatus.equals(OrderEventStatus.UPCOMING)){
+            if(now.isAfter(startDate)) {
+                this.orderEventStatus = OrderEventStatus.OPEN;
+                log.info("EVENT OPEN");
+            }
+        }
+        if(orderEventStatus.equals(OrderEventStatus.OPEN)){
+            if(now.isAfter(endDate)){
+                this.orderEventStatus = OrderEventStatus.END;
+                log.info("EVENT END");
+            }
+        }
     }
 }
