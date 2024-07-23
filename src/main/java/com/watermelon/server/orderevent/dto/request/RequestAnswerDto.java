@@ -1,4 +1,4 @@
-package com.watermelon.server.fifoevent.dto.request;
+package com.watermelon.server.orderevent.dto.request;
 
 
 import lombok.AllArgsConstructor;

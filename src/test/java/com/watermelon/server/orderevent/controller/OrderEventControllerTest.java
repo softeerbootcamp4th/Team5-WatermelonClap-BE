@@ -1,4 +1,4 @@
-package com.watermelon.server.fifoevent.controller;
+package com.watermelon.server.orderevent.controller;
 
 import com.watermelon.server.ServerApplication;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ServerApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class FifoEventControllerTest {
+class OrderEventControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

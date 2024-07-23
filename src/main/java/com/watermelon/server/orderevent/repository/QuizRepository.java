@@ -1,6 +1,6 @@
-package com.watermelon.server.fifoevent.repository;
+package com.watermelon.server.orderevent.repository;
 
-import com.watermelon.server.fifoevent.domain.Quiz;
+import com.watermelon.server.orderevent.domain.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
