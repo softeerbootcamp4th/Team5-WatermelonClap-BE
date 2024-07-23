@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 public class JwtPayload {
 
-    private Long quizId;
+    private String quizId;
 }
