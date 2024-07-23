@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/event/order")
 public class OrderEventController {
 
     private final OrderEventQueryService orderEventQueryService;
@@ -27,12 +26,12 @@ public class OrderEventController {
 //        return fifoEventService.applyFifoEvent(requestAnswerDto);
 //    }
 
-    @GetMapping(path = "/{eventId}")
+    @GetMapping(path = "/event/order/{eventId}")
     public ResponseOrderEventDto getOrderEvent(@PathVariable Long orderEventId){
         return orderEventQueryService.getOrderEvent(orderEventId);
     }
 
-    @PostMapping
+    @PostMapping("/event/order")
     public void makeEvent(RequestOrderEventDto requestOrderEventDto){
         orderEventCommandService.makeEvent(requestOrderEventDto);
     }
