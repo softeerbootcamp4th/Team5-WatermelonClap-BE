@@ -41,7 +41,7 @@ public class OrderEventCommandService {
         return orderEventRepository.save(newOrderEvent);
     }
     @Transactional
-    public ResponseApplyTicketDto getApplyTicket(Long orderEventId,Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
+    public ResponseApplyTicketDto makeApplyTicket(Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
 
         OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId,quizId).orElseThrow(WrongOrderEventFormatException::new);
@@ -50,6 +50,10 @@ public class OrderEventCommandService {
         if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
 
         String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(quizId)));
+
+
+
+
         return ResponseApplyTicketDto.from(applyToken);
 
     }

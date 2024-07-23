@@ -36,9 +36,9 @@ public class OrderEventController {
     }
 
     @PostMapping(path = "/{eventId/{quizId}")
-    public ResponseApplyTicketDto getApplyTicket(@PathVariable Long orderEventId, @PathVariable Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
+    public ResponseApplyTicketDto makeApplyTicket(@PathVariable Long orderEventId, @PathVariable Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
-        return orderEventCommandService.getApplyTicket(orderEventId,quizId);
+        return orderEventCommandService.makeApplyTicket(orderEventId,quizId);
     }
 
     @PostMapping
