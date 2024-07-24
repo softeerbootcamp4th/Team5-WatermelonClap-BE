@@ -5,9 +5,14 @@ import com.watermelon.server.orderevent.domain.OrderEvent;
 import com.watermelon.server.orderevent.domain.Quiz;
 import com.watermelon.server.orderevent.dto.request.RequestAnswerDto;
 import com.watermelon.server.orderevent.dto.request.RequestOrderEventDto;
+import com.watermelon.server.orderevent.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.orderevent.dto.response.ResponseQuizResultDto;
+import com.watermelon.server.orderevent.error.NotDuringEventPeriodException;
+import com.watermelon.server.orderevent.error.WrongOrderEventFormatException;
 import com.watermelon.server.orderevent.repository.OrderEventRepository;
 import com.watermelon.server.orderevent.repository.QuizRepository;
+import com.watermelon.server.token.ApplyTokenProvider;
+import com.watermelon.server.token.JwtPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +28,7 @@ public class OrderEventCommandService {
 
     private final OrderEventRepository orderEventRepository;
     private final QuizRepository quizRepository;
+    private final ApplyTokenProvider applyTokenProvider;
     @Transactional
     public void changeOrderStatusByTime(){
         List<OrderEvent> orderEvents = orderEventRepository.findAll();
@@ -34,6 +40,30 @@ public class OrderEventCommandService {
         OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         return orderEventRepository.save(newOrderEvent);
     }
+    @Transactional
+    public ResponseApplyTicketDto makeApplyTicket(Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
+
+
+        OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId,quizId).orElseThrow(WrongOrderEventFormatException::new);
+
+        // 기간이 아닐시에
+        if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
+
+        String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(quizId)));
+
+
+
+
+        return ResponseApplyTicketDto.from(applyToken);
+
+    }
+
+
+
+
+
+
+
     public ResponseQuizResultDto applyFifoEvent(RequestAnswerDto requestAnswerDto){
         Optional<OrderEvent> fifoEventOptional = orderEventRepository.findById(requestAnswerDto.getFifoEventId());
         OrderEvent orderEvent = fifoEventOptional.get();
