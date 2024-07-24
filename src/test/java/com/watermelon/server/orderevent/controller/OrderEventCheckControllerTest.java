@@ -1,6 +1,6 @@
 package com.watermelon.server.orderevent.controller;
 
-import com.watermelon.server.orderevent.service.QuizCheckService;
+import com.watermelon.server.orderevent.dto.response.ResponseOrderEventResultDto;
 import com.watermelon.server.orderevent.service.OrderEventCheckService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,16 +46,19 @@ class OrderEventCheckControllerTest {
     @MockBean
     private OrderEventCheckService orderEventCheckService;
 
-    @MockBean
-    private QuizCheckService quizCheckService;
 
     @Test
-    @DisplayName("정답, 검증된 티켓, 선착순 가능한 상태이면 결과로 Success 를 반환해야 한다.")
+    @DisplayName("success 를 반환한다.")
     void testGetOrderEventResultSuccess() throws Exception {
 
-        //when
-        Mockito.when(orderEventCheckService.isAble(VALID_TICKET)).thenReturn(true);
-        Mockito.when(quizCheckService.isCorrect(QUIZ_ID, CORRECT_ANSWER)).thenReturn(true);
+        //given
+        Mockito.when(orderEventCheckService.getOrderEventResult(
+                VALID_TICKET, EVENT_ID, QUIZ_ID, CORRECT_ANSWER
+        )).thenReturn(
+                ResponseOrderEventResultDto.builder()
+                        .result(SUCCESS_RESULT)
+                        .build()
+        );
 
         //then
         this.mockMvc.perform(get(PATH, EVENT_ID, QUIZ_ID)
@@ -69,12 +72,17 @@ class OrderEventCheckControllerTest {
     }
 
     @Test
-    @DisplayName("오답이면 결과로 wrong 을 반환해야 한다.")
+    @DisplayName("wrong 을 반환한다.")
     void testGetOrderEventResultWrongTicket() throws Exception {
 
-        //when
-        Mockito.when(orderEventCheckService.isAble(VALID_TICKET)).thenReturn(true);
-        Mockito.when(quizCheckService.isCorrect(QUIZ_ID, WRONG_ANSWER)).thenReturn(false);
+        //given
+        Mockito.when(orderEventCheckService.getOrderEventResult(
+                VALID_TICKET, EVENT_ID, QUIZ_ID, WRONG_ANSWER
+        )).thenReturn(
+                ResponseOrderEventResultDto.builder()
+                        .result(WRONG_RESULT)
+                        .build()
+        );
 
         //then
         this.mockMvc.perform(get(PATH, EVENT_ID, QUIZ_ID)
@@ -88,12 +96,17 @@ class OrderEventCheckControllerTest {
     }
 
     @Test
-    @DisplayName("선착순이 마감되었으면 closed 를 반환해야 한다.")
+    @DisplayName("closed 를 반환한다.")
     void testGetOrderEventResultClosed() throws Exception {
 
-        //when
-        Mockito.when(orderEventCheckService.isAble(VALID_TICKET)).thenReturn(false);
-        Mockito.when(quizCheckService.isCorrect(QUIZ_ID, CORRECT_ANSWER)).thenReturn(true);
+        //given
+        Mockito.when(orderEventCheckService.getOrderEventResult(
+                VALID_TICKET, EVENT_ID, QUIZ_ID, CORRECT_ANSWER
+        )).thenReturn(
+                ResponseOrderEventResultDto.builder()
+                        .result(CLOSED_RESULT)
+                        .build()
+        );
 
         //then
         this.mockMvc.perform(get(PATH, EVENT_ID, QUIZ_ID)
