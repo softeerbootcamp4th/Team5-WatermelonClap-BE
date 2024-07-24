@@ -15,13 +15,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/event/order")
 public class OrderEventController {
 
     private final OrderEventQueryService orderEventQueryService;
     private final OrderEventCommandService orderEventCommandService;
 
-    @GetMapping
+    @GetMapping(path = "/event/order)
     public List<ResponseOrderEventDto> getOrderEvents(){
         return orderEventQueryService.getOrderEvents();
     }
@@ -30,18 +29,17 @@ public class OrderEventController {
 //        return fifoEventService.applyFifoEvent(requestAnswerDto);
 //    }
 
-    @GetMapping(path = "/{eventId}")
+    @GetMapping(path = "/event/order/{eventId}")
     public ResponseOrderEventDto getOrderEvent(@PathVariable Long orderEventId){
         return orderEventQueryService.getOrderEvent(orderEventId);
     }
 
-    @PostMapping(path = "/{eventId/{quizId}")
+    @PostMapping(path = "/event/order/{eventId/{quizId}")
     public ResponseApplyTicketDto makeApplyTicket(@PathVariable Long orderEventId, @PathVariable Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
         return orderEventCommandService.makeApplyTicket(orderEventId,quizId);
     }
-
-    @PostMapping
+    @PostMapping("/event/order")
     public void makeEvent(RequestOrderEventDto requestOrderEventDto){
         orderEventCommandService.makeEvent(requestOrderEventDto);
     }
