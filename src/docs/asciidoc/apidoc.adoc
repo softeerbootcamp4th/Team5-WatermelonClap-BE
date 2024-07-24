@@ -1,7 +1,7 @@
-== index
+//제목
+= API Document
+//왼쪽 목차
+:toc: left
 
-operation::index[]
-
-== fifo_event
-
-operation::event/fifo[]
+== 선착순 퀴즈 제출 처리 결과 확인
+operation::event/order/result[snippets='curl-request,http-request,http-response,response-body']
