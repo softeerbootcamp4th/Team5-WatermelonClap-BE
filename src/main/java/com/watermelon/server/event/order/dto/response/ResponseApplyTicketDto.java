@@ -24,4 +24,10 @@ public class ResponseApplyTicketDto {
                 .ApplyTicket(null)
                 .build();
     }
+    public static ResponseApplyTicketDto fullApply(){
+        return ResponseApplyTicketDto.builder()
+                .result(ApplyTicketStatus.CLOSED.name())
+                .ApplyTicket(null)
+                .build();
+    }
 }

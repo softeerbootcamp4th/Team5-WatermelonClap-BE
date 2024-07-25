@@ -12,6 +12,7 @@ import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.repository.QuizRepository;
 import com.watermelon.server.event.order.result.repository.OrderResultRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
+import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import java.util.List;
 public class OrderEventCommandService {
 
     private final OrderEventRepository orderEventRepository;
-    private final OrderResultRepository orderResultRepository;
+    private final OrderResultQueryService orderResultQueryService;
     private final ApplyTokenProvider applyTokenProvider;
     private final OrderResultCommandService orderResultCommandService;
 
@@ -44,24 +45,23 @@ public class OrderEventCommandService {
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
+        //id가 다를 시에
         OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId,quizId).orElseThrow(WrongOrderEventFormatException::new);
-
         // 기간이 아닐시에
         if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
+
         // 퀴즈 틀릴 시에
         Quiz quiz = orderEvent.getQuiz();
         if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
-
-
+        // 선착순 마감시에
+        if(!orderResultQueryService.canMakeOrderEventApply()) return ResponseApplyTicketDto.fullApply();
 
         //토큰 생성
         String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(quizId)));
 
-
         orderResultCommandService.makeOrderEventApply(applyToken);
 
         return ResponseApplyTicketDto.from(applyToken);
-
     }
 
 }
