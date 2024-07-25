@@ -89,7 +89,10 @@ res: 리소스 관련 (String, Color 등) 파일 `안드로이드 한정`
 ```
 
 ## 📌 ERD
-[사진]
+<img width="1376" alt="image" src="https://github.com/user-attachments/assets/07372ccf-ff02-4b97-9583-ec6cdaef8511">
+
 
 ## 📌 API 명세서
-[사진]
+<img width="715" alt="image" src="https://github.com/user-attachments/assets/225a4b1c-4cf6-4577-9035-6922136f127f">
+<img width="712" alt="image" src="https://github.com/user-attachments/assets/688df485-feaf-4176-a70b-77874658803e">
+
