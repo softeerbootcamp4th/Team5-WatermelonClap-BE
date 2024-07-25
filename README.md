@@ -91,4 +91,4 @@ res: 리소스 관련 (String, Color 등) 파일 `안드로이드 한정`
 <img width="712" alt="image" src="https://github.com/user-attachments/assets/688df485-feaf-4176-a70b-77874658803e">
 
 ## 📌 선착순 아키텍처 설계
-<img width="452" alt="image" src="https://github.com/user-attachments/assets/b47811eb-a30f-48c6-aec0-7fe41bb00052">
+<img width="520" alt="image" src="https://github.com/user-attachments/assets/d32557ac-2632-4502-8cde-541a2d207ba3">
