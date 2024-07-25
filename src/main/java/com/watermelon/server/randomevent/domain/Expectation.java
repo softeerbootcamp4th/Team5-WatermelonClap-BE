@@ -7,12 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Expectations extends BaseEntity {
+public class Expectation extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
 
     @OneToOne
     private Participant participant;
+
+    private boolean isApproved;
 
 }
