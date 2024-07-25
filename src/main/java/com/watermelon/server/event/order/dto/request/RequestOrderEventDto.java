@@ -15,8 +15,4 @@ public class RequestOrderEventDto {
 
     private RequestQuizDto requestQuizDto;
     private RequestOrderRewardDto requestOrderRewardDto;
-
-
-
-
 }

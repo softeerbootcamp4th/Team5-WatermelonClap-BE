@@ -2,6 +2,7 @@ package com.watermelon.server.event.order.result.service;
 
 
 import com.watermelon.server.event.order.result.repository.OrderResultRepository;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class OrderResultQueryService {
     private final OrderResultRepository orderResultRepository;
 
+    @Getter
     private final int maxCount;
 
     public OrderResultQueryService(OrderResultRepository orderResultRepository) {

@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @RequiredArgsConstructor
+
 public class OrderEvent extends BaseEntity {
 
     private static final Logger log = LoggerFactory.getLogger(OrderEvent.class);
@@ -53,7 +54,15 @@ public class OrderEvent extends BaseEntity {
         if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}
         return false;
     }
-    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz,OrderEventReward orderEventReward){
+
+    @Builder
+    public OrderEvent(Quiz quiz, LocalDateTime startDate, LocalDateTime endDate) {
+        this.quiz = quiz;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
         this.maxWinnerCount = maxWinnerCount;
         this.endDate = endDate;
         this.startDate = startDate;

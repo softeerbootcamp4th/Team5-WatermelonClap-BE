@@ -36,6 +36,12 @@ public class Quiz {
         this.imgSrc = imgSrc;
         this.title = title;
     }
+
+    @Builder
+    public Quiz(String answer) {
+        this.answer = answer;
+    }
+
     public boolean isCorrect(String answer){
         return answer.equals(this.answer);
     }
