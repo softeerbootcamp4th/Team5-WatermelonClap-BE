@@ -1,15 +1,10 @@
-# 🍉 박수칠수박
-<br/>
-
-
+# 협업 관련
 ## 📌 github 규칙
 
 - main에 커밋 금지(보호 걸어놓음, 메인 빌드용)
 - 브랜치 네이밍 컨벤션 준수
     - 이슈 번호
     - `CLAP-1`
-
-<br/>
 
 ## 📌 이슈 관리
 
@@ -21,9 +16,6 @@
     - 스프린트 종료 시 회고를 통해 작업 진행속도 및 작업 분배에 대해 논의한다.
     
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/b6e96953-96ed-4a26-a4be-3543d81a45d5">
-
-
-<br/>
 
 ## 📌 커밋 컨벤션
 
@@ -88,6 +80,8 @@ res: 리소스 관련 (String, Color 등) 파일 `안드로이드 한정`
 - ex) 메서드 XXX의 이름을 더 잘 짓고 싶은데 혹시 좋은 명칭이 있을까요?
 ```
 
+# 설계
+
 ## 📌 ERD
 <img width="1376" alt="image" src="https://github.com/user-attachments/assets/07372ccf-ff02-4b97-9583-ec6cdaef8511">
 
@@ -96,3 +90,5 @@ res: 리소스 관련 (String, Color 등) 파일 `안드로이드 한정`
 <img width="715" alt="image" src="https://github.com/user-attachments/assets/225a4b1c-4cf6-4577-9035-6922136f127f">
 <img width="712" alt="image" src="https://github.com/user-attachments/assets/688df485-feaf-4176-a70b-77874658803e">
 
+## 📌 선착순 아키텍처 설계
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/b47811eb-a30f-48c6-aec0-7fe41bb00052">
