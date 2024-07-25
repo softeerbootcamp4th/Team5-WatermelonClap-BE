@@ -20,7 +20,7 @@ public class OrderEventController {
     private final OrderEventQueryService orderEventQueryService;
     private final OrderEventCommandService orderEventCommandService;
 
-    @GetMapping(path = "/event/order)
+    @GetMapping(path = "/event/order")
     public List<ResponseOrderEventDto> getOrderEvents(){
         return orderEventQueryService.getOrderEvents();
     }
@@ -34,7 +34,7 @@ public class OrderEventController {
         return orderEventQueryService.getOrderEvent(orderEventId);
     }
 
-    @PostMapping(path = "/event/order/{eventId/{quizId}")
+    @PostMapping(path = "/event/order/{eventId}/{quizId}")
     public ResponseApplyTicketDto makeApplyTicket(@PathVariable Long orderEventId, @PathVariable Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
         return orderEventCommandService.makeApplyTicket(orderEventId,quizId);
