@@ -43,10 +43,7 @@ public class OrderEventCommandService {
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
-        //id가 다를 시에
-        OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId,quizId).orElseThrow(WrongOrderEventFormatException::new);
-        // 기간이 아닐시에
-        if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
+        OrderEvent orderEvent = checkOrderEventNotError(orderEventId, quizId);
 
         // 퀴즈 틀릴 시에
         Quiz quiz = orderEvent.getQuiz();
@@ -60,6 +57,14 @@ public class OrderEventCommandService {
         orderResultCommandService.makeOrderEventApply(applyToken);
 
         return ResponseApplyTicketDto.from(applyToken);
+    }
+
+    private OrderEvent checkOrderEventNotError(Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
+        //id가 다를 시에
+        OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId, quizId).orElseThrow(WrongOrderEventFormatException::new);
+        // 기간이 아닐시에
+        if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
+        return orderEvent;
     }
 
 }
