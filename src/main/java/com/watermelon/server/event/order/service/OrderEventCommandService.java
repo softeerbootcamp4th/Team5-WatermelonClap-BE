@@ -9,8 +9,6 @@ import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
-import com.watermelon.server.event.order.repository.QuizRepository;
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
 import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
@@ -54,7 +52,7 @@ public class OrderEventCommandService {
         Quiz quiz = orderEvent.getQuiz();
         if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
         // 선착순 마감시에
-        if(!orderResultQueryService.canMakeOrderEventApply()) return ResponseApplyTicketDto.fullApply();
+        if(!orderResultQueryService.isOrderApplyNotFull()) return ResponseApplyTicketDto.fullApply();
 
         //토큰 생성
         String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(quizId)));

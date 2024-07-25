@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 public class OrderResultCommandService {
     private final OrderResultRepository orderResultRepository;
 
-    public void makeOrderEventApply(String applyToken){
+    public OrderResult makeOrderEventApply(String applyToken){
         OrderResult orderResult = OrderResult.makeOrderEventApply(applyToken);
-        orderResultRepository.save(orderResult);
+        return orderResultRepository.save(orderResult);
     }
-
 }
