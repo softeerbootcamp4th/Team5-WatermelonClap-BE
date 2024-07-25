@@ -1,7 +1,8 @@
 package com.watermelon.server.orderevent.controller;
 
-import com.watermelon.server.orderevent.dto.response.ResponseOrderEventResultDto;
-import com.watermelon.server.orderevent.service.OrderEventCheckService;
+import com.watermelon.server.event.order.controller.OrderEventCheckController;
+import com.watermelon.server.event.order.dto.response.ResponseOrderEventResultDto;
+import com.watermelon.server.event.order.service.OrderEventCheckService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

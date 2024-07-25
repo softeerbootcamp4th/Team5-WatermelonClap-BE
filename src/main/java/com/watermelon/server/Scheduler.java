@@ -1,6 +1,6 @@
 package com.watermelon.server;
 
-import com.watermelon.server.orderevent.service.OrderEventCommandService;
+import com.watermelon.server.event.order.service.OrderEventCommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
