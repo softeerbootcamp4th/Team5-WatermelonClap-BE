@@ -11,6 +11,16 @@ public class Participant extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
+    private boolean isPartsWinner;
+
+    private boolean isLotteryWinner;
+
+    private boolean isPartsApplier;
+
+    private int remainChance;
+
+    private String email;
+
     private String phoneNumber;
 
 }
