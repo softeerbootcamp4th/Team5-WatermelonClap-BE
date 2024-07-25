@@ -1,12 +1,14 @@
 package com.watermelon.server.orderevent.service;
 
 import com.watermelon.server.ServerApplication;
-import com.watermelon.server.orderevent.domain.OrderEvent;
-import com.watermelon.server.orderevent.domain.OrderEventStatus;
-import com.watermelon.server.orderevent.dto.request.RequestOrderEventDto;
-import com.watermelon.server.orderevent.dto.request.RequestOrderRewardDto;
-import com.watermelon.server.orderevent.dto.request.RequestQuizDto;
-import com.watermelon.server.orderevent.repository.OrderEventRepository;
+import com.watermelon.server.event.order.domain.OrderEvent;
+import com.watermelon.server.event.order.domain.OrderEventStatus;
+import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
+import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
+import com.watermelon.server.event.order.dto.request.RequestQuizDto;
+import com.watermelon.server.event.order.repository.OrderEventRepository;
+import com.watermelon.server.event.order.service.OrderEventCommandService;
+import com.watermelon.server.event.order.service.OrderEventQueryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
