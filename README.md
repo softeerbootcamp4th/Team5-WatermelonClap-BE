@@ -15,7 +15,7 @@
     - 스프린트 시작 시 백로그에서 이번주에 진행할 작업을 가져와 스프린트에 채운다.
     - 스프린트 종료 시 회고를 통해 작업 진행속도 및 작업 분배에 대해 논의한다.
     
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/b6e96953-96ed-4a26-a4be-3543d81a45d5">
+<img width="691" alt="image" src="https://github.com/user-attachments/assets/637d80b6-e830-4dea-aea1-e49798aa4c3a">
 
 ## 📌 커밋 컨벤션
 
@@ -85,10 +85,10 @@ res: 리소스 관련 (String, Color 등) 파일 `안드로이드 한정`
 ## 📌 ERD
 <img width="1376" alt="image" src="https://github.com/user-attachments/assets/07372ccf-ff02-4b97-9583-ec6cdaef8511">
 
-
 ## 📌 API 명세서
 <img width="715" alt="image" src="https://github.com/user-attachments/assets/225a4b1c-4cf6-4577-9035-6922136f127f">
 <img width="712" alt="image" src="https://github.com/user-attachments/assets/688df485-feaf-4176-a70b-77874658803e">
 
-## 📌 선착순 아키텍처 설계
-<img width="520" alt="image" src="https://github.com/user-attachments/assets/d32557ac-2632-4502-8cde-541a2d207ba3">
+## 📌 개발 중점 사항
+1. 비용, 관리해야하는 리소스의 최소화
+2. 테스트를 기반으로 동작하는 안정적인 서비스 배포 (Spring Rest Docs 사용)
