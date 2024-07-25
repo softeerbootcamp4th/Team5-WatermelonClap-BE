@@ -7,10 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Expectations extends BaseEntity {
+public class Link extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
+
+    private int viewCount;
+
+    private String link;
 
     @OneToOne
     private Participant participant;
