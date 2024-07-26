@@ -13,7 +13,12 @@ public class MockBeans {
 
     @Bean
     public OrderEventCheckService orderEventCheckService() {
-        return (ticket, eventId, quizId, answer) -> ResponseOrderEventResultDto.builder().build();
+        return new OrderEventCheckService() {
+            @Override
+            public ResponseOrderEventResultDto getOrderEventResult(String ticket, Long eventId, Long quizId, String answer) {
+                return ResponseOrderEventResultDto.builder().build();
+            }
+        };
     }
 
     @Bean
