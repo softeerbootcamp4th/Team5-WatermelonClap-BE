@@ -52,9 +52,9 @@ public class OrderEventCommandService {
         if(!orderResultQueryService.isOrderApplyNotFull()) return ResponseApplyTicketDto.fullApply();
 
         //토큰 생성
-        String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(quizId)));
+        String applyToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(orderEventId )));
 
-        orderResultCommandService.makeOrderEventApply(applyToken);
+
 
         return ResponseApplyTicketDto.from(applyToken);
     }

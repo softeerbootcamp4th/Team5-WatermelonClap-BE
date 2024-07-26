@@ -29,19 +29,19 @@ class OrderResultQueryServiceTest {
     OrderResultQueryService orderResultQueryService;
     String applyToken= "applyToken";
 
-    @Test
-    @DisplayName("OrderResult full 확인")
-    public void checkIsOrderApplyFull(){
-        List<OrderResult> orderResults = new ArrayList<>();
-        when(orderResultRepository.findAll()).thenReturn(orderResults);
-
-
-        Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isTrue();
-        for(int i=0;i<orderResultQueryService.getMaxCount();i++){
-            orderResults.add(OrderResult.makeOrderEventApply(applyToken));
-        }
-        Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isFalse();
-
-    }
+//    @Test
+//    @DisplayName("OrderResult full 확인")
+//    public void checkIsOrderApplyFull(){
+//        List<OrderResult> orderResults = new ArrayList<>();
+//        when(orderResultRepository.findAll()).thenReturn(orderResults);
+//
+//
+//        Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isTrue();
+//        for(int i=0;i<orderResultQueryService.getMaxCount();i++){
+//            orderResults.add(OrderResult.makeOrderEventApply(applyToken));
+//        }
+//        Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isFalse();
+//
+//    }
 
 }

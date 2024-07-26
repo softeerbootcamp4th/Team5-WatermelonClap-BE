@@ -14,7 +14,7 @@ public class ResponseApplyTicketDto {
 
     public static ResponseApplyTicketDto from(String applyTicket){
         return ResponseApplyTicketDto.builder()
-                .result(ApplyTicketStatus.PENDING.name())
+                .result(ApplyTicketStatus.SUCCESS.name())
                 .ApplyTicket(applyTicket)
                 .build();
     }
