@@ -2,7 +2,6 @@ package com.watermelon.server.event.order.service;
 
 
 import com.watermelon.server.error.ApplyTicketWrongException;
-import com.watermelon.server.event.order.domain.OrderEventWinner;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
@@ -12,9 +11,6 @@ import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
-import com.watermelon.server.event.order.repository.OrderEventWinnerRepository;
-import com.watermelon.server.event.order.result.domain.OrderResult;
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
 import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
