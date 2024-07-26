@@ -6,10 +6,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Participant extends BaseEntity {
 
     @Id @GeneratedValue
@@ -17,7 +25,7 @@ public class Participant extends BaseEntity {
 
     private boolean isPartsWinner;
 
-    private boolean isLotteryWinner;
+    private int lotteryRank;
 
     private boolean isPartsApplier;
 

@@ -39,19 +39,13 @@ class LotteryControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("JSON 형식의 랭크, 이메일 목록을 반환한다.")
+    @DisplayName("추첨자 명단을 JSON 형식으로 반환한다.")
     void testGetOrderEventResultSuccess() throws Exception {
 
         //given
         List<ResponseLotteryWinnerDto> expectedResponse = List.of(
-                ResponseLotteryWinnerDto.builder()
-                        .email("email1@email.com")
-                        .rank(-1)
-                        .build(),
-                ResponseLotteryWinnerDto.builder()
-                        .email("email2@email.com")
-                        .rank(1)
-                        .build()
+                ResponseLotteryWinnerDto.from("email1@email.com", -1),
+                ResponseLotteryWinnerDto.from("email2@email.com", 1)
         );
 
         Mockito.when(lotteryService.getLotteryWinners())
