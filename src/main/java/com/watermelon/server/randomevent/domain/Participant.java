@@ -23,6 +23,8 @@ public class Participant extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
+    private String uid;
+
     private boolean isPartsWinner;
 
     private int lotteryRank;
