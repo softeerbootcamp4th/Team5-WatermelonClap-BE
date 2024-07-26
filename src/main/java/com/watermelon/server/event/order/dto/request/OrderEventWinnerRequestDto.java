@@ -1,4 +1,4 @@
-package com.watermelon.server.event.order.result.dto.request;
+package com.watermelon.server.event.order.dto.request;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResultRequestDto {
+public class OrderEventWinnerRequestDto {
     private String phoneNumber;
 }

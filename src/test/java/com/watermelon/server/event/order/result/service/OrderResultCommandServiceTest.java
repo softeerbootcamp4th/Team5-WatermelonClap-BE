@@ -30,14 +30,13 @@ class OrderResultCommandServiceTest {
 
     private String applyToken = "applyToken";
 
-//    @Test
-//    @DisplayName("선착순 응모 결과 생성 (기본 ApplyStatus 상태 Pending)")
-//    public void makeOrderResult() {
-//        when(orderResultRepository.save(any())).thenReturn(OrderResult.makeOrderEventApply(applyToken));
-//        OrderResult orderResult = orderResultCommandService.makeOrderEventApply(applyToken);
-//
-//        Assertions.assertThat(orderResult.getApplyToken()).isEqualTo(applyToken);
-//        Assertions.assertThat(orderResult.getApplyTicketStatus()).isEqualTo(ApplyTicketStatus.PENDING);
-//    }
+    @Test
+    @DisplayName("선착순 응모 결과 생성 ")
+    public void makeOrderResult() {
+        when(orderResultRepository.save(any())).thenReturn(OrderResult.makeOrderEventApply(applyToken));
+        OrderResult orderResult = orderResultCommandService.makeOrderEventApply(applyToken);
+
+        Assertions.assertThat(orderResult.getApplyToken()).isEqualTo(applyToken);
+    }
 
 }
