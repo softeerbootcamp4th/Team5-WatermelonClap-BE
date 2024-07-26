@@ -1,6 +1,8 @@
 package com.watermelon.server.event.order.controller;
 
 
+import com.watermelon.server.error.ApplyTicketWrongException;
+import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
@@ -46,6 +48,18 @@ public class OrderEventController {
     @PostMapping("/event/order")
     public void makeEvent(RequestOrderEventDto requestOrderEventDto){
         orderEventCommandService.makeEvent(requestOrderEventDto);
+    }
+
+    @PostMapping(path = "/event/order/{eventId}/{quizId}/apply")
+    public void makeApply(@RequestHeader("ApplyTicket") String applyTicket,
+                          @PathVariable("eventId") Long eventId,
+                          @PathVariable("quizId") Long quizId,
+                          @RequestBody OrderEventWinnerRequestDto orderEventWinnerRequestDto)
+            throws ApplyTicketWrongException
+            , WrongOrderEventFormatException {
+        orderEventCommandService.makeOrderEventWinner(applyTicket,eventId,orderEventWinnerRequestDto);
+
+
     }
 
 }

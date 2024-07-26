@@ -1,7 +1,6 @@
 package com.watermelon.server.event.order.result.domain;
 
 
-import com.watermelon.server.event.order.domain.ApplyTicketStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,7 +15,6 @@ public class OrderResult {
     private long id;
 
     private String applyToken;
-    private ApplyTicketStatus applyTicketStatus;
 
 
 
@@ -24,12 +22,10 @@ public class OrderResult {
         return OrderResult.builder()
                 .applyToken(applyToken)
                 .build();
-
     }
 
     @Builder
     OrderResult(String applyToken) {
         this.applyToken = applyToken;
-        this.applyTicketStatus = ApplyTicketStatus.PENDING;
     }
 }

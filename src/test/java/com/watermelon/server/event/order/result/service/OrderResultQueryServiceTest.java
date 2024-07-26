@@ -30,18 +30,16 @@ class OrderResultQueryServiceTest {
     String applyToken= "applyToken";
 
     @Test
-    @DisplayName("OrderResult full 확인")
+    @DisplayName("선착순 이벤트 제한수 확인")
     public void checkIsOrderApplyFull(){
         List<OrderResult> orderResults = new ArrayList<>();
         when(orderResultRepository.findAll()).thenReturn(orderResults);
-
 
         Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isTrue();
         for(int i=0;i<orderResultQueryService.getMaxCount();i++){
             orderResults.add(OrderResult.makeOrderEventApply(applyToken));
         }
         Assertions.assertThat(orderResultQueryService.isOrderApplyNotFull()).isFalse();
-
     }
 
 }
