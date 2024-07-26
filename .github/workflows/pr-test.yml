@@ -20,6 +20,7 @@ jobs:
           mkdir -p src/main/resources
           echo "${{ secrets.APPLICATION_LOCAL_DB }}" | base64 --decode > src/main/resources/application-local-db.yml
           echo "${{ secrets.APPLICATION_LOCAL_TOKEN }}" | base64 --decode > src/main/resources/application-local-token.yml
+          echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
           find src
 
       # Gradle wrapper 파일 실행 권한주기
