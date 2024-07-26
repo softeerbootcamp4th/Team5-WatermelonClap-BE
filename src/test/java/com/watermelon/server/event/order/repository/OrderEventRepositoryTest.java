@@ -1,6 +1,5 @@
-package com.watermelon.server.orderevent.repository;
+package com.watermelon.server.event.order.repository;
 
-import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
