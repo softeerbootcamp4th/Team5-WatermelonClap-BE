@@ -37,6 +37,8 @@ public class Participant extends BaseEntity {
 
     private String phoneNumber;
 
+    private String name;
+
     @OneToMany(mappedBy = "participant")
     private List<ParticipantParts> participantParts;
 
