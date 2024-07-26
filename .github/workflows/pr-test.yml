@@ -15,6 +15,13 @@ jobs:
         with:
           java-version: 17
 
+      - name: Set YML
+        run: |
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_LOCAL_DB }}" | base64 --decode > src/main/resources/application-local-db.yml
+          echo "${{ secrets.APPLICATION_LOCAL_TOKEN }}" | base64 --decode > src/main/resources/application-local-token.yml
+          find src
+
       # Gradle wrapper 파일 실행 권한주기
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
