@@ -8,9 +8,9 @@ import lombok.Getter;
 @Getter
 public class JwtPayload {
 
-    private String quizId;
+    private String eventId;
 
-    public static JwtPayload from(String quizId) {
-        return JwtPayload.builder().quizId(quizId).build();
+    public static JwtPayload from(String orderEventId) {
+        return JwtPayload.builder().eventId(orderEventId).build();
     }
 }

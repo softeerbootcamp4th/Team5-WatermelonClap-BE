@@ -1,6 +1,5 @@
-package com.watermelon.server.orderevent.controller;
+package com.watermelon.server.event.order.controller;
 
-import com.watermelon.server.event.order.controller.OrderEventCheckController;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventResultDto;
 import com.watermelon.server.event.order.service.OrderEventCheckService;
 import org.junit.jupiter.api.DisplayName;

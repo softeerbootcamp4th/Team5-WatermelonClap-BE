@@ -12,9 +12,9 @@ public class ResponseApplyTicketDto {
     private String result;
     private String ApplyTicket;
 
-    public static ResponseApplyTicketDto from(String applyTicket){
+    public static ResponseApplyTicketDto applySuccess(String applyTicket){
         return ResponseApplyTicketDto.builder()
-                .result(ApplyTicketStatus.PENDING.name())
+                .result(ApplyTicketStatus.SUCCESS.name())
                 .ApplyTicket(applyTicket)
                 .build();
     }

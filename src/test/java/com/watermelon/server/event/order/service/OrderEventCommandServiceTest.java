@@ -138,5 +138,8 @@ class OrderEventCommandServiceTest {
     }
 
 
-
+    @Test
+    @DisplayName("선착순 당첨자 등록")
+    void makeOrderEventWinner() {
+    }
 }
