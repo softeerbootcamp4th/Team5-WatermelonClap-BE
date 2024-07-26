@@ -29,6 +29,8 @@ public class LotteryServiceImpl implements LotteryService {
 
     @Override
     public ResponseLotteryWinnerInfoDto getLotteryWinnerInfo(String uid) {
-        return null;
+        return ResponseLotteryWinnerInfoDto.from(
+                participantRepository.findByUid(uid).orElseThrow()
+        );
     }
 }
