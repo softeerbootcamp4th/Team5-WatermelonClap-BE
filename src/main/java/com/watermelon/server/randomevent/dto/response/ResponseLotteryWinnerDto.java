@@ -10,4 +10,8 @@ public class ResponseLotteryWinnerDto {
     private String email;
     private int rank;
 
+    public static ResponseLotteryWinnerDto from(String email, int rank) {
+        return new ResponseLotteryWinnerDto(email, rank);
+    }
+
 }
