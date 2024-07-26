@@ -33,9 +33,8 @@ public class OrderEventCommandService {
     private final OrderEventRepository orderEventRepository;
     private final OrderResultQueryService orderResultQueryService;
     private final ApplyTokenProvider applyTokenProvider;
-    private final OrderEventWinnerRepository orderEventWinnerRepository;
+    private final OrderEventWinnerService orderEventWinnerService;
     private final OrderResultCommandService orderResultCommandService;
-    private final OrderResultRepository orderResultRepository;
 
     @Transactional
     public void changeOrderStatusByTime(){
@@ -56,18 +55,20 @@ public class OrderEventCommandService {
         // 퀴즈 틀릴 시에
         Quiz quiz = orderEvent.getQuiz();
         if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
-        // 선착순 마감시에
-        if(!orderResultQueryService.isOrderApplyNotFull()) return ResponseApplyTicketDto.fullApply();
+
+
 
 
 
         //토큰 생성
         String applyTicketToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(orderEventId )));
-        OrderResult orderResult = OrderResult.makeOrderEventApply(applyTicketToken);
 
+        //(선착순 마감 확인,저장은 하나의 transaction 단위로 걸어야함)
+        // 선착순 마감시에
+        if(!orderResultQueryService.isOrderApplyNotFull()) return ResponseApplyTicketDto.fullApply();
+        orderResultCommandService.makeOrderEventApply(applyTicketToken);
 
-        //반환 (저장과 돌려주는 것은 확실하게 transaction 걸어야함)
-        orderResultRepository.save(orderResult);
+        //저장 할시에 확실하게 돌려주어야함 - 하지만 돌려주지 못 할시에는 어떻게?( 로그인이 안 되어있음)
         return ResponseApplyTicketDto.applySuccess(applyTicketToken);
     }
 
@@ -82,8 +83,7 @@ public class OrderEventCommandService {
     public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
         JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(eventId));
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
-        OrderEventWinner orderEventWinner = OrderEventWinner.makeWinner(orderEvent, orderEventWinnerRequestDto);
-        orderEventWinnerRepository.save(orderEventWinner);
+        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto);
     }
 
 }

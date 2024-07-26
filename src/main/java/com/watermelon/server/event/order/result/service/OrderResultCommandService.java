@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderResultCommandService {
     private final OrderResultRepository orderResultRepository;
-    private final OrderEventWinnerRepository orderEventWinnerRepository;
-    private final ApplyTokenProvider applyTokenProvider;
 
     public OrderResult makeOrderEventApply(String applyToken){
         OrderResult orderResult = OrderResult.makeOrderEventApply(applyToken);
