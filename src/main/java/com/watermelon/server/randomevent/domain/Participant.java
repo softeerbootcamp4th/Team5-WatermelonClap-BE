@@ -23,6 +23,8 @@ public class Participant extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
+    private String uid;
+
     private boolean isPartsWinner;
 
     private int lotteryRank;
@@ -34,6 +36,10 @@ public class Participant extends BaseEntity {
     private String email;
 
     private String phoneNumber;
+
+    private String name;
+
+    private String address;
 
     @OneToMany(mappedBy = "participant")
     private List<ParticipantParts> participantParts;
