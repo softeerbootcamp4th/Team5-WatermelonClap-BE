@@ -96,14 +96,15 @@ class OrderEventServiceTest {
                 .endDate(now.plusSeconds(3))
                 .winnerCount(100)
                 .build();
-        OrderEvent orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEventRepository.save(newOrderEvent);
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
         Thread.sleep(2000L);
-        orderEvent = orderEventRepository.findById(orderEvent.getId()).get();
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
+        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
         Thread.sleep(2000L);
-        orderEvent = orderEventRepository.findById(orderEvent.getId()).get();
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
+        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
     }
 
     @Test
