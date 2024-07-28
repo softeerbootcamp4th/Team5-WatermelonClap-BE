@@ -1,6 +1,6 @@
 package com.watermelon.server.randomevent.dto.response;
 
-import com.watermelon.server.randomevent.domain.Participant;
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,12 +12,12 @@ public class ResponseLotteryWinnerInfoDto {
     String address;
     String phoneNumber;
 
-    public static ResponseLotteryWinnerInfoDto from(Participant participant){
+    public static ResponseLotteryWinnerInfoDto from(LotteryApplier lotteryApplier){
 
         return ResponseLotteryWinnerInfoDto.builder()
-                .name(participant.getName())
-                .address(participant.getAddress())
-                .phoneNumber(participant.getPhoneNumber())
+                .name(lotteryApplier.getName())
+                .address(lotteryApplier.getAddress())
+                .phoneNumber(lotteryApplier.getPhoneNumber())
                 .build();
 
     }

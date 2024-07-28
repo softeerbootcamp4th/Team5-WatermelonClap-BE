@@ -1,11 +1,11 @@
 package com.watermelon.server.randomevent.parts.domain;
 
 import com.watermelon.server.BaseEntity;
-import com.watermelon.server.randomevent.domain.Participant;
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import jakarta.persistence.*;
 
 @Entity
-public class ParticipantParts extends BaseEntity {
+public class LotteryApplierParts extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
@@ -15,8 +15,8 @@ public class ParticipantParts extends BaseEntity {
     private Parts parts;
 
     @ManyToOne
-    @JoinColumn(name = "participant_id")
-    private Participant participant;
+    @JoinColumn(name = "lotteryApplier_id")
+    private LotteryApplier lotteryApplier;
 
     private boolean isEquipped;
 

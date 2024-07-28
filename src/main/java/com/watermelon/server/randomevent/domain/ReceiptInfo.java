@@ -11,7 +11,7 @@ public class ReceiptInfo extends BaseEntity {
     private Long id;
 
     @OneToOne
-    private Participant participant;
+    private LotteryApplier lotteryApplier;
 
     private String address;
     private String name;
