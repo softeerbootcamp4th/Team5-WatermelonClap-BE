@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Getter
 @RequiredArgsConstructor
-
 public class OrderEvent extends BaseEntity {
 
     private static final Logger log = LoggerFactory.getLogger(OrderEvent.class);
@@ -37,6 +36,9 @@ public class OrderEvent extends BaseEntity {
     @Setter
     private OrderEventStatus orderEventStatus;
 
+    public void openEvent(){
+        this.orderEventStatus = OrderEventStatus.OPEN;
+    }
     public boolean isWinnerAddable(){
         if(winnerCount<maxWinnerCount) return true;
         return false;

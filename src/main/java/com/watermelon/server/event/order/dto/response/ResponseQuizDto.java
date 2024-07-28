@@ -1,34 +1,38 @@
 package com.watermelon.server.event.order.dto.response;
 
 
-import com.watermelon.server.admin.dto.response.ResponseAdminQuizDto;
 import com.watermelon.server.event.order.domain.Quiz;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
 public class ResponseQuizDto {
     private Long quizId;
     private String imgSrc;
+    private String answer;
 
 
     public static ResponseQuizDto forUser(Quiz quiz) {
         return ResponseQuizDto.builder()
                 .quizId(quiz.getId())
                 .imgSrc(quiz.getImgSrc())
+                .answer(null)
                 .build();
     }
 
-    public static ResponseAdminQuizDto forAdmin(Quiz quiz) {
-        return ResponseAdminQuizDto.makeQuizDtoForAdmin(quiz);
+    public static ResponseQuizDto forAdmin(Quiz quiz) {
+        return ResponseQuizDto.builder()
+                .quizId(quiz.getId())
+                .imgSrc(quiz.getImgSrc())
+                .answer(quiz.getAnswer())
+                .build();
     }
 
 
-    public ResponseQuizDto(Long quizId, String imgSrc) {
+    @Builder
+    public ResponseQuizDto(Long quizId, String imgSrc,String answer ) {
         this.quizId = quizId;
         this.imgSrc = imgSrc;
+        this.answer = answer;
     }
 }

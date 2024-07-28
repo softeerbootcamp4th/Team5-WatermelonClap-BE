@@ -1,7 +1,6 @@
 package com.watermelon.server.event.order.dto.response;
 
 
-import com.watermelon.server.admin.dto.response.ResponseAdminQuizDto;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,7 @@ public class ResponseOrderEventDto {
 
     public static ResponseOrderEventDto forUser(OrderEvent orderEvent) {
         ResponseQuizDto responseQuizDto = null;
+        //열리지 않거나
         if(orderEvent.getOrderEventStatus().equals(OrderEventStatus.OPEN)
                 || orderEvent.getOrderEventStatus().equals(OrderEventStatus.CLOSED)){
             responseQuizDto = ResponseQuizDto.forUser(orderEvent.getQuiz());
@@ -39,7 +39,7 @@ public class ResponseOrderEventDto {
                 .build();
     }
     public static ResponseOrderEventDto forAdmin(OrderEvent orderEvent) {
-        ResponseAdminQuizDto responseQuizDto = ResponseQuizDto.forAdmin(orderEvent.getQuiz());
+        ResponseQuizDto responseQuizDto = ResponseQuizDto.forAdmin(orderEvent.getQuiz());
         ResponseRewardDto rewardDto = ResponseRewardDto.fromReward(orderEvent.getOrderEventReward());
         return ResponseOrderEventDto.builder()
                 .eventId(orderEvent.getId())

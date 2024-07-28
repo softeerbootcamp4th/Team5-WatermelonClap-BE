@@ -15,9 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService {
+public class AdminOrderService {
     private final OrderEventRepository orderEventRepository;
 
+
+    @Transactional(readOnly = true)
     public List<ResponseOrderEventDto> getOrderEventsForAdmin() {
         List<OrderEvent> orderEvents = orderEventRepository.findAll();
         List<ResponseOrderEventDto> responseOrderEventDtos = new ArrayList<>();
