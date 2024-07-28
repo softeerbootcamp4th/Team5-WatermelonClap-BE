@@ -39,9 +39,11 @@ public class LotteryServiceImpl implements LotteryService {
     @Override
     public void createLotteryWinnerInfo(String uid, RequestLotteryWinnerInfoDto requestLotteryWinnerInfoDto) {
         Participant participant = participantRepository.findByUid(uid).orElseThrow();
-        participant.setAddress(requestLotteryWinnerInfoDto.getAddress());
-        participant.setName(requestLotteryWinnerInfoDto.getName());
-        participant.setPhoneNumber(requestLotteryWinnerInfoDto.getPhoneNumber());
+        participant.setLotteryWinnerInfo(
+                requestLotteryWinnerInfoDto.getAddress(),
+                requestLotteryWinnerInfoDto.getName(),
+                requestLotteryWinnerInfoDto.getPhoneNumber()
+        );
         participantRepository.save(participant);
     }
 }

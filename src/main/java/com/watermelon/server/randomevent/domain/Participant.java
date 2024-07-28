@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,5 +40,11 @@ public class Participant extends BaseEntity {
 
     @OneToMany(mappedBy = "participant")
     private List<ParticipantParts> participantParts;
+
+    public void setLotteryWinnerInfo(String address, String name, String phoneNumber){
+        this.address = address;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
 }
