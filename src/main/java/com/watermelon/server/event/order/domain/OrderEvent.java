@@ -48,7 +48,7 @@ public class OrderEvent extends BaseEntity {
     public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
         OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
-        return new OrderEvent(requestOrderEventDto.getMaxWinnerCount(), requestOrderEventDto.getStartTime(), requestOrderEventDto.getEndTime(),quiz,reward);
+        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
     }
     public boolean isTimeInEventTime(LocalDateTime time){
         if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}

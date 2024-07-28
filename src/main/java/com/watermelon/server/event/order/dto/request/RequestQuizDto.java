@@ -9,8 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RequestQuizDto {
 
-    private String description;
     private String answer;
-    private String imgSrc;
-    private String title;
+
 }

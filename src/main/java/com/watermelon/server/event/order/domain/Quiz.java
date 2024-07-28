@@ -16,25 +16,13 @@ public class Quiz {
     @OneToOne
     private OrderEvent orderEvent;
 
-    private String description;
     private String answer;
     private String imgSrc;
-    private String title;
 
     public static Quiz makeQuiz(RequestQuizDto requestQuizDto){
         return Quiz.builder()
-                .description(requestQuizDto.getDescription())
                 .answer(requestQuizDto.getAnswer())
-                .imgSrc(requestQuizDto.getImgSrc())
-                .title(requestQuizDto.getTitle())
                 .build();
-    }
-    @Builder
-    public Quiz(String answer, String description,String imgSrc,String title) {
-        this.answer = answer;
-        this.description = description;
-        this.imgSrc = imgSrc;
-        this.title = title;
     }
 
     @Builder

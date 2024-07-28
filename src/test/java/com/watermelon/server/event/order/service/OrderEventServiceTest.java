@@ -44,21 +44,17 @@ class OrderEventServiceTest {
     @DisplayName("선착순 이벤트 생성")
     public void makeOrderEvents(){
         RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .description("testDescription")
                 .answer("testAnswer")
-                .imgSrc("testImg")
-                .title("testTitle")
                 .build();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
                 .name("testName")
-                .imgSrc("testImg")
                 .build();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
                 .requestOrderRewardDto(requestOrderRewardDto)
                 .requestQuizDto(requestQuizDto)
-                .startTime(LocalDateTime.now().plusHours(10))
-                .endTime(LocalDateTime.now().plusHours(20))
-                .maxWinnerCount(100)
+                .startDate(LocalDateTime.now().plusHours(10))
+                .endDate(LocalDateTime.now().plusHours(20))
+                .winnerCount(100)
                 .build();
         orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
     }
@@ -87,21 +83,17 @@ class OrderEventServiceTest {
     public void orderStatusChangeByTime() throws InterruptedException {
         LocalDateTime now = LocalDateTime.now();
         RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .description("testDescription")
                 .answer("testAnswer")
-                .imgSrc("testImg")
-                .title("testTitle")
                 .build();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
                 .name("testName")
-                .imgSrc("testImg")
                 .build();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
                 .requestOrderRewardDto(requestOrderRewardDto)
                 .requestQuizDto(requestQuizDto)
-                .startTime(now.plusSeconds(1))
-                .endTime(now.plusSeconds(3))
-                .maxWinnerCount(100)
+                .startDate(now.plusSeconds(1))
+                .endDate(now.plusSeconds(3))
+                .winnerCount(100)
                 .build();
         OrderEvent orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
         Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);

@@ -45,10 +45,7 @@ public class OrderEventController {
 
         return orderEventCommandService.makeApplyTicket(requestAnswerDto,orderEventId,quizId);
     }
-    @PostMapping("/event/order")
-    public void makeEvent(RequestOrderEventDto requestOrderEventDto){
-        orderEventCommandService.makeEvent(requestOrderEventDto);
-    }
+
 
     @PostMapping(path = "/event/order/{eventId}/{quizId}/apply")
     public void makeApply(@RequestHeader("ApplyTicket") String applyTicket,

@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestOrderEventDto {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private int maxWinnerCount;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private int winnerCount;
 
     private RequestQuizDto requestQuizDto;
     private RequestOrderRewardDto requestOrderRewardDto;

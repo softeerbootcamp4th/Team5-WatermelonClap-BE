@@ -28,13 +28,11 @@ public class OrderEventReward {
 
     public static OrderEventReward makeReward(RequestOrderRewardDto requestOrderRewardDto){
         return OrderEventReward.builder()
-                .imgSrc(requestOrderRewardDto.getImgSrc())
                 .name(requestOrderRewardDto.getName())
                 .build();
     }
     @Builder
-    public OrderEventReward(String name,String imgSrc){
+    public OrderEventReward(String name){
         this.name = name;
-        this.imgSrc = imgSrc;
     }
 }
