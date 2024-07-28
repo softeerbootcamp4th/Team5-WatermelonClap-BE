@@ -20,6 +20,13 @@ public class OrderEventWinner extends BaseEntity {
     @ManyToOne
     @JoinColumn
     private OrderEvent orderEvent;
+
+    @Builder
+    public OrderEventWinner(String phoneNumber,OrderEvent orderEvent,String applyAnswer) {
+        this.phoneNumber = phoneNumber;
+        this.orderEvent = orderEvent;
+        this.applyAnswer = applyAnswer;
+    }
     public static OrderEventWinner makeWinner(OrderEvent orderEvent
             , OrderEventWinnerRequestDto orderEventWinnerRequestDto
     ,String applyAnswer) {
@@ -29,11 +36,6 @@ public class OrderEventWinner extends BaseEntity {
                 .applyAnswer(applyAnswer)
                 .build();
     }
-    @Builder
-    public OrderEventWinner(String phoneNumber,OrderEvent orderEvent,String applyAnswer) {
-        this.phoneNumber = phoneNumber;
-        this.orderEvent = orderEvent;
-        this.applyAnswer = applyAnswer;
-    }
+
 
 }
