@@ -15,22 +15,37 @@ import java.time.LocalDateTime;
 public class ResponseOrderEventDto {
     private Long eventId;
     private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private OrderEventStatus status;
     private ResponseQuizDto quiz;
     private ResponseRewardDto reward;
 
 
-    public static ResponseOrderEventDto from(OrderEvent orderEvent) {
+    public static ResponseOrderEventDto forUser(OrderEvent orderEvent) {
         ResponseQuizDto responseQuizDto = null;
         if(orderEvent.getOrderEventStatus().equals(OrderEventStatus.OPEN)
                 || orderEvent.getOrderEventStatus().equals(OrderEventStatus.CLOSED)){
-            responseQuizDto = ResponseQuizDto.from(orderEvent.getQuiz());
+            responseQuizDto = ResponseQuizDto.forUser(orderEvent.getQuiz());
         }
+        ResponseRewardDto responseRewardDto = ResponseRewardDto.fromReward(orderEvent.getOrderEventReward());
         return ResponseOrderEventDto.builder()
                 .eventId(orderEvent.getId())
                 .status(orderEvent.getOrderEventStatus())
-                .reward(ResponseRewardDto.fromReward(orderEvent.getOrderEventReward()))
+                .reward(responseRewardDto)
                 .startDate(orderEvent.getStartDate())
+                .endDate(orderEvent.getEndDate())
+                .quiz(responseQuizDto)
+                .build();
+    }
+    public static ResponseOrderEventDto forAdmin(OrderEvent orderEvent) {
+        ResponseQuizDto responseQuizDto = ResponseQuizDto.forAdmin(orderEvent.getQuiz());
+        ResponseRewardDto rewardDto = ResponseRewardDto.fromReward(orderEvent.getOrderEventReward());
+        return ResponseOrderEventDto.builder()
+                .eventId(orderEvent.getId())
+                .status(orderEvent.getOrderEventStatus())
+                .reward(rewardDto)
+                .startDate(orderEvent.getStartDate())
+                .endDate(orderEvent.getEndDate())
                 .quiz(responseQuizDto)
                 .build();
     }

@@ -38,11 +38,7 @@ public class OrderEventCommandService {
         orderEvents.forEach(orderEvent -> {orderEvent.changeOrderEventStatusByTime(LocalDateTime.now());});
     }
 
-    @Transactional
-    public OrderEvent makeEvent(RequestOrderEventDto requestOrderEventDto){
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
-        return orderEventRepository.save(newOrderEvent);
-    }
+
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 

@@ -56,7 +56,8 @@ class OrderEventServiceTest {
                 .endDate(LocalDateTime.now().plusHours(20))
                 .winnerCount(100)
                 .build();
-        orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
+        orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEventRepository.save(orderEvent);
     }
 
     @Test
@@ -95,7 +96,7 @@ class OrderEventServiceTest {
                 .endDate(now.plusSeconds(3))
                 .winnerCount(100)
                 .build();
-        OrderEvent orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
+        OrderEvent orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
         Thread.sleep(2000L);
         orderEvent = orderEventRepository.findById(orderEvent.getId()).get();

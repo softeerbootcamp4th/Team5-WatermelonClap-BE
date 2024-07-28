@@ -29,13 +29,13 @@ public class OrderEventQueryService {
     public List<ResponseOrderEventDto> getOrderEvents(){
         List<OrderEvent> orderEvents = orderEventRepository.findAll();
         List<ResponseOrderEventDto> responseOrderEventDtos = new ArrayList<>();
-        orderEvents.forEach(orderEvent -> responseOrderEventDtos.add(ResponseOrderEventDto.from(orderEvent)));
+        orderEvents.forEach(orderEvent -> responseOrderEventDtos.add(ResponseOrderEventDto.forUser(orderEvent)));
         return responseOrderEventDtos;
     }
     @Transactional(readOnly = true)
     public ResponseOrderEventDto getOrderEvent(Long orderEventId){
         Optional<OrderEvent> orderEvent = orderEventRepository.findById(orderEventId);
-        return ResponseOrderEventDto.from(orderEvent.get());
+        return ResponseOrderEventDto.forUser(orderEvent.get());
     }
 
 
