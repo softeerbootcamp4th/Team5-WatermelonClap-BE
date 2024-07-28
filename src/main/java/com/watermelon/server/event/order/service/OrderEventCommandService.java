@@ -75,7 +75,7 @@ public class OrderEventCommandService {
     public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
         JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(eventId));
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
-        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto);
+        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer");
     }
 
 }

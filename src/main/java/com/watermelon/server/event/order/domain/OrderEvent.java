@@ -30,8 +30,8 @@ public class OrderEvent extends BaseEntity {
     private List<OrderEventWinner> orderEventWinner = new ArrayList<>();
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int maxWinnerCount;
     private int winnerCount;
+    private int currentWinnerCount;
 
     @Setter
     private OrderEventStatus orderEventStatus;
@@ -40,11 +40,11 @@ public class OrderEvent extends BaseEntity {
         this.orderEventStatus = OrderEventStatus.OPEN;
     }
     public boolean isWinnerAddable(){
-        if(winnerCount<maxWinnerCount) return true;
+        if(currentWinnerCount < winnerCount) return true;
         return false;
     }
     public void addWinner(){
-        this.winnerCount++;
+        this.currentWinnerCount++;
     }
 
     public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
@@ -64,8 +64,8 @@ public class OrderEvent extends BaseEntity {
         this.endDate = endDate;
     }
 
-    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
-        this.maxWinnerCount = maxWinnerCount;
+    OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
+        this.winnerCount = winnerCount;
         this.endDate = endDate;
         this.startDate = startDate;
         this.quiz = quiz;
