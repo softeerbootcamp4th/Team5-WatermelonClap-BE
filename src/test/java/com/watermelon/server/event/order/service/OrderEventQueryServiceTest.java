@@ -5,7 +5,6 @@ import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
-import com.watermelon.server.event.order.dto.response.ResponseQuizDto;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +38,7 @@ class OrderEventQueryServiceTest {
     static void setUp() {
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto,requestOrderRewardDto);
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
         unOpenedOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         openEvents.add(unOpenedOrderEvent);
         OrderEvent openedOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);

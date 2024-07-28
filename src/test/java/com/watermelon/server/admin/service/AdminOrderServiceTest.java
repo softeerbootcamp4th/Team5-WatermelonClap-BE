@@ -36,7 +36,7 @@ class AdminOrderServiceTest {
     static void setUpBeforeClass(){
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto,requestOrderRewardDto);
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
         orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEvents.add(orderEvent);
         Assertions.assertThat(orderEvents.size()).isEqualTo(1);

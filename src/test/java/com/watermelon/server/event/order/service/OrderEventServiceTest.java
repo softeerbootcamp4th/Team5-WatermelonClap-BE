@@ -45,7 +45,7 @@ class OrderEventServiceTest {
     public void makeOrderEvents(){
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto,requestOrderRewardDto);
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
         orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(orderEvent);
     }
@@ -72,10 +72,9 @@ class OrderEventServiceTest {
     @DisplayName("선착순 이벤트 1초단위 상태변경 (UPCOMING->OPEN)")
     @Order(2)
     public void orderStatusChangeByTime() throws InterruptedException {
-        LocalDateTime now = LocalDateTime.now();
         RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto, requestOrderRewardDto);
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second(requestQuizDto, requestOrderRewardDto);
         OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(newOrderEvent);
         Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
