@@ -11,4 +11,10 @@ public class RequestQuizDto {
 
     private String answer;
 
+    public static RequestQuizDto makeForTest(){
+        return RequestQuizDto.builder()
+                .answer("testAnswer")
+                .build();
+    }
+
 }

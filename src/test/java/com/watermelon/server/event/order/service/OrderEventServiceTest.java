@@ -43,19 +43,9 @@ class OrderEventServiceTest {
     @BeforeEach
     @DisplayName("선착순 이벤트 생성")
     public void makeOrderEvents(){
-        RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .answer("testAnswer")
-                .build();
-        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
-                .name("testName")
-                .build();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
-                .requestOrderRewardDto(requestOrderRewardDto)
-                .requestQuizDto(requestQuizDto)
-                .startDate(LocalDateTime.now().plusHours(10))
-                .endDate(LocalDateTime.now().plusHours(20))
-                .winnerCount(100)
-                .build();
+        RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
+        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto,requestOrderRewardDto);
         orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(orderEvent);
     }
@@ -83,19 +73,9 @@ class OrderEventServiceTest {
     @Order(2)
     public void orderStatusChangeByTime() throws InterruptedException {
         LocalDateTime now = LocalDateTime.now();
-        RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .answer("testAnswer")
-                .build();
-        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
-                .name("testName")
-                .build();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
-                .requestOrderRewardDto(requestOrderRewardDto)
-                .requestQuizDto(requestQuizDto)
-                .startDate(now.plusSeconds(1))
-                .endDate(now.plusSeconds(3))
-                .winnerCount(100)
-                .build();
+        RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
+        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTest(requestQuizDto, requestOrderRewardDto);
         OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
         orderEventRepository.save(newOrderEvent);
         Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
