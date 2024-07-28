@@ -1,6 +1,7 @@
 package com.watermelon.server.event.order.dto.response;
 
 
+import com.watermelon.server.admin.dto.response.ResponseAdminQuizDto;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,7 @@ public class ResponseOrderEventDto {
                 .build();
     }
     public static ResponseOrderEventDto forAdmin(OrderEvent orderEvent) {
-        ResponseQuizDto responseQuizDto = ResponseQuizDto.forAdmin(orderEvent.getQuiz());
+        ResponseAdminQuizDto responseQuizDto = ResponseQuizDto.forAdmin(orderEvent.getQuiz());
         ResponseRewardDto rewardDto = ResponseRewardDto.fromReward(orderEvent.getOrderEventReward());
         return ResponseOrderEventDto.builder()
                 .eventId(orderEvent.getId())

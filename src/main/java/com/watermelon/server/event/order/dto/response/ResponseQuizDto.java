@@ -22,7 +22,7 @@ public class ResponseQuizDto {
                 .build();
     }
 
-    public static ResponseQuizDto forAdmin(Quiz quiz) {
+    public static ResponseAdminQuizDto forAdmin(Quiz quiz) {
         return ResponseAdminQuizDto.makeQuizDtoForAdmin(quiz);
     }
 
