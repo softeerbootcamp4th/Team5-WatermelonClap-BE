@@ -1,5 +1,7 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.randomevent.domain.Participant;
+import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.repository.ParticipantRepository;
@@ -32,5 +34,14 @@ public class LotteryServiceImpl implements LotteryService {
         return ResponseLotteryWinnerInfoDto.from(
                 participantRepository.findByUid(uid).orElseThrow()
         );
+    }
+
+    @Override
+    public void createLotteryWinnerInfo(String uid, RequestLotteryWinnerInfoDto requestLotteryWinnerInfoDto) {
+        Participant participant = participantRepository.findByUid(uid).orElseThrow();
+        participant.setAddress(requestLotteryWinnerInfoDto.getAddress());
+        participant.setName(requestLotteryWinnerInfoDto.getName());
+        participant.setPhoneNumber(requestLotteryWinnerInfoDto.getPhoneNumber());
+        participantRepository.save(participant);
     }
 }

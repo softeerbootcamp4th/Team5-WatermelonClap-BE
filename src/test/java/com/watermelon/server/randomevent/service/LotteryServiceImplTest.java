@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.service;
 
 import com.watermelon.server.randomevent.domain.Participant;
+import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.repository.ParticipantRepository;
@@ -13,10 +14,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static com.watermelon.server.Constants.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 class LotteryServiceImplTest {
@@ -75,5 +78,42 @@ class LotteryServiceImplTest {
         //then
         assertThat(actual).isEqualTo(responseLotteryWinnerInfoDto);
 
+    }
+
+    @Test
+    @DisplayName("uid 에 해당하는 참가자 정보를 변경하고 저장한다.")
+    void createLotteryWinnerInfoSuccess(){
+        //given
+        Participant participant = Participant.builder().uid(TEST_UID).build();
+
+        Mockito.when(participantRepository.findByUid(TEST_UID)).thenReturn(
+                Optional.of(participant));
+
+        RequestLotteryWinnerInfoDto requestLotteryWinnerInfoDto = RequestLotteryWinnerInfoDto.builder()
+                .phoneNumber(TEST_PHONE_NUMBER)
+                .address(TEST_ADDRESS)
+                .name(TEST_NAME)
+                .build();
+
+        //when
+        lotteryService.createLotteryWinnerInfo(TEST_UID, requestLotteryWinnerInfoDto);
+
+        //then
+        assertThat(participant.getPhoneNumber()).isEqualTo(TEST_PHONE_NUMBER);
+        assertThat(participant.getAddress()).isEqualTo(TEST_ADDRESS);
+        assertThat(participant.getName()).isEqualTo(TEST_NAME);
+        Mockito.verify(participantRepository).save(participant);
+
+    }
+
+    @Test
+    @DisplayName("uid 가 없으면 예외를 발생시킨다.")
+    void createLotteryWinnerInfoFailure() {
+        //given
+        Mockito.when(participantRepository.findByUid(TEST_UID)).thenReturn(Optional.empty());
+
+        //then
+        assertThatThrownBy(()->lotteryService.createLotteryWinnerInfo(TEST_UID, RequestLotteryWinnerInfoDto.builder().build()))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
