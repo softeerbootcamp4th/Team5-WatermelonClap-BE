@@ -30,48 +30,32 @@ public class OrderEvent extends BaseEntity {
     private List<OrderEventWinner> orderEventWinner = new ArrayList<>();
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int maxWinnerCount;
     private int winnerCount;
-
+    private int currentWinnerCount;
     @Setter
     private OrderEventStatus orderEventStatus;
-
-    public void openEvent(){
-        this.orderEventStatus = OrderEventStatus.OPEN;
-    }
-    public boolean isWinnerAddable(){
-        if(winnerCount<maxWinnerCount) return true;
-        return false;
-    }
-    public void addWinner(){
-        this.winnerCount++;
-    }
-
-    public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
-        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
-        OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
-        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
-    }
-    public boolean isTimeInEventTime(LocalDateTime time){
-        if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}
-        return false;
-    }
-
     @Builder
     public OrderEvent(Quiz quiz, LocalDateTime startDate, LocalDateTime endDate) {
         this.quiz = quiz;
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
-    OrderEvent(int maxWinnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
-        this.maxWinnerCount = maxWinnerCount;
+    OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
+        this.winnerCount = winnerCount;
         this.endDate = endDate;
         this.startDate = startDate;
         this.quiz = quiz;
         this.orderEventReward = orderEventReward;
         this.orderEventStatus = OrderEventStatus.UPCOMING;
     }
+
+
+    public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
+        OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
+        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
+    }
+
 
     public void changeOrderEventStatusByTime(LocalDateTime now){
         if(orderEventStatus.equals(OrderEventStatus.END)||orderEventStatus.equals(OrderEventStatus.CLOSED)) return;
@@ -87,5 +71,20 @@ public class OrderEvent extends BaseEntity {
                 log.info("EVENT END");
             }
         }
+    }
+
+    public boolean isTimeInEventTime(LocalDateTime time){
+        if(time.isAfter(startDate)&&time.isBefore(endDate)){ return true;}
+        return false;
+    }
+    public void openEvent(){
+        this.orderEventStatus = OrderEventStatus.OPEN;
+    }
+    public boolean isWinnerAddable(){
+        if(currentWinnerCount < winnerCount) return true;
+        return false;
+    }
+    public void addWinner(){
+        this.currentWinnerCount++;
     }
 }

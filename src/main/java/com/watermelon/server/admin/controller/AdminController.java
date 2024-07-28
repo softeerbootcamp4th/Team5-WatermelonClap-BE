@@ -4,11 +4,10 @@ package com.watermelon.server.admin.controller;
 import com.watermelon.server.admin.service.AdminOrderService;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
+import com.watermelon.server.event.order.dto.response.ResponseOrderEventWinnerDto;
+import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,11 @@ public class AdminController {
     @GetMapping("/event/order")
     public List<ResponseOrderEventDto> getOrderEventForAdmin(){
         return adminOrderService.getOrderEventsForAdmin();
+    }
+
+    @GetMapping("/event/order/{eventId}/winner")
+    public List<ResponseOrderEventWinnerDto> getOrderEventWinnersForAdmin(@PathVariable("eventId") Long eventId) throws WrongOrderEventFormatException {
+        return adminOrderService.getOrderEventWinnersForAdmin(eventId);
     }
 
 

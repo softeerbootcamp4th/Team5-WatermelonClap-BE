@@ -12,8 +12,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderEventWinnerService {
     private final OrderEventWinnerRepository orderEventWinnerRepository;
-    public OrderEventWinner makeWinner(OrderEvent orderEvent, OrderEventWinnerRequestDto orderEventWinnerRequestDto){
-        OrderEventWinner orderEventWinner = OrderEventWinner.makeWinner(orderEvent, orderEventWinnerRequestDto);
+    public OrderEventWinner makeWinner(OrderEvent orderEvent
+            , OrderEventWinnerRequestDto orderEventWinnerRequestDto
+    ,String applyAnswer){
+        OrderEventWinner orderEventWinner = OrderEventWinner.makeWinner(orderEvent
+                , orderEventWinnerRequestDto
+        ,applyAnswer);
+        //ApplyTicket  payload에서 applyAnswer를 담도록 하여야함
         return orderEventWinnerRepository.save(orderEventWinner);
     }
 }
