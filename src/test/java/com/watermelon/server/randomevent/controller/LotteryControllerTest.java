@@ -62,8 +62,7 @@ class LotteryControllerTest {
         String expectedJson = objectMapper.writeValueAsString(expectedResponse);
 
         //then
-        this.mockMvc.perform(get(PATH)
-                        .accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson))
                 .andDo(document(DOCUMENT_NAME));
@@ -88,8 +87,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(TEST_NAME))
                 .andExpect(jsonPath("$.address").value(TEST_ADDRESS))
@@ -117,7 +115,6 @@ class LotteryControllerTest {
         //then
         this.mockMvc.perform(post(PATH)
                         .header(UidArgumentResolver.HEADER_UID, TEST_UID)
-                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
@@ -138,9 +135,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(jsonPath("$.rank").value(-1))
                 .andExpect(jsonPath("$.applied").value(false))
                 .andDo(document(DOCUMENT_NAME)
@@ -162,8 +157,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rank").value(TEST_RANK))
                 .andExpect(jsonPath("$.applied").value(true))
