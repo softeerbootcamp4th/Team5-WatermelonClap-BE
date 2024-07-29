@@ -13,7 +13,7 @@ public class Expectation extends BaseEntity {
     private Long id;
 
     @OneToOne
-    private Participant participant;
+    private LotteryApplier lotteryApplier;
 
     private boolean isApproved;
 

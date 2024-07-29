@@ -20,6 +20,6 @@ public class Parts {
     private String category;
 
     @OneToMany(mappedBy = "parts")
-    private List<ParticipantParts> participantParts;
+    private List<LotteryApplierParts> lotteryApplierParts;
 
 }
