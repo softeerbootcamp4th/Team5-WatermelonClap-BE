@@ -1,6 +1,6 @@
 package com.watermelon.server.randomevent.repository;
 
-import com.watermelon.server.randomevent.domain.Participant;
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,34 +13,34 @@ import static com.watermelon.server.Constants.TEST_UID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class ParticipantRepositoryTest {
+class LotteryApplierRepositoryTest {
 
     final int N = -1;
 
     @Autowired
-    private ParticipantRepository participantRepository;
+    private LotteryApplierRepository lotteryApplierRepository;
 
     @Test
     @DisplayName("추첨 순위가 n인 참여자를 제외한 참여자 리스트를 반환한다.")
     void findByLotteryRankNot() {
 
         //given
-        Participant participantRankNotN = Participant.builder()
+        LotteryApplier lotteryApplierRankNotN = LotteryApplier.builder()
                 .lotteryRank(N+1)
                 .build();
 
-        Participant participantRankN = Participant.builder()
+        LotteryApplier lotteryApplierRankN = LotteryApplier.builder()
                 .lotteryRank(N)
                 .build();
 
-        participantRepository.save(participantRankNotN);
-        participantRepository.save(participantRankN);
+        lotteryApplierRepository.save(lotteryApplierRankNotN);
+        lotteryApplierRepository.save(lotteryApplierRankN);
 
         //when
-        List<Participant> participants = participantRepository.findByLotteryRankNot(N);
+        List<LotteryApplier> lotteryAppliers = lotteryApplierRepository.findByLotteryRankNot(N);
 
         //then
-        assertThat(participants).hasSize(1);
+        assertThat(lotteryAppliers).hasSize(1);
 
     }
 
@@ -49,16 +49,16 @@ class ParticipantRepositoryTest {
     void findByUid() {
 
         //given
-        Optional<Participant> expected = Optional.of(
-                Participant.builder()
+        Optional<LotteryApplier> expected = Optional.of(
+                LotteryApplier.builder()
                 .uid(TEST_UID)
                 .build()
         );
 
-        participantRepository.save(expected.get());
+        lotteryApplierRepository.save(expected.get());
 
         //when
-        Optional<Participant> actual = participantRepository.findByUid(TEST_UID);
+        Optional<LotteryApplier> actual = lotteryApplierRepository.findByUid(TEST_UID);
 
         //then
         assertThat(actual).isEqualTo(expected);

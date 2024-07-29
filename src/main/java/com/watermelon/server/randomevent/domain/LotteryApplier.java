@@ -1,15 +1,12 @@
 package com.watermelon.server.randomevent.domain;
 
 import com.watermelon.server.BaseEntity;
-import com.watermelon.server.randomevent.parts.domain.ParticipantParts;
+import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Participant extends BaseEntity {
+public class LotteryApplier extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
@@ -41,7 +38,13 @@ public class Participant extends BaseEntity {
 
     private String address;
 
-    @OneToMany(mappedBy = "participant")
-    private List<ParticipantParts> participantParts;
+    @OneToMany(mappedBy = "lotteryApplier")
+    private List<LotteryApplierParts> lotteryApplierParts;
+
+    public void setLotteryWinnerInfo(String address, String name, String phoneNumber){
+        this.address = address;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
 }

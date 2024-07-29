@@ -17,6 +17,6 @@ public class Link extends BaseEntity {
     private String link;
 
     @OneToOne
-    private Participant participant;
+    private LotteryApplier lotteryApplier;
 
 }
