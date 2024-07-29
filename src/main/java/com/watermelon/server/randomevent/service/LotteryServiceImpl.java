@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.service;
 
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
@@ -45,5 +46,12 @@ public class LotteryServiceImpl implements LotteryService {
                 requestLotteryWinnerInfoDto.getPhoneNumber()
         );
         lotteryApplierRepository.save(lotteryApplier);
+    }
+
+    @Override
+    public ResponseLotteryRankDto getLotteryRank(String uid) {
+        return ResponseLotteryRankDto.from(
+                lotteryApplierRepository.findByUid(uid).orElseThrow()
+        );
     }
 }

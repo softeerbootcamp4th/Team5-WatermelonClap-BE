@@ -3,6 +3,7 @@ package com.watermelon.server.randomevent.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.randomevent.auth.service.TokenVerifier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.service.LotteryService;
@@ -18,9 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.watermelon.server.Constants.*;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +47,7 @@ class LotteryControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("추첨자 명단을 JSON 형식으로 반환한다.")
+    @DisplayName("추첨자 명단을 반환한다.")
     void testGetOrderEventResultSuccess() throws Exception {
 
         //given
@@ -71,7 +74,7 @@ class LotteryControllerTest {
     }
 
     @Test
-    @DisplayName("당첨자 정보를 JSON 형식으로 반환한다.")
+    @DisplayName("당첨자 정보를 반환한다.")
     void testGetOrderEventResultFailure() throws Exception {
 
         //given
@@ -89,7 +92,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header("Authorization", "Bearer " + TEST_TOKEN)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(TEST_NAME))
@@ -126,5 +129,52 @@ class LotteryControllerTest {
 
     }
 
+
+    @Test
+    @DisplayName("응모 정보가 없으면 rank : -1, applied : false 로 응답한다.")
+    void testGetLotteryRankNotAppliedCase() throws Exception {
+
+        final String PATH = "/event/lotteries/rank";
+        final String DOCUMENT_NAME = "event/lotteries/rank";
+
+        //given
+        Mockito.doThrow(new NoSuchElementException()).when(lotteryService).getLotteryRank(anyString());
+        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
+
+        //then
+        this.mockMvc.perform(get(PATH)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rank").value(-1))
+                .andExpect(jsonPath("$.applied").value(false))
+                .andDo(document(DOCUMENT_NAME)
+                );
+
+    }
+
+    @Test
+    @DisplayName("응모 정보가 있으면 해당 유저의 rank, applied : true 로 응답한다.")
+    void testGetLotteryRankAppliedCase() throws Exception {
+
+        final String PATH = "/event/lotteries/rank";
+        final String DOCUMENT_NAME = "event/lotteries/rank";
+
+        //given
+        Mockito.when(lotteryService.getLotteryRank(TEST_UID)).thenReturn(
+                ResponseLotteryRankDto.createAppliedTest()
+        );
+        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
+
+        //then
+        this.mockMvc.perform(get(PATH)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rank").value(TEST_RANK))
+                .andExpect(jsonPath("$.applied").value(true))
+                .andDo(document(DOCUMENT_NAME));
+
+    }
 
 }

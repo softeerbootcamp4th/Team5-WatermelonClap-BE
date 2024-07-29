@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.service;
 
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
@@ -115,5 +116,35 @@ class LotteryServiceImplTest {
         //then
         assertThatThrownBy(()->lotteryService.createLotteryWinnerInfo(TEST_UID, RequestLotteryWinnerInfoDto.builder().build()))
                 .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    @DisplayName("uid 에 해당하는 참가자가 있으면, rank 와 참가여부를 반환한다.")
+    void getLotteryRankPresentationCase() {
+
+        //given
+        Mockito.when(lotteryApplierRepository.findByUid(TEST_UID)).thenReturn(
+                Optional.of(LotteryApplier.builder().lotteryRank(TEST_RANK).build())
+        );
+
+        //when
+        ResponseLotteryRankDto responseLotteryRankDto = lotteryService.getLotteryRank(TEST_UID);
+
+        //then
+        assertThat(responseLotteryRankDto.getRank()).isEqualTo(TEST_RANK);
+        assertThat(responseLotteryRankDto.isApplied()).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("uid 에 해당하는 참가자가 없으면, NoSuchElementException 을 던진다.")
+    void getLotteryRankNotFoundCase() {
+        //given
+        Mockito.when(lotteryApplierRepository.findByUid(TEST_UID))
+                .thenThrow(new NoSuchElementException());
+
+        //when & then
+        assertThatThrownBy(()->lotteryService.getLotteryRank(TEST_UID)).isInstanceOf(NoSuchElementException.class);
+
     }
 }
