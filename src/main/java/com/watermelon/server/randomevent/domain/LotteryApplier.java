@@ -22,13 +22,15 @@ public class LotteryApplier extends BaseEntity {
 
     private String uid;
 
-    private boolean isPartsWinner;
+    private boolean isPartsWinner = false;
 
-    private int lotteryRank;
+    private int lotteryRank = -1;
 
-    private boolean isPartsApplier;
+    private boolean isPartsApplier = false;
 
-    private int remainChance;
+    private boolean isLotteryApplier = false;
+
+    private int remainChance = 0;
 
     private String email;
 
@@ -45,6 +47,14 @@ public class LotteryApplier extends BaseEntity {
         this.address = address;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public boolean hasRemainChance(){
+        return remainChance > 0;
+    }
+
+    public void applyLottery(){
+        this.isLotteryApplier = true;
     }
 
 }
