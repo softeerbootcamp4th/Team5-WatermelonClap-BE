@@ -47,7 +47,7 @@ class LotteryControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("추첨자 명단을 JSON 형식으로 반환한다.")
+    @DisplayName("추첨자 명단을 반환한다.")
     void testGetOrderEventResultSuccess() throws Exception {
 
         //given
@@ -74,7 +74,7 @@ class LotteryControllerTest {
     }
 
     @Test
-    @DisplayName("당첨자 정보를 JSON 형식으로 반환한다.")
+    @DisplayName("당첨자 정보를 반환한다.")
     void testGetOrderEventResultFailure() throws Exception {
 
         //given
