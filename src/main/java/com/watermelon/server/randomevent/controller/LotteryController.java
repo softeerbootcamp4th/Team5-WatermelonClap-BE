@@ -15,17 +15,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/event/lotteries")
 public class LotteryController {
 
     private final LotteryService lotteryService;
     private final TokenVerifier tokenVerifier;
 
-    @GetMapping("/event/lotteries")
+    @GetMapping
     public ResponseEntity<List<ResponseLotteryWinnerDto>> getLotteryWinnerList(){
         return new ResponseEntity<>(lotteryService.getLotteryWinners(), HttpStatus.OK);
     }
 
-    @GetMapping("/event/lotteries/info")
+    @GetMapping("/info")
     public ResponseEntity<ResponseLotteryWinnerInfoDto> getLotteryWinnerInfo(
             @RequestHeader("Authorization") String authorization
     ){
@@ -35,7 +36,7 @@ public class LotteryController {
 
     }
 
-    @PostMapping("/event/lotteries/info")
+    @PostMapping("/info")
     public ResponseEntity<Void> createLotteryWinnerInfo(
             @RequestHeader("Authorization") String authorization,
             @RequestBody RequestLotteryWinnerInfoDto dto
@@ -45,4 +46,5 @@ public class LotteryController {
         lotteryService.createLotteryWinnerInfo(uid, dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }
