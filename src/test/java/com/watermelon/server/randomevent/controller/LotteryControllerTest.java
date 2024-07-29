@@ -88,7 +88,6 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .header(UidArgumentResolver.HEADER_UID, TEST_UID)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -117,7 +116,6 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(post(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .header(UidArgumentResolver.HEADER_UID, TEST_UID)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -140,7 +138,6 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .header(UidArgumentResolver.HEADER_UID, TEST_UID)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -165,7 +162,6 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .header(UidArgumentResolver.HEADER_UID, TEST_UID)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
