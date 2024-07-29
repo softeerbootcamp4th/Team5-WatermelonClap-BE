@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.service;
 
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 
@@ -27,5 +28,12 @@ public interface LotteryService {
      * @param requestLotteryWinnerInfoDto 당첨자 정보
      */
     void createLotteryWinnerInfo(String uid, RequestLotteryWinnerInfoDto requestLotteryWinnerInfoDto);
+
+    /**
+     * uid 를 가진 유저에 대한 추첨 이벤트 순위를 반환한다.
+     * @param uid
+     * @return 순위
+     */
+    ResponseLotteryRankDto getLotteryRank(String uid);
 
 }
