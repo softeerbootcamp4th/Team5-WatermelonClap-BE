@@ -9,8 +9,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RequestQuizDto {
 
-    private String description;
     private String answer;
-    private String imgSrc;
-    private String title;
+
+    public static RequestQuizDto makeForTest(){
+        return RequestQuizDto.builder()
+                .answer("testAnswer")
+                .build();
+    }
+
 }

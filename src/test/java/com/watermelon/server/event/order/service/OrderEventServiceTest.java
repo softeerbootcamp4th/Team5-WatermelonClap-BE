@@ -43,24 +43,11 @@ class OrderEventServiceTest {
     @BeforeEach
     @DisplayName("선착순 이벤트 생성")
     public void makeOrderEvents(){
-        RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .description("testDescription")
-                .answer("testAnswer")
-                .imgSrc("testImg")
-                .title("testTitle")
-                .build();
-        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
-                .name("testName")
-                .imgSrc("testImg")
-                .build();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
-                .requestOrderRewardDto(requestOrderRewardDto)
-                .requestQuizDto(requestQuizDto)
-                .startTime(LocalDateTime.now().plusHours(10))
-                .endTime(LocalDateTime.now().plusHours(20))
-                .maxWinnerCount(100)
-                .build();
-        orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
+        RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
+        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
+        orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEventRepository.save(orderEvent);
     }
 
     @Test
@@ -85,32 +72,18 @@ class OrderEventServiceTest {
     @DisplayName("선착순 이벤트 1초단위 상태변경 (UPCOMING->OPEN)")
     @Order(2)
     public void orderStatusChangeByTime() throws InterruptedException {
-        LocalDateTime now = LocalDateTime.now();
-        RequestQuizDto requestQuizDto =RequestQuizDto.builder()
-                .description("testDescription")
-                .answer("testAnswer")
-                .imgSrc("testImg")
-                .title("testTitle")
-                .build();
-        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.builder()
-                .name("testName")
-                .imgSrc("testImg")
-                .build();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.builder()
-                .requestOrderRewardDto(requestOrderRewardDto)
-                .requestQuizDto(requestQuizDto)
-                .startTime(now.plusSeconds(1))
-                .endTime(now.plusSeconds(3))
-                .maxWinnerCount(100)
-                .build();
-        OrderEvent orderEvent = orderEventCommandService.makeEvent(requestOrderEventDto);
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
+        RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
+        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
+        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second(requestQuizDto, requestOrderRewardDto);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEventRepository.save(newOrderEvent);
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
         Thread.sleep(2000L);
-        orderEvent = orderEventRepository.findById(orderEvent.getId()).get();
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
+        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
         Thread.sleep(2000L);
-        orderEvent = orderEventRepository.findById(orderEvent.getId()).get();
-        Assertions.assertThat(orderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
+        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
     }
 
     @Test

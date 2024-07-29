@@ -11,5 +11,9 @@ import lombok.Getter;
 public class RequestOrderRewardDto {
 
     private String name;
-    private String imgSrc;
+    public static RequestOrderRewardDto makeForTest(){
+        return RequestOrderRewardDto.builder()
+                .name("testName")
+                .build();
+    }
 }

@@ -38,11 +38,7 @@ public class OrderEventCommandService {
         orderEvents.forEach(orderEvent -> {orderEvent.changeOrderEventStatusByTime(LocalDateTime.now());});
     }
 
-    @Transactional
-    public OrderEvent makeEvent(RequestOrderEventDto requestOrderEventDto){
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
-        return orderEventRepository.save(newOrderEvent);
-    }
+
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
@@ -79,7 +75,7 @@ public class OrderEventCommandService {
     public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
         JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(eventId));
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
-        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto);
+        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer");
     }
 
 }
