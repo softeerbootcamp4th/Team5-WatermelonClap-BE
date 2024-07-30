@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
 import com.watermelon.server.randomevent.parts.service.PartsService;
 import org.junit.jupiter.api.DisplayName;
@@ -98,6 +99,28 @@ class PartsControllerTest {
                 .andDo(document(DOCUMENT_NAME));
 
         verify(partsService).toggleParts(TEST_UID, TEST_PARTS_ID);
+
+    }
+
+    @DisplayName("남은 파츠 뽑기 횟수를 반환한다.")
+    void getRemainChance() throws Exception {
+
+        final String PATH = "/event/parts/remain";
+        final String DOCUMENT_NAME = "event/parts/remain";
+
+        //given
+        final ResponseRemainChanceDto responseRemainChanceDto = ResponseRemainChanceDto.createTestDto();
+
+        Mockito.when(partsService.getRemainChance(TEST_UID)).thenReturn(responseRemainChanceDto);
+
+        String expectedResponseBody = objectMapper.writeValueAsString(responseRemainChanceDto);
+
+        //when & then
+        this.mockMvc.perform(get(PATH)
+                .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponseBody))
+                .andDo(document(DOCUMENT_NAME));
 
     }
 

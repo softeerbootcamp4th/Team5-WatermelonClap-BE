@@ -62,4 +62,9 @@ public class LotteryServiceImpl implements LotteryService {
         applier.applyLottery();
         return lotteryApplierRepository.save(applier);
     }
+
+    @Override
+    public int getRemainChance(String uid) {
+        return lotteryApplierRepository.findByUid(uid).orElseThrow().getRemainChance();
+    }
 }

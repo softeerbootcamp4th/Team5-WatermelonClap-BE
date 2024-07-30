@@ -44,4 +44,6 @@ public interface LotteryService {
      */
     LotteryApplier applyAndGet(String uid);
 
+    int getRemainChance(String uid);
+
 }
