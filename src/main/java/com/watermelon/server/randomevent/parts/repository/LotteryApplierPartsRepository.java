@@ -8,5 +8,6 @@ import java.util.List;
 public interface LotteryApplierPartsRepository extends JpaRepository<LotteryApplierParts, Long> {
 
     List<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierId(Long lotteryApplierId);
+    List<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierUid(String lotteryApplierUid);
 
 }
