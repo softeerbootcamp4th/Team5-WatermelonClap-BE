@@ -2,12 +2,18 @@ package com.watermelon.server.event.order.domain;
 
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class OrderEventCheckService {
     private Long eventId;
     private Long quizId;

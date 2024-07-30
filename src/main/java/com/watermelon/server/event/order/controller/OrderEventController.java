@@ -55,8 +55,6 @@ public class OrderEventController {
             throws ApplyTicketWrongException
             , WrongOrderEventFormatException {
         orderEventCommandService.makeOrderEventWinner(applyTicket,eventId,orderEventWinnerRequestDto);
-
-
     }
 
 }

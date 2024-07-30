@@ -21,4 +21,5 @@ public class OrderEventWinnerService {
         //ApplyTicket  payload에서 applyAnswer를 담도록 하여야함
         return orderEventWinnerRepository.save(orderEventWinner);
     }
+
 }
