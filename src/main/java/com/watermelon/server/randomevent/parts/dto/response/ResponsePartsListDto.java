@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ResponsePartsDrawDto {
+public class ResponsePartsListDto {
 
     private String category;
     private Long partsId;
@@ -15,23 +15,24 @@ public class ResponsePartsDrawDto {
     private String imgSrc;
     private boolean isEquipped;
 
-    public static ResponsePartsDrawDto createResponsePartsDrawDtoTest(){
-        return ResponsePartsDrawDto.builder()
-                .category("Test")
+    public static ResponsePartsListDto any(){
+        return ResponsePartsListDto.builder()
                 .partsId(1L)
-                .imgSrc("Test")
-                .description("Test")
-                .isEquipped(true)
+                .category("any")
+                .name("any")
+                .description("any")
+                .imgSrc("any")
+                .isEquipped(false)
                 .build();
     }
 
-    public static ResponsePartsDrawDto from(Parts parts, boolean isEquipped){
-        return ResponsePartsDrawDto.builder()
+    public static ResponsePartsListDto from(Parts parts, boolean isEquipped){
+        return ResponsePartsListDto.builder()
                 .category(parts.getCategory().toString())
                 .partsId(parts.getId())
                 .name(parts.getName())
-                .imgSrc(parts.getImgSrc())
                 .description(parts.getDescription())
+                .imgSrc(parts.getImgSrc())
                 .isEquipped(isEquipped)
                 .build();
     }

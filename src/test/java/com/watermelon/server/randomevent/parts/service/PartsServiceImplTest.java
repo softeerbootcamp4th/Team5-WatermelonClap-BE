@@ -3,6 +3,7 @@ package com.watermelon.server.randomevent.parts.service;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
+import com.watermelon.server.randomevent.parts.domain.PartsCategory;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
 import com.watermelon.server.randomevent.parts.repository.PartsRepository;
@@ -45,7 +46,9 @@ class PartsServiceImplTest {
                 .remainChance(1)
                 .build();
 
-        Parts parts = new Parts();
+        Parts parts = Parts.builder()
+                .category(PartsCategory.COLOR)
+                .build();
 
         when(lotteryService.applyAndGet(TEST_UID)).thenReturn(applier);
         when(partsRepository.findAll()).thenReturn(List.of(parts));
