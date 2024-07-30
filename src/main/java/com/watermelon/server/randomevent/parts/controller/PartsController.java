@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.parts.controller;
 
 import com.watermelon.server.randomevent.auth.annotations.Uid;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,11 +35,19 @@ public class PartsController {
         }
     }
 
+
     @GetMapping("/remain")
     public ResponseEntity<ResponseRemainChanceDto> getRemainChance(
             @Uid String uid
     ){
         return new ResponseEntity<>(partsService.getRemainChance(uid), HttpStatus.OK);
+
+    @GetMapping
+    public ResponseEntity<List<ResponseMyPartsListDto>> getMyPartsList(
+            @Uid String uid
+    ){
+        return new ResponseEntity<>(partsService.getMyParts(uid), HttpStatus.OK);
+
     }
 
 }
