@@ -2,6 +2,7 @@ package com.watermelon.server.event.order.service;
 
 
 import com.watermelon.server.error.ApplyTicketWrongException;
+import com.watermelon.server.event.order.domain.CurrentEventInfo;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
@@ -31,25 +32,14 @@ public class OrderEventCommandService {
     private final ApplyTokenProvider applyTokenProvider;
     private final OrderEventWinnerService orderEventWinnerService;
     private final OrderResultCommandService orderResultCommandService;
-
-    @Transactional
-    public void changeOrderStatusByTime(){
-        List<OrderEvent> orderEvents = orderEventRepository.findAll();
-        orderEvents.forEach(orderEvent -> {orderEvent.changeOrderEventStatusByTime(LocalDateTime.now());});
-    }
-
+    private CurrentEventInfo currentEventInfo;
 
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
-
         OrderEvent orderEvent = checkOrderEventNotError(orderEventId, quizId);
-
         // 퀴즈 틀릴 시에
         Quiz quiz = orderEvent.getQuiz();
         if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
-
-
-
 
 
         //토큰 생성
