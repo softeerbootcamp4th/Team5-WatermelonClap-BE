@@ -24,7 +24,7 @@ class ApplyTokenProviderTest {
         JwtPayload payload = JwtPayload.builder()
                 .eventId(testEventId)
                 .build();
-        String accessToken = applyTokenProvider.createTokenByQuizId(payload);
+        String accessToken = applyTokenProvider.createTokenByOrderEventId(payload);
         Assertions.assertThat(accessToken).isNotNull();
 
         JwtPayload payLoad1 = applyTokenProvider.verifyToken(accessToken,testEventId);

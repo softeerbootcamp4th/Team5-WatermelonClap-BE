@@ -2,6 +2,7 @@ package com.watermelon.server.event.order.service;
 
 import com.watermelon.server.event.order.domain.ApplyTicketStatus;
 import com.watermelon.server.event.order.domain.OrderEvent;
+import com.watermelon.server.event.order.domain.OrderEventCheckService;
 import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
@@ -11,25 +12,20 @@ import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
 import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
-import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.swing.plaf.DimensionUIResource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -40,9 +36,7 @@ class OrderEventCommandServiceTest {
     @Mock
     private OrderEventRepository orderEventRepository;
     @Mock
-    private OrderResultQueryService orderResultQueryService;
-    @Mock
-    private ApplyTokenProvider applyTokenProvider;
+    private OrderEventCheckService orderEventCheckService;
     @Mock
     private OrderResultCommandService orderResultCommandService;
     @InjectMocks
@@ -56,8 +50,6 @@ class OrderEventCommandServiceTest {
     public LocalDateTime endDateTime;
     public String applyToken = "applyToken";
     OrderEvent orderEvent;
-
-
 
     @BeforeEach
     @DisplayName("응모 생성")
@@ -76,63 +68,39 @@ class OrderEventCommandServiceTest {
     @DisplayName("정상 응모")
     void makeApplyTicket() throws NotDuringEventPeriodException, WrongOrderEventFormatException {
 
-        when(orderEventRepository.findByIdAndQuizId(eventId,quizId)).thenReturn(Optional.ofNullable(orderEvent));
-        when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(true);
-        when(applyTokenProvider.createTokenByQuizId(any())).thenReturn(applyToken);
-
-        ResponseApplyTicketDto responseApplyTicketDto = orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
-                .answer(answer)
-                .build(),eventId,quizId);
-        Assertions.assertThat(responseApplyTicketDto).isNotNull();
-    }
-    @Test
-    @DisplayName("선착순 응모 -선착순 인원 out")
-    void makeApplyTicketFull() throws NotDuringEventPeriodException, WrongOrderEventFormatException {
-        when(orderEventRepository.findByIdAndQuizId(any(),any())).thenReturn(Optional.ofNullable(orderEvent));
-        when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(false);
-        ResponseApplyTicketDto responseApplyTicketDto = orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
-                .answer(answer)
-                .build(),eventId,quizId);
-        Assertions.assertThat(responseApplyTicketDto.getResult()).isEqualTo(ApplyTicketStatus.CLOSED.name());
+        when(orderEventCheckService.isAnswerCorrect(any())).thenReturn(true);
+        when(orderResultCommandService.isOrderResultFullElseMake(any())).thenReturn(ResponseApplyTicketDto.applySuccess(applyToken));
+        Assertions.assertThat(orderEventCommandService.makeApplyTicket(RequestAnswerDto.makeWith(answer),1L,1L).getResult())
+                .isEqualTo(ApplyTicketStatus.SUCCESS.name());
 
     }
 
     @Test
     @DisplayName("선착순 응모 -정답 틀림")
     void makeApplyTicketWrongAnswer() throws NotDuringEventPeriodException, WrongOrderEventFormatException {
-        when(orderEventRepository.findByIdAndQuizId(any(),any())).thenReturn(Optional.ofNullable(orderEvent));
-        ResponseApplyTicketDto responseApplyTicketDto = orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
-                .answer(answer+"wrongAnswer")
-                .build(),eventId,quizId);
-
-
-        Assertions.assertThat(responseApplyTicketDto.getResult()).isEqualTo(ApplyTicketStatus.WRONG.name());
+        when(orderEventCheckService.isAnswerCorrect(any())).thenReturn(false);
+        Assertions.assertThat(orderEventCommandService.makeApplyTicket(RequestAnswerDto.makeWith(answer),1L,1L).getResult())
+                .isEqualTo(ApplyTicketStatus.WRONG.name());
     }
-
 
 
     @Test
     @DisplayName("선착순 응모 - 에러(존재하지 않음)")
-    void makeApplyTicketIdError() {
+    void makeApplyTicketIdError() throws NotDuringEventPeriodException, WrongOrderEventFormatException {
+        Mockito.doThrow(WrongOrderEventFormatException.class).when(orderEventCheckService).checkingInfoErrors(any(),any());
         Assertions.assertThatThrownBy(()->
                 orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
                         .answer(answer)
-                        .build(),eventId+1,quizId)
+                        .build(),eventId,quizId)
                 ).isInstanceOf(WrongOrderEventFormatException.class);
     }
     @Test
     @DisplayName("선착순 응모 - 에러(기간 오류)")
-    void makeApplyTicketTimeError()  {
-
-        OrderEvent wrongTimeOrderEvent = OrderEvent.builder()
-                .quiz(Quiz.builder().answer(answer).build())
-                .startDate(startDateTime)
-                .endDate(endDateTime.minusSeconds(100))
-                .build();
-        when(orderEventRepository.findByIdAndQuizId(eventId,quizId)).thenReturn(Optional.ofNullable(wrongTimeOrderEvent));
+    void makeApplyTicketTimeError() throws NotDuringEventPeriodException, WrongOrderEventFormatException {
+        Mockito.doThrow(NotDuringEventPeriodException.class).when(orderEventCheckService).checkingInfoErrors(any(),any());
         Assertions.assertThatThrownBy(()->
                 orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
-                        .answer(answer+"++")
+                        .answer(answer)
                         .build(),eventId,quizId)
         ).isInstanceOf(NotDuringEventPeriodException.class);
     }
