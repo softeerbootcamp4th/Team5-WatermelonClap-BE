@@ -17,8 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
-@RequiredArgsConstructor
 public class OrderEventCommandService {
 
     private final OrderEventRepository orderEventRepository;
@@ -26,7 +27,17 @@ public class OrderEventCommandService {
     private final OrderResultCommandService orderResultCommandService;
     private final OrderEventCheckService orderEventCheckService;
 
-
+    public OrderEventCommandService(
+            OrderEventRepository orderEventRepository,
+            OrderEventWinnerService orderEventWinnerService,
+            OrderResultCommandService orderResultCommandService,
+            OrderEventCheckService orderEventCheckService) {
+        this.orderEventRepository = orderEventRepository;
+        this.orderEventWinnerService = orderEventWinnerService;
+        this.orderResultCommandService = orderResultCommandService;
+        this.orderEventCheckService = orderEventCheckService;
+        setOrderEventCheckService();
+    }
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
         orderEventCheckService.checkingInfoErrors(orderEventId,quizId);
@@ -41,5 +52,14 @@ public class OrderEventCommandService {
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
         orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
+
+    public void setOrderEventCheckService(){
+        //현재 OrderEvent의 상태를 주기적으로 변경
+        List<OrderEvent> orderEvent = orderEventRepository.findAll();
+        if(orderEvent.isEmpty()) return; // 이벤트 없을시 스킵
+        OrderEvent currentOrderEvent = orderEvent.get(0); // 여기서 현재 이벤트를 검증해야함
+        this.orderEventCheckService.refreshInforMation(currentOrderEvent);
+    }
+
 
 }

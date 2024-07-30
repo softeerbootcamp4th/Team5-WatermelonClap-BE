@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 
 @Service
-@AllArgsConstructor
 @NoArgsConstructor
 public class OrderEventCheckService {
     private Long eventId;
@@ -19,12 +18,29 @@ public class OrderEventCheckService {
     private String answer;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
+    @Builder
+    public OrderEventCheckService(Long eventId, Long quizId, String answer, LocalDateTime startDate, LocalDateTime endDate) {
+        this.eventId = eventId;
+        this.quizId = quizId;
+        this.answer = answer;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public void refreshInforMation(OrderEvent orderEvent){
+        this.eventId = orderEvent.getId();
+        this.quizId =orderEvent.getQuiz().getId();
+        this.answer = orderEvent.getQuiz().getAnswer();
+        this.startDate = orderEvent.getStartDate();
+        this.endDate = orderEvent.getEndDate();
+    }
     public boolean isAnswerCorrect(String submitAnswer){
         if(this.answer.equals(submitAnswer)) return true;
         return false;
     }
     public boolean isTimeInEvent(LocalDateTime now){
-        if(now.equals(this.startDate) &&now.isBefore(endDate)) return true;
+        if(now.isAfter(this.startDate) &&now.isBefore(endDate)) return true;
         return false;
     }
     public boolean isEventAndQuizIdWrong( Long eventId,Long quizId) {
