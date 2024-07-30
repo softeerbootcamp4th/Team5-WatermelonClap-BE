@@ -14,6 +14,11 @@ public interface PartsService {
      */
     ResponsePartsDrawDto drawParts(String uid);
 
+    /**
+     * uid 에 대한 유저의 파츠 목록을 dto 형식으로 반환
+     * @param uid uid
+     * @return 유저의 파츠 목록
+     */
     List<ResponseMyPartsListDto> getMyParts(String uid);
 
 }
