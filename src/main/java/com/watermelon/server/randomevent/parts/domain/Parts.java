@@ -1,9 +1,6 @@
 package com.watermelon.server.randomevent.parts.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +22,8 @@ public class Parts {
 
     private String description;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private PartsCategory category;
 
     private String imgSrc;
 
