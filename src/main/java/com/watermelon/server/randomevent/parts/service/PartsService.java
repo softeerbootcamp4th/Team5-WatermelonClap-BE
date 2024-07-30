@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.parts.service;
 
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 
 public interface PartsService {
 
@@ -10,5 +11,7 @@ public interface PartsService {
      * @return 파츠 뽑기 결과
      */
     ResponsePartsDrawDto drawParts(String uid);
+
+    ResponseRemainChanceDto getRemainChance(String uid);
 
 }
