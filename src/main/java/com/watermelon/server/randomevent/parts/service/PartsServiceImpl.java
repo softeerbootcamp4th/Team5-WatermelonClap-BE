@@ -43,10 +43,14 @@ public class PartsServiceImpl implements PartsService {
     }
 
     @Override
+    public void toggleParts(String uid, Long partId) {
+        lotteryApplierPartsService.toggleEquipped(uid, partId);
+    }
 
     public ResponseRemainChanceDto getRemainChance(String uid) {
         return ResponseRemainChanceDto.create(lotteryService.getRemainChance(uid));
     }
+  
     public List<ResponseMyPartsListDto> getMyParts(String uid) {
         return ResponseMyPartsListDto.createDtoListByCategory(
                 lotteryApplierPartsService.getListByApplier(uid)

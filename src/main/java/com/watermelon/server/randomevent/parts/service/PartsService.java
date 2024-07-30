@@ -15,6 +15,8 @@ public interface PartsService {
      */
     ResponsePartsDrawDto drawParts(String uid);
 
+    void toggleParts(String uid, Long partId);
+  
     ResponseRemainChanceDto getRemainChance(String uid);
 
     /**
@@ -23,6 +25,5 @@ public interface PartsService {
      * @return 유저의 파츠 목록
      */
     List<ResponseMyPartsListDto> getMyParts(String uid);
-
 
 }
