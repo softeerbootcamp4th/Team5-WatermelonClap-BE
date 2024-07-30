@@ -5,7 +5,9 @@ import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
+import com.watermelon.server.randomevent.repository.LotteryRewardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class LotteryServiceImpl implements LotteryService {
     private final int NOT_RANKED = -1;
 
     private final LotteryApplierRepository lotteryApplierRepository;
+    private final LotteryRewardRepository lotteryRewardRepository;
 
     @Override
     public List<ResponseLotteryWinnerDto> getLotteryWinners() {
@@ -66,5 +69,12 @@ public class LotteryServiceImpl implements LotteryService {
     @Override
     public int getRemainChance(String uid) {
         return lotteryApplierRepository.findByUid(uid).orElseThrow().getRemainChance();
+    }
+
+    @Override
+    public ResponseRewardInfoDto getRewardInfo(int rank) {
+        return ResponseRewardInfoDto.from(
+                lotteryRewardRepository.findLotteryRewardByRank(rank).orElseThrow()
+        );
     }
 }

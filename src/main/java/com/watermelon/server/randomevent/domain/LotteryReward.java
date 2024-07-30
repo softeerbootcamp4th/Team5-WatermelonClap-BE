@@ -4,8 +4,10 @@ import com.watermelon.server.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class LotteryReward extends BaseEntity {
 
     @Id @GeneratedValue
@@ -14,6 +16,8 @@ public class LotteryReward extends BaseEntity {
     private int rank;
 
     private String imgSrc;
+
+    private String name;
 
     private int winnerCount;
 
