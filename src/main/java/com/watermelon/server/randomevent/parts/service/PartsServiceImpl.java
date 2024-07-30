@@ -40,6 +40,11 @@ public class PartsServiceImpl implements PartsService {
         return ResponsePartsDrawDto.from(parts, lotteryApplierParts.isEquipped());
     }
 
+    @Override
+    public void toggleParts(String uid, Long partId) {
+        lotteryApplierPartsService.toggleEquipped(uid, partId);
+    }
+
     /**
      * 저장되어 있는 파츠 중 랜덤으로 하나를 반환한다.
      *

@@ -4,6 +4,7 @@ import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
 import com.watermelon.server.randomevent.parts.repository.LotteryApplierPartsRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,17 @@ public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsServic
                 LotteryApplierParts.createApplierParts(isFirst, lotteryApplier, parts)
         );
 
+    }
+
+    @Transactional // 상태를 읽고 쓰는 과정에 원자성 보장 필요
+    @Override
+    public void toggleEquipped(String uid, Long partsId) {
+        LotteryApplierParts lotteryApplierParts = lotteryApplierPartsRepository
+                .findLotteryApplierPartsByLotteryApplierUidAndPartsId(uid, partsId).orElseThrow();
+
+        lotteryApplierParts.toggleEquipped();
+
+        lotteryApplierPartsRepository.save(lotteryApplierParts);
     }
 
     /**

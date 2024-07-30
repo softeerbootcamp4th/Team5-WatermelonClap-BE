@@ -15,4 +15,6 @@ public interface LotteryApplierPartsService {
      */
     LotteryApplierParts addPartsAndGet(LotteryApplier lotteryApplier, Parts parts);
 
+    void toggleEquipped(String uid, Long partsId);
+
 }
