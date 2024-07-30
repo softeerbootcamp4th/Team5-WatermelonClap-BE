@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrderEventCheckService {
     private Long eventId;
     private Long quizId;
