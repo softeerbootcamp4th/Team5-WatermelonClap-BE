@@ -5,10 +5,12 @@ import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,6 +23,7 @@ import java.util.Optional;
 import static com.watermelon.server.Constants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class LotteryServiceImplTest {
@@ -103,7 +106,7 @@ class LotteryServiceImplTest {
         assertThat(lotteryApplier.getPhoneNumber()).isEqualTo(TEST_PHONE_NUMBER);
         assertThat(lotteryApplier.getAddress()).isEqualTo(TEST_ADDRESS);
         assertThat(lotteryApplier.getName()).isEqualTo(TEST_NAME);
-        Mockito.verify(lotteryApplierRepository).save(lotteryApplier);
+        verify(lotteryApplierRepository).save(lotteryApplier);
 
     }
 
@@ -145,6 +148,29 @@ class LotteryServiceImplTest {
 
         //when & then
         assertThatThrownBy(()->lotteryService.getLotteryRank(TEST_UID)).isInstanceOf(NoSuchElementException.class);
+
+    }
+
+    @Test
+    @DisplayName("처음 응모라면 응모로 처리된다.")
+    void applyAndGet() {
+
+        //given
+        Mockito.when(lotteryApplierRepository.findByUid(TEST_UID)).thenReturn(
+                Optional.ofNullable(LotteryApplier.builder()
+                        .uid(TEST_UID)
+                        .isLotteryApplier(false)
+                        .build())
+        );
+
+        //when
+        lotteryService.applyAndGet(TEST_UID);
+
+        ArgumentCaptor<LotteryApplier> captor = ArgumentCaptor.forClass(LotteryApplier.class);
+
+        //then
+        verify(lotteryApplierRepository).save(captor.capture());
+        assertThat(captor.getValue().isLotteryApplier()).isTrue();
 
     }
 }

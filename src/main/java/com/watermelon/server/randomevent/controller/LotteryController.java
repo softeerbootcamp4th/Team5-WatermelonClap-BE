@@ -1,7 +1,6 @@
 package com.watermelon.server.randomevent.controller;
 
-import com.watermelon.server.randomevent.auth.Utils;
-import com.watermelon.server.randomevent.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.auth.annotations.Uid;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -21,7 +20,6 @@ import java.util.NoSuchElementException;
 public class LotteryController {
 
     private final LotteryService lotteryService;
-    private final TokenVerifier tokenVerifier;
 
     @GetMapping
     public ResponseEntity<List<ResponseLotteryWinnerDto>> getLotteryWinnerList(){
@@ -30,30 +28,24 @@ public class LotteryController {
 
     @GetMapping("/info")
     public ResponseEntity<ResponseLotteryWinnerInfoDto> getLotteryWinnerInfo(
-            @RequestHeader("Authorization") String authorization
+            @Uid String uid
     ){
-
-        String uid = tokenVerifier.verify(Utils.parseAuthenticationHeaderValue(authorization));
         return new ResponseEntity<>(lotteryService.getLotteryWinnerInfo(uid), HttpStatus.OK);
-
     }
 
     @PostMapping("/info")
     public ResponseEntity<Void> createLotteryWinnerInfo(
-            @RequestHeader("Authorization") String authorization,
-            @RequestBody RequestLotteryWinnerInfoDto dto
+            @RequestBody RequestLotteryWinnerInfoDto dto,
+            @Uid String uid
     ){
-
-        String uid = tokenVerifier.verify(Utils.parseAuthenticationHeaderValue(authorization));
         lotteryService.createLotteryWinnerInfo(uid, dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/rank")
     public ResponseEntity<ResponseLotteryRankDto> getLotteryRank(
-            @RequestHeader("Authorization") String authorization
+            @Uid String uid
     ){
-        String uid = tokenVerifier.verify(Utils.parseAuthenticationHeaderValue(authorization));
         try {
             return new ResponseEntity<>(lotteryService.getLotteryRank(uid), HttpStatus.OK);
         }catch (NoSuchElementException e) {

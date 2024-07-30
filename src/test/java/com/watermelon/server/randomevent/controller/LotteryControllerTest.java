@@ -1,7 +1,7 @@
 package com.watermelon.server.randomevent.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.watermelon.server.randomevent.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -40,9 +40,6 @@ class LotteryControllerTest {
     @MockBean
     private LotteryService lotteryService;
 
-    @MockBean
-    private TokenVerifier tokenVerifier;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -65,8 +62,7 @@ class LotteryControllerTest {
         String expectedJson = objectMapper.writeValueAsString(expectedResponse);
 
         //then
-        this.mockMvc.perform(get(PATH)
-                        .accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson))
                 .andDo(document(DOCUMENT_NAME));
@@ -88,12 +84,10 @@ class LotteryControllerTest {
                 .build();
 
         Mockito.when(lotteryService.getLotteryWinnerInfo(TEST_UID)).thenReturn(expected);
-        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(TEST_NAME))
                 .andExpect(jsonPath("$.address").value(TEST_ADDRESS))
@@ -120,8 +114,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(post(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
-                        .accept(MediaType.APPLICATION_JSON)
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
@@ -139,13 +132,10 @@ class LotteryControllerTest {
 
         //given
         Mockito.doThrow(new NoSuchElementException()).when(lotteryService).getLotteryRank(anyString());
-        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(jsonPath("$.rank").value(-1))
                 .andExpect(jsonPath("$.applied").value(false))
                 .andDo(document(DOCUMENT_NAME)
@@ -164,12 +154,10 @@ class LotteryControllerTest {
         Mockito.when(lotteryService.getLotteryRank(TEST_UID)).thenReturn(
                 ResponseLotteryRankDto.createAppliedTest()
         );
-        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rank").value(TEST_RANK))
                 .andExpect(jsonPath("$.applied").value(true))
