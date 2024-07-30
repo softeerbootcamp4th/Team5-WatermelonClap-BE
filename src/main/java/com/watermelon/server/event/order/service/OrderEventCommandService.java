@@ -2,10 +2,9 @@ package com.watermelon.server.event.order.service;
 
 
 import com.watermelon.server.error.ApplyTicketWrongException;
-import com.watermelon.server.event.order.domain.CurrentEventInfo;
+import com.watermelon.server.event.order.domain.OrderEventCheckService;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
-import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,16 +30,17 @@ public class OrderEventCommandService {
     private final ApplyTokenProvider applyTokenProvider;
     private final OrderEventWinnerService orderEventWinnerService;
     private final OrderResultCommandService orderResultCommandService;
-    private CurrentEventInfo currentEventInfo;
+    private final OrderEventCheckService orderEventCheckService;
+
 
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
-        OrderEvent orderEvent = checkOrderEventNotError(orderEventId, quizId);
+        orderEventCheckService.checkingInfoErrors(orderEventId,quizId);
         // 퀴즈 틀릴 시에
-        Quiz quiz = orderEvent.getQuiz();
-        if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
-
-
+        if(!orderEventCheckService.isAnswerCorrect(requestAnswerDto.getAnswer()))
+        {
+            return ResponseApplyTicketDto.wrongAnswer();
+        }
         //토큰 생성
         String applyTicketToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(orderEventId )));
 
