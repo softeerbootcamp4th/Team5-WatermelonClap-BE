@@ -3,6 +3,7 @@ package com.watermelon.server.randomevent.parts.service;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
+import com.watermelon.server.randomevent.parts.domain.PartsCategory;
 import com.watermelon.server.randomevent.parts.repository.LotteryApplierPartsRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,8 @@ class LotteryApplierPartsServiceImplTest {
     @DisplayName("만약 응모자가 가지고 있는 기존 파츠 중 신규 파츠가 카테고리의 첫 번째 파츠라면, 장착함.")
     void addPartsAndGetFirstPartsCase() {
 
-        final String CATEGORY2 = "2";
-        final String CATEGORY3 = "3";
+        final PartsCategory CATEGORY2 = PartsCategory.COLOR;
+        final PartsCategory CATEGORY3 = PartsCategory.WHEEL;
 
         //given (응모자가 가지고 있는 기존 파츠 중 신규 파츠가 카테고리의 첫 파츠일 때)
         final LotteryApplier lotteryApplier = LotteryApplier.builder()
@@ -73,12 +74,11 @@ class LotteryApplierPartsServiceImplTest {
     void addPartsAndGetNotFirstPartsCase() {
 
         //given
-        final String CATEGORY = "1";
 
         //when (응모자가 가지고 있는 기존 파츠 중 신규 파츠가 카테고리의 첫 파츠가 아닐 때)
         final LotteryApplier lotteryApplier = LotteryApplier.builder().id(anyLong()).build();
-        final Parts existParts = Parts.builder().category(CATEGORY).build();
-        final Parts newParts = Parts.builder().category(CATEGORY).build();
+        final Parts existParts = Parts.builder().category(PartsCategory.COLOR).build();
+        final Parts newParts = Parts.builder().category(PartsCategory.COLOR).build();
 
         final List<LotteryApplierParts> lotteryApplierPartsList = List.of(
                 LotteryApplierParts.createApplierParts(true, lotteryApplier, existParts)

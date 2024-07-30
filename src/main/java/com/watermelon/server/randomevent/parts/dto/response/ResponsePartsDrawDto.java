@@ -27,7 +27,7 @@ public class ResponsePartsDrawDto {
 
     public static ResponsePartsDrawDto from(Parts parts, boolean isEquipped){
         return ResponsePartsDrawDto.builder()
-                .category(parts.getCategory())
+                .category(parts.getCategory().toString())
                 .partsId(parts.getId())
                 .name(parts.getName())
                 .imgSrc(parts.getImgSrc())
