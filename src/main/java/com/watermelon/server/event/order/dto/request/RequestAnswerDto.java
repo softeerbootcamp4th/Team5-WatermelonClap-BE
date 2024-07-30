@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestAnswerDto {
     private String answer;
+
+    public static RequestAnswerDto makeWith(String answer) {
+        return RequestAnswerDto.builder().answer(answer).build();
+    }
 }

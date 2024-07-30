@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsService{
@@ -34,6 +36,10 @@ public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsServic
         lotteryApplierParts.toggleEquipped();
 
         lotteryApplierPartsRepository.save(lotteryApplierParts);
+    }
+    @Override
+    public List<LotteryApplierParts> getListByApplier(String uid) {
+        return lotteryApplierPartsRepository.findLotteryApplierPartsByLotteryApplierUid(uid);
     }
 
     /**

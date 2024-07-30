@@ -2,80 +2,64 @@ package com.watermelon.server.event.order.service;
 
 
 import com.watermelon.server.error.ApplyTicketWrongException;
+import com.watermelon.server.event.order.domain.OrderEventCheckService;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
-import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
-import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
-import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class OrderEventCommandService {
 
     private final OrderEventRepository orderEventRepository;
-    private final OrderResultQueryService orderResultQueryService;
-    private final ApplyTokenProvider applyTokenProvider;
     private final OrderEventWinnerService orderEventWinnerService;
     private final OrderResultCommandService orderResultCommandService;
+    private final OrderEventCheckService orderEventCheckService;
 
-    @Transactional
-    public void changeOrderStatusByTime(){
-        List<OrderEvent> orderEvents = orderEventRepository.findAll();
-        orderEvents.forEach(orderEvent -> {orderEvent.changeOrderEventStatusByTime(LocalDateTime.now());});
+    public OrderEventCommandService(
+            OrderEventRepository orderEventRepository,
+            OrderEventWinnerService orderEventWinnerService,
+            OrderResultCommandService orderResultCommandService,
+            OrderEventCheckService orderEventCheckService) {
+        this.orderEventRepository = orderEventRepository;
+        this.orderEventWinnerService = orderEventWinnerService;
+        this.orderResultCommandService = orderResultCommandService;
+        this.orderEventCheckService = orderEventCheckService;
+        setOrderEventCheckService();
     }
-
-
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
-
-        OrderEvent orderEvent = checkOrderEventNotError(orderEventId, quizId);
-
+        orderEventCheckService.checkingInfoErrors(orderEventId,quizId);
         // 퀴즈 틀릴 시에
-        Quiz quiz = orderEvent.getQuiz();
-        if(!quiz.isCorrect(requestAnswerDto.getAnswer())) return ResponseApplyTicketDto.wrongAnswer();
-
-
-
-
-
-        //토큰 생성
-        String applyTicketToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(orderEventId )));
-
-        //(선착순 마감 확인,저장은 하나의 transaction 단위로 걸어야함)
-        // 선착순 마감시에
-        if(!orderResultQueryService.isOrderApplyNotFull()) return ResponseApplyTicketDto.fullApply();
-        orderResultCommandService.makeOrderEventApply(applyTicketToken);
-
-        //저장 할시에 확실하게 돌려주어야함 - 하지만 돌려주지 못 할시에는 어떻게?( 로그인이 안 되어있음)
-        return ResponseApplyTicketDto.applySuccess(applyTicketToken);
+        if(!orderEventCheckService.isAnswerCorrect(requestAnswerDto.getAnswer()))
+        {
+            return ResponseApplyTicketDto.wrongAnswer();
+        }
+        return orderResultCommandService.isOrderResultFullElseMake(orderEventId);
     }
-
-    private OrderEvent checkOrderEventNotError(Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
-        //id가 다를 시에
-        OrderEvent orderEvent = orderEventRepository.findByIdAndQuizId(orderEventId, quizId).orElseThrow(WrongOrderEventFormatException::new);
-        // 기간이 아닐시에
-        if(!orderEvent.isTimeInEventTime(LocalDateTime.now())) throw new NotDuringEventPeriodException();
-        return orderEvent;
-    }
-
     public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
-        JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(eventId));
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
-        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer");
+        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
+
+    public void setOrderEventCheckService(){
+        //현재 OrderEvent의 상태를 주기적으로 변경
+        List<OrderEvent> orderEvent = orderEventRepository.findAll();
+        if(orderEvent.isEmpty()) return; // 이벤트 없을시 스킵
+        OrderEvent currentOrderEvent = orderEvent.get(0); // 여기서 현재 이벤트를 검증해야함
+        this.orderEventCheckService.refreshInforMation(currentOrderEvent);
+    }
+
 
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface LotteryApplierPartsRepository extends JpaRepository<LotteryApplierParts, Long> {
 
     List<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierId(Long lotteryApplierId);
+    List<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierUid(String lotteryApplierUid);
 
     Optional<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierUidAndPartsId(String lotteryApplierUid,Long partsId);
 

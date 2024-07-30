@@ -3,6 +3,7 @@ package com.watermelon.server.randomevent.parts.service;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.randomevent.parts.exception.PartsNotExistException;
 import com.watermelon.server.randomevent.parts.repository.PartsRepository;
@@ -43,6 +44,11 @@ public class PartsServiceImpl implements PartsService {
     @Override
     public void toggleParts(String uid, Long partId) {
         lotteryApplierPartsService.toggleEquipped(uid, partId);
+    }
+    public List<ResponseMyPartsListDto> getMyParts(String uid) {
+        return ResponseMyPartsListDto.createDtoListByCategory(
+                lotteryApplierPartsService.getListByApplier(uid)
+        );
     }
 
     /**

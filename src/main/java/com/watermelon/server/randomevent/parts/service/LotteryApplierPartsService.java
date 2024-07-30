@@ -4,6 +4,9 @@ import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
 
+import java.util.List;
+
+
 public interface LotteryApplierPartsService {
 
     /**
@@ -16,5 +19,12 @@ public interface LotteryApplierPartsService {
     LotteryApplierParts addPartsAndGet(LotteryApplier lotteryApplier, Parts parts);
 
     void toggleEquipped(String uid, Long partsId);
+  
+    /**
+     * uid 에 대한 응모자의 응모자-파츠 목록을 반환
+     * @param uid 응모자의 uid
+     * @return 응모자-파츠 목록
+     */
+    List<LotteryApplierParts> getListByApplier(String uid);
 
 }

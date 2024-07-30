@@ -25,7 +25,7 @@ public class ApplyTokenProvider {
     public ApplyTokenProvider( @Value("${apply.token.secret}") String tokenSecret) {
         this.TOKEN_SECRET = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(tokenSecret));
     }
-    public String createTokenByQuizId(JwtPayload payload){
+    public String createTokenByOrderEventId(JwtPayload payload){
         return Jwts.builder()
                 .claim(eventIdClaimKey,payload.getEventId())
                 .issuer(tokenIssuer)
