@@ -39,9 +39,9 @@ public class PartsController {
     @GetMapping("/remain")
     public ResponseEntity<ResponseRemainChanceDto> getRemainChance(
             @Uid String uid
-    ){
+    ) {
         return new ResponseEntity<>(partsService.getRemainChance(uid), HttpStatus.OK);
-
+    }
     @GetMapping
     public ResponseEntity<List<ResponseMyPartsListDto>> getMyPartsList(
             @Uid String uid

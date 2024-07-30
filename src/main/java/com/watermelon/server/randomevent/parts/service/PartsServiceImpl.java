@@ -46,6 +46,7 @@ public class PartsServiceImpl implements PartsService {
 
     public ResponseRemainChanceDto getRemainChance(String uid) {
         return ResponseRemainChanceDto.create(lotteryService.getRemainChance(uid));
+    }
     public List<ResponseMyPartsListDto> getMyParts(String uid) {
         return ResponseMyPartsListDto.createDtoListByCategory(
                 lotteryApplierPartsService.getListByApplier(uid)
