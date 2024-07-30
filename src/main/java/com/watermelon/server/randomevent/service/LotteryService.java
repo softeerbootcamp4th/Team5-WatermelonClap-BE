@@ -5,6 +5,7 @@ import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 
 import java.util.List;
 
@@ -45,5 +46,7 @@ public interface LotteryService {
     LotteryApplier applyAndGet(String uid);
 
     int getRemainChance(String uid);
+
+    ResponseRewardInfoDto getRewardInfo(int rank);
 
 }
