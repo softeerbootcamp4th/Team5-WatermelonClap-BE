@@ -1,8 +1,11 @@
 package com.watermelon.server.event.order.result.service;
 
+import com.watermelon.server.event.order.domain.ApplyTicketStatus;
 import com.watermelon.server.event.order.result.domain.OrderResult;
 import com.watermelon.server.event.order.result.repository.OrderResultRepository;
+import com.watermelon.server.token.ApplyTokenProvider;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,19 +22,32 @@ class OrderResultCommandServiceTest {
 
     @Mock
     private OrderResultRepository orderResultRepository;
-
+    @Mock
+    private ApplyTokenProvider applyTokenProvider;
+    @Mock
+    private OrderResultQueryService orderResultQueryService;
     @InjectMocks
     private OrderResultCommandService orderResultCommandService;
 
     private String applyToken = "applyToken";
 
+    @BeforeEach
+    public void setUp() {
+        when(applyTokenProvider.createTokenByOrderEventId(any())).thenReturn(applyToken);
+    }
     @Test
-    @DisplayName("선착순 응모 결과 생성 ")
+    @DisplayName("선착순 응모 결과 생성(정상) ")
     public void makeOrderResult() {
-        when(orderResultRepository.save(any())).thenReturn(OrderResult.makeOrderEventApply(applyToken));
-        OrderResult orderResult = orderResultCommandService.isOrderResultFullElseMake(applyToken);
-
-        Assertions.assertThat(orderResult.getApplyToken()).isEqualTo(applyToken);
+        when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(false);
+        Assertions.assertThat(orderResultCommandService.isOrderResultFullElseMake(1L).getResult())
+                .isEqualTo(ApplyTicketStatus.SUCCESS.name());
+    }
+    @Test
+    @DisplayName("선착순 응모 결과 생성(선착순 FULL)")
+    public void makeOrderResultFull() {
+        when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(true);
+        Assertions.assertThat(orderResultCommandService.isOrderResultFullElseMake(1L).getResult())
+                .isEqualTo(ApplyTicketStatus.CLOSED.name());
     }
 
 }
