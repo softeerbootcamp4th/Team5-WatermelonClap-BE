@@ -11,4 +11,6 @@ public interface PartsService {
      */
     ResponsePartsDrawDto drawParts(String uid);
 
+    void toggleParts(String uid, Long partId);
+
 }

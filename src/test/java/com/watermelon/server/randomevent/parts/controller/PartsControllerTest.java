@@ -15,9 +15,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.watermelon.server.Constants.TEST_PARTS_ID;
 import static com.watermelon.server.Constants.TEST_UID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -74,4 +77,22 @@ class PartsControllerTest {
                 .andDo(document(DOCUMENT_NAME));
 
     }
+
+    @Test
+    @DisplayName("파츠 상태 변경에 성공")
+    void toggleParts() throws Exception {
+
+        final String PATH = "/event/parts/1/"+TEST_PARTS_ID;
+        final String DOCUMENT_NAME = "event/parts/equip";
+
+        //when & then
+        this.mockMvc.perform(patch(PATH)
+                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME));
+
+        verify(partsService).toggleParts(TEST_UID, TEST_PARTS_ID);
+
+    }
+
 }
