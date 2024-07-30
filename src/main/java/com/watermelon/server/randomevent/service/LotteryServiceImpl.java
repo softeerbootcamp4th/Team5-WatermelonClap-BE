@@ -54,4 +54,12 @@ public class LotteryServiceImpl implements LotteryService {
                 lotteryApplierRepository.findByUid(uid).orElseThrow()
         );
     }
+
+    @Override
+    public LotteryApplier applyAndGet(String uid) {
+        LotteryApplier applier = lotteryApplierRepository.findByUid(uid).orElseThrow();
+        if(applier.isLotteryApplier()) return applier;
+        applier.applyLottery();
+        return lotteryApplierRepository.save(applier);
+    }
 }
