@@ -45,8 +45,18 @@ public interface LotteryService {
      */
     LotteryApplier applyAndGet(String uid);
 
+    /**
+     * uid 를 가진 응모자에 대한 남은 뽑기 횟수를 반환한다.
+     * @param uid uid
+     * @return 뽑기 횟수
+     */
     int getRemainChance(String uid);
 
+    /**
+     * rank 에 대한 경품 정보를 반환한다.
+     * @param rank 순위
+     * @return 경품 정보
+     */
     ResponseRewardInfoDto getRewardInfo(int rank);
 
 }
