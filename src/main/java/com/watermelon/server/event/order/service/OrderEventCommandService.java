@@ -2,7 +2,6 @@ package com.watermelon.server.event.order.service;
 
 
 import com.watermelon.server.error.ApplyTicketWrongException;
-import com.watermelon.server.event.order.domain.OrderEventCheckService;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
@@ -11,9 +10,6 @@ import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
-import com.watermelon.server.token.ApplyTokenProvider;
-import com.watermelon.server.token.JwtPayload;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
