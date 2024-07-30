@@ -4,6 +4,7 @@ import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 import com.watermelon.server.randomevent.parts.exception.PartsNotExistException;
 import com.watermelon.server.randomevent.parts.repository.PartsRepository;
 import com.watermelon.server.randomevent.service.LotteryService;
@@ -38,6 +39,11 @@ public class PartsServiceImpl implements PartsService {
         LotteryApplierParts lotteryApplierParts = lotteryApplierPartsService.addPartsAndGet(applier, parts);
 
         return ResponsePartsDrawDto.from(parts, lotteryApplierParts.isEquipped());
+    }
+
+    @Override
+    public ResponseRemainChanceDto getRemainChance(String uid) {
+        return ResponseRemainChanceDto.create(lotteryService.getRemainChance(uid));
     }
 
     /**

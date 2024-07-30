@@ -13,4 +13,8 @@ public class ResponseRemainChanceDto {
         return ResponseRemainChanceDto.builder().remainChance(1).build();
     }
 
+    public static ResponseRemainChanceDto create(int remainChance){
+        return ResponseRemainChanceDto.builder().remainChance(remainChance).build();
+    }
+
 }
