@@ -11,7 +11,6 @@ import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
-import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderEventCommandService {
 
     private final OrderEventRepository orderEventRepository;
-    private final ApplyTokenProvider applyTokenProvider;
     private final OrderEventWinnerService orderEventWinnerService;
     private final OrderResultCommandService orderResultCommandService;
     private final OrderEventCheckService orderEventCheckService;
@@ -37,19 +35,11 @@ public class OrderEventCommandService {
         {
             return ResponseApplyTicketDto.wrongAnswer();
         }
-        //토큰 생성
-        String applyTicketToken = applyTokenProvider.createTokenByQuizId(JwtPayload.from(String.valueOf(orderEventId )));
-        // 선착순 마감이 아닐시에
-        if(orderResultCommandService.isOrderResultFullElseMake(applyTicketToken)) return ResponseApplyTicketDto.applySuccess(applyTicketToken);
-        return ResponseApplyTicketDto.fullApply();
-
-        //저장 할시에 확실하게 돌려주어야함 - 하지만 돌려주지 못 할시에는 어떻게?( 로그인이 안 되어있음)
+        return orderResultCommandService.isOrderResultFullElseMake(orderEventId);
     }
-
     public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
-        JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(eventId));
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
-        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer");
+        orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
 
 }

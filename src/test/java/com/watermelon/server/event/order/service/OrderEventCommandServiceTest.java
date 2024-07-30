@@ -11,9 +11,7 @@ import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
 import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.token.ApplyTokenProvider;
-import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,15 +19,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -78,7 +71,7 @@ class OrderEventCommandServiceTest {
 
         when(orderEventRepository.findByIdAndQuizId(eventId,quizId)).thenReturn(Optional.ofNullable(orderEvent));
         when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(true);
-        when(applyTokenProvider.createTokenByQuizId(any())).thenReturn(applyToken);
+        when(applyTokenProvider.createTokenByOrderEventId(any())).thenReturn(applyToken);
 
         ResponseApplyTicketDto responseApplyTicketDto = orderEventCommandService.makeApplyTicket(RequestAnswerDto.builder()
                 .answer(answer)
