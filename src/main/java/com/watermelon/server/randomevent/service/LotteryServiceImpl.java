@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
@@ -9,6 +10,9 @@ import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
 import com.watermelon.server.randomevent.repository.LotteryRewardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,5 +80,11 @@ public class LotteryServiceImpl implements LotteryService {
         return ResponseRewardInfoDto.from(
                 lotteryRewardRepository.findLotteryRewardByRank(rank).orElseThrow()
         );
+    }
+
+    @Override
+    public Page<ResponseLotteryApplierDto> getApplierInfoPage(Pageable pageable) {
+        return lotteryApplierRepository.findByIsLotteryApplierTrue(pageable)
+                .map(ResponseLotteryApplierDto::from);
     }
 }
