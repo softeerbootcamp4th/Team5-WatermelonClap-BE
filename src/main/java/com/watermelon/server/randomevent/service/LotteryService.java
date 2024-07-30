@@ -1,11 +1,14 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -58,5 +61,12 @@ public interface LotteryService {
      * @return 경품 정보
      */
     ResponseRewardInfoDto getRewardInfo(int rank);
+
+    /**
+     * 응모자 정보를 페이지로 반환
+     * @param pageable 페이지 정보
+     * @return 응모자 정보 페이지
+     */
+    Page<ResponseLotteryApplierDto> getApplierInfoPage(Pageable pageable);
 
 }
