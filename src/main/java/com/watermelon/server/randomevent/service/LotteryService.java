@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -35,5 +36,12 @@ public interface LotteryService {
      * @return 순위
      */
     ResponseLotteryRankDto getLotteryRank(String uid);
+
+    /**
+     * 응모한 뒤 응모자 객체를 반환. 만약 처음 응모라면, 응모 처리.
+     * @param uid
+     * @return 응모자
+     */
+    LotteryApplier applyAndGet(String uid);
 
 }

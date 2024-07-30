@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.domain;
 
 import com.watermelon.server.BaseEntity;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
+import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -22,15 +23,20 @@ public class LotteryApplier extends BaseEntity {
 
     private String uid;
 
+    @Builder.Default
     private boolean isPartsWinner = false;
 
+    @Builder.Default
     private int lotteryRank = -1;
 
+    @Builder.Default
     private boolean isPartsApplier = false;
 
+    @Builder.Default
     private boolean isLotteryApplier = false;
 
-    private int remainChance = 0;
+    @Builder.Default
+    private int remainChance = 1;
 
     private String email;
 
@@ -51,6 +57,10 @@ public class LotteryApplier extends BaseEntity {
 
     public boolean hasRemainChance(){
         return remainChance > 0;
+    }
+
+    public void hasRemainChanceOrThrow(){
+        if(!hasRemainChance()) throw new PartsDrawLimitExceededException();
     }
 
     public void applyLottery(){

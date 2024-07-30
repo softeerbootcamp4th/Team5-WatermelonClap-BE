@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.parts.dto.response;
 
+import com.watermelon.server.randomevent.parts.domain.Parts;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,6 +22,17 @@ public class ResponsePartsDrawDto {
                 .imgSrc("Test")
                 .description("Test")
                 .isEquipped(true)
+                .build();
+    }
+
+    public static ResponsePartsDrawDto from(Parts parts, boolean isEquipped){
+        return ResponsePartsDrawDto.builder()
+                .category(parts.getCategory())
+                .partsId(parts.getId())
+                .name(parts.getName())
+                .imgSrc(parts.getImgSrc())
+                .description(parts.getDescription())
+                .isEquipped(isEquipped)
                 .build();
     }
 
