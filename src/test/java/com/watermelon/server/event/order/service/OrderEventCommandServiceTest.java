@@ -2,7 +2,6 @@ package com.watermelon.server.event.order.service;
 
 import com.watermelon.server.event.order.domain.ApplyTicketStatus;
 import com.watermelon.server.event.order.domain.OrderEvent;
-import com.watermelon.server.event.order.domain.OrderEventCheckService;
 import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
@@ -10,8 +9,6 @@ import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.result.service.OrderResultCommandService;
-import com.watermelon.server.event.order.result.service.OrderResultQueryService;
-import com.watermelon.server.token.ApplyTokenProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,9 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.plaf.DimensionUIResource;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

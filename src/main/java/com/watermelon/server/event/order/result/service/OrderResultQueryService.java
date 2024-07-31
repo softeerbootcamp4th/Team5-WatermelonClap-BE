@@ -1,30 +1,29 @@
 package com.watermelon.server.event.order.result.service;
 
 
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
+import com.watermelon.server.event.order.result.domain.OrderResult;
 import lombok.Getter;
+import org.redisson.api.RSet;
 import org.springframework.stereotype.Service;
 
 @Service
-//@RequiredArgsConstructor
 public class OrderResultQueryService {
-    private final OrderResultRepository orderResultRepository;
+    private final RSet<OrderResult> orderResultRset;
 
     @Getter
-    private final int maxCount;
+    private int availableTicket;
 
-    public OrderResultQueryService(OrderResultRepository orderResultRepository) {
-        this.orderResultRepository = orderResultRepository;
-        this.maxCount= 10;
+    public OrderResultQueryService(RSet orderResultRset) {
+        this.orderResultRset = orderResultRset;
+        this.availableTicket = 100;
     }
 
     public boolean isOrderApplyNotFull(){
         int count = getCurrentCount();
-        return count < maxCount;
+        return availableTicket-count>0;
     }
 
     private int getCurrentCount() {
-        return orderResultRepository.findAll().size();
+        return orderResultRset.size();
     }
-
 }
