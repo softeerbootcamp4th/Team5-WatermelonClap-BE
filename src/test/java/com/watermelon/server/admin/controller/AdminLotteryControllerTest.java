@@ -85,6 +85,7 @@ class AdminLotteryControllerTest {
     }
 
     @Test
+    @DisplayName("파츠 당첨자 명단을 반환한다.")
     void getPartsWinners() throws Exception {
 
         //given
@@ -103,4 +104,5 @@ class AdminLotteryControllerTest {
                 .andDo(document(DOCUMENT_NAME_PARTS_WINNERS));
 
     }
+
 }
