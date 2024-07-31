@@ -6,6 +6,7 @@ import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -165,4 +166,24 @@ class LotteryControllerTest {
 
     }
 
+    @Test
+    @DisplayName("추첨이벤트 경품 정보를 반환한다.")
+    void getRewardInfo() throws Exception {
+
+        final String PATH = "/event/lotteries/reward/{rank}";
+        final String DOCUMENT_NAME = "event/lotteries/rank";
+
+        //when
+        Mockito.when(lotteryService.getRewardInfo(TEST_RANK)).thenReturn(
+                new ResponseRewardInfoDto(TEST_IMGSRC, TEST_NAME)
+        );
+
+        //then
+        this.mockMvc.perform(get(PATH, TEST_RANK))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.imgSrc").value(TEST_IMGSRC))
+                .andExpect(jsonPath("$.name").value(TEST_NAME))
+                .andDo(document(DOCUMENT_NAME));
+
+    }
 }

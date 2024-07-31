@@ -9,8 +9,19 @@ public class Constants {
     public static final String TEST_TOKEN = "token";
     public static final int TEST_RANK = 1;
     public static final long TEST_PARTS_ID = 1L;
+    public static final String TEST_IMGSRC = "imgsrc";
+    public static final int TEST_PAGE_NUMBER = 1;
+    public static final int TEST_PAGE_SIZE = 2;
 
     public static final String HEADER_NAME_AUTHORIZATION = "Authorization";
     public static final String HEADER_VALUE_BEARER = "Bearer";
+    public static final String PARAM_PAGE = "page";
+    public static final String PARAM_SIZE = "size";
 
+    public static final String PATH_ADMIN_APPLIER = "/admin/event/applier";
+    public static final String DOCUMENT_NAME_ADMIN_APPLIER = "admin/event/parts";
+    public static final String PATH_ADMIN_LOTTERY_WINNERS = "/admin/lotteries";
+    public static final String DOCUMENT_NAME_LOTTERY_WINNERS = "admin/lotteries";
+    public static final String PATH_ADMIN_PARTS_WINNERS = "/admin/event/parts";
+    public static final String DOCUMENT_NAME_PARTS_WINNERS = "admin/event/parts";
 }

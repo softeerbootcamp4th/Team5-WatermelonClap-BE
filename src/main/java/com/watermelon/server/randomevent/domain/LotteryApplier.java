@@ -3,10 +3,7 @@ package com.watermelon.server.randomevent.domain;
 import com.watermelon.server.BaseEntity;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -45,6 +42,15 @@ public class LotteryApplier extends BaseEntity {
     private String name;
 
     private String address;
+
+    @Builder.Default
+    private boolean isLotteryWinnerCheckedByAdmin = false;
+
+    @Builder.Default
+    private boolean isPartsWinnerCheckedByAdmin = false;
+
+    @OneToOne(mappedBy = "lotteryApplier")
+    private Link link;
 
     @OneToMany(mappedBy = "lotteryApplier")
     private List<LotteryApplierParts> lotteryApplierParts;
