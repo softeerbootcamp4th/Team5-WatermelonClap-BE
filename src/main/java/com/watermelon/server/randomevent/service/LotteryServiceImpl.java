@@ -11,6 +11,7 @@ import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoD
 import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
 import com.watermelon.server.randomevent.repository.LotteryRewardRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -101,5 +102,13 @@ public class LotteryServiceImpl implements LotteryService {
         return lotteryApplierRepository.findByIsPartsWinnerTrue().stream()
                 .map(ResponseAdminPartsWinnerDto::from)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional //처음 상태와 변경 후 상태의 원자성 보장 필요.
+    @Override
+    public void lotteryWinnerCheck(String uid) {
+        LotteryApplier lotteryApplier = lotteryApplierRepository.findByUid(uid).orElseThrow();
+        lotteryApplier.lotteryWinnerCheck();
+        lotteryApplierRepository.save(lotteryApplier);
     }
 }

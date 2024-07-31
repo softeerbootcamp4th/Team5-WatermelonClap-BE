@@ -73,4 +73,8 @@ public class LotteryApplier extends BaseEntity {
         this.isLotteryApplier = true;
     }
 
+    public void lotteryWinnerCheck(){
+        this.isLotteryWinnerCheckedByAdmin = true;
+    }
+
 }
