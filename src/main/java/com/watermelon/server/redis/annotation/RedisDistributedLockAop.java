@@ -39,7 +39,7 @@ public class RedisDistributedLockAop {
         try{
             //Lock을 점유하고 대기해본다
             boolean lockObtainable = rlock.tryLock(redisDistributedLock.waitTime(),
-                    redisDistributedLock.waitTime(),
+                    redisDistributedLock.releaseTime(),
                     redisDistributedLock.timeUnit());
             if(!lockObtainable) return false;
 
