@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
@@ -68,5 +69,11 @@ public interface LotteryService {
      * @return 응모자 정보 페이지
      */
     Page<ResponseLotteryApplierDto> getApplierInfoPage(Pageable pageable);
+
+    /**
+     * 당첨자 명단을 반환
+     * @return 당첨자 리스트
+     */
+    List<ResponseAdminLotteryWinnerDto> getAdminLotteryWinners();
 
 }

@@ -1,8 +1,10 @@
 package com.watermelon.server.admin.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.service.LotteryService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +61,28 @@ class AdminLotteryControllerTest {
                 .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER));
 
     }
+
+    @Test
+    @DisplayName("추첨 당첨자 명단을 반환한다.")
+    void getLotteryWinners() throws Exception {
+
+        //given
+        List<ResponseAdminLotteryWinnerDto> expected = List.of(
+                ResponseAdminLotteryWinnerDto.createTestDto(),
+                ResponseAdminLotteryWinnerDto.createTestDto()
+        );
+
+        Mockito.when(lotteryService.getAdminLotteryWinners())
+                .thenReturn(expected);
+
+        System.out.println(objectMapper.writeValueAsString(expected));
+
+        //when & then
+        this.mockMvc.perform(get(PATH_ADMIN_LOTTERY_WINNERS)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
+                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS));
+
+    }
+
 }
