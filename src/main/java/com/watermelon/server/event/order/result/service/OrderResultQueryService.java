@@ -1,19 +1,21 @@
 package com.watermelon.server.event.order.result.service;
 
 
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
+import com.watermelon.server.event.order.result.domain.OrderResult;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.redisson.api.RSet;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderResultQueryService {
-    private final OrderResultRepository orderResultRepository;
+    private final RSet<OrderResult> orderResultRset;
 
     @Getter
     private final int maxCount;
 
-    public OrderResultQueryService(OrderResultRepository orderResultRepository) {
-        this.orderResultRepository = orderResultRepository;
+    public OrderResultQueryService(RSet orderResultRset) {
+        this.orderResultRset = orderResultRset;
         this.maxCount= 100;
     }
 
@@ -23,7 +25,6 @@ public class OrderResultQueryService {
     }
 
     private int getCurrentCount() {
-        return orderResultRepository.findAll().size();
+        return orderResultRset.size();
     }
-
 }

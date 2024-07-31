@@ -1,9 +1,7 @@
 package com.watermelon.server.event.order.result.service;
 
 import com.watermelon.server.event.order.result.domain.OrderResult;
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

@@ -1,8 +1,6 @@
 package com.watermelon.server.event.order.result.service;
 
 import com.watermelon.server.event.order.domain.ApplyTicketStatus;
-import com.watermelon.server.event.order.result.domain.OrderResult;
-import com.watermelon.server.event.order.result.repository.OrderResultRepository;
 import com.watermelon.server.token.ApplyTokenProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
