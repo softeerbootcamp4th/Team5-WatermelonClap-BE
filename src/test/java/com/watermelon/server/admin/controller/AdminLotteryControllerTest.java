@@ -22,9 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static com.watermelon.server.Constants.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(AdminLotteryController.class)
@@ -105,4 +108,17 @@ class AdminLotteryControllerTest {
 
     }
 
+    @Test
+    @DisplayName("추첨 당첨자를 확인처리 한다.")
+    void lotteryWinnerCheckDone() throws Exception {
+
+        //when & then
+        this.mockMvc.perform(post(PATH_ADMIN_LOTTERY_WINNER_CHECK, TEST_UID)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK));
+
+        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+
+    }
 }

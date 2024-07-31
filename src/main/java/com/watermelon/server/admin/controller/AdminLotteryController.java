@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,6 +37,14 @@ public class AdminLotteryController {
     @GetMapping("admin/event/parts")
     public ResponseEntity<List<ResponseAdminPartsWinnerDto>> getPartsWinners(){
         return new ResponseEntity<>(lotteryService.getAdminPartsWinners(), HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/event/lotteries/{uid}/done")
+    public ResponseEntity<Void> lotteryWinnerCheckDone(
+            @PathVariable String uid
+    ){
+        lotteryService.lotteryWinnerCheck(uid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
