@@ -2,6 +2,7 @@ package com.watermelon.server.admin.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
+import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
@@ -75,8 +76,6 @@ class AdminLotteryControllerTest {
         Mockito.when(lotteryService.getAdminLotteryWinners())
                 .thenReturn(expected);
 
-        System.out.println(objectMapper.writeValueAsString(expected));
-
         //when & then
         this.mockMvc.perform(get(PATH_ADMIN_LOTTERY_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
@@ -85,4 +84,23 @@ class AdminLotteryControllerTest {
 
     }
 
+    @Test
+    void getPartsWinners() throws Exception {
+
+        //given
+        List<ResponseAdminPartsWinnerDto> expected = List.of(
+                ResponseAdminPartsWinnerDto.createTestDto(),
+                ResponseAdminPartsWinnerDto.createTestDto()
+        );
+
+        Mockito.when(lotteryService.getAdminPartsWinners())
+                .thenReturn(expected);
+
+        //when & then
+        this.mockMvc.perform(get(PATH_ADMIN_PARTS_WINNERS)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
+                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS));
+
+    }
 }

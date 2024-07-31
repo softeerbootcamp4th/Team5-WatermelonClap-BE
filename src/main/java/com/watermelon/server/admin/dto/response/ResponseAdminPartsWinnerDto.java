@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ResponseAdminLotteryWinnerDto {
+public class ResponseAdminPartsWinnerDto {
 
     private String uid;
     private String name;
@@ -16,9 +16,9 @@ public class ResponseAdminLotteryWinnerDto {
     private int rank;
     private AdminCheckStatus status;
 
-    public static ResponseAdminLotteryWinnerDto createTestDto() {
+    public static ResponseAdminPartsWinnerDto createTestDto() {
 
-        return ResponseAdminLotteryWinnerDto.builder()
+        return ResponseAdminPartsWinnerDto.builder()
                 .uid("uid")
                 .name("name")
                 .phoneNumber("phoneNumber")
@@ -29,15 +29,15 @@ public class ResponseAdminLotteryWinnerDto {
 
     }
 
-    public static ResponseAdminLotteryWinnerDto from(LotteryApplier lotteryApplier){
+    public static ResponseAdminPartsWinnerDto from(LotteryApplier lotteryApplier){
 
-        return ResponseAdminLotteryWinnerDto.builder()
+        return ResponseAdminPartsWinnerDto.builder()
                 .uid(lotteryApplier.getUid())
                 .name(lotteryApplier.getName())
                 .phoneNumber(lotteryApplier.getPhoneNumber())
                 .address(lotteryApplier.getAddress())
-                .rank(lotteryApplier.getLotteryRank())
-                .status(AdminCheckStatus.getStatus(lotteryApplier.isLotteryWinnerCheckedByAdmin()))
+                .rank(1)
+                .status(AdminCheckStatus.getStatus(lotteryApplier.isPartsWinnerCheckedByAdmin()))
                 .build();
 
     }

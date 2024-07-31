@@ -1,6 +1,7 @@
 package com.watermelon.server.admin.controller;
 
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
+import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.service.LotteryService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class AdminLotteryController {
     @GetMapping("admin/lotteries")
     public ResponseEntity<List<ResponseAdminLotteryWinnerDto>> getLotteryWinners() {
         return new ResponseEntity<>(lotteryService.getAdminLotteryWinners(), HttpStatus.OK);
+    }
+
+    @GetMapping("admin/event/parts")
+    public ResponseEntity<List<ResponseAdminPartsWinnerDto>> getPartsWinners(){
+        return new ResponseEntity<>(lotteryService.getAdminPartsWinners(), HttpStatus.OK);
     }
 
 }
