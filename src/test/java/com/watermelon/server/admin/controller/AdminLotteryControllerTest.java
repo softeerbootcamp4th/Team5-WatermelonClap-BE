@@ -132,7 +132,7 @@ class AdminLotteryControllerTest {
                 ).andExpect(status().isOk())
                 .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK));
 
-        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+        verify(lotteryService).partsWinnerCheck(TEST_UID);
 
     }
 
