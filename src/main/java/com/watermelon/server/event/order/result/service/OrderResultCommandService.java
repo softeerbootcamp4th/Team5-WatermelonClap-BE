@@ -32,7 +32,7 @@ public class OrderResultCommandService {
 
     @Transactional
     public boolean saveResponseResultWithOutLock(OrderResult orderResult){
-        if(!orderResultQueryService.isOrderApplyNotFull()){
+        if(orderResultQueryService.isOrderApplyNotFull()){
             orderResultSet.add(orderResult);
             return true;
         }
@@ -40,7 +40,7 @@ public class OrderResultCommandService {
     }
     @RedisDistributedLock(key = "orderResultLock")
     public boolean saveResponseResultWithLock(OrderResult orderResult){
-        if(!orderResultQueryService.isOrderApplyNotFull()){
+        if(orderResultQueryService.isOrderApplyNotFull()){
             orderResultSet.add(orderResult);
             return true;
         }

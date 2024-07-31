@@ -3,7 +3,6 @@ package com.watermelon.server.event.order.result.service;
 
 import com.watermelon.server.event.order.result.domain.OrderResult;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.redisson.api.RSet;
 import org.springframework.stereotype.Service;
 
