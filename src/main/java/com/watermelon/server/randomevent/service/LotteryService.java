@@ -89,4 +89,10 @@ public interface LotteryService {
      */
     void lotteryWinnerCheck(String uid);
 
+    /**
+     * uid 에 해당하는 당첨자 파츠 추첨 어드민 확인 상태를 참으로 변경
+     * @param uid 당첨자의 uid
+     */
+    void partsWinnerCheck(String uid);
+
 }

@@ -26,4 +26,10 @@ public class Constants {
     public static final String DOCUMENT_NAME_PARTS_WINNERS = "admin/event/parts";
     public static final String PATH_ADMIN_LOTTERY_WINNER_CHECK = "/admin/event/lotteries/{uid}/done";
     public static final String DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK = "admin/event/lotteries/done";
+
+    public static final String PATH_ADMIN_PARTS_WINNER_CHECK = "/admin/event/parts/{uid}/done";
+    public static final String DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK = "admin/event/parts/done";
+
 }
+
+

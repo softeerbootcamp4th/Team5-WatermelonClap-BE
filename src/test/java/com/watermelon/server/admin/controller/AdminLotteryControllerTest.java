@@ -121,4 +121,19 @@ class AdminLotteryControllerTest {
         verify(lotteryService).lotteryWinnerCheck(TEST_UID);
 
     }
+
+    @Test
+    @DisplayName("파츠 추첨 당첨자를 확인처리 한다.")
+    void partsWinnerCheckDone() throws Exception {
+
+        //when & then
+        this.mockMvc.perform(post(PATH_ADMIN_PARTS_WINNER_CHECK, TEST_UID)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK));
+
+        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+
+    }
+
 }

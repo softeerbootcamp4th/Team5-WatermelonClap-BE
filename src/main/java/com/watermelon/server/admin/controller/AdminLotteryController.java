@@ -47,4 +47,12 @@ public class AdminLotteryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/admin/event/parts/{uid}/done")
+    public ResponseEntity<Void> partsWinnerCheckDone(
+            @PathVariable String uid
+    ){
+        lotteryService.partsWinnerCheck(uid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
