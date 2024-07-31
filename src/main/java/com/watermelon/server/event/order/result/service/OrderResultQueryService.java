@@ -11,17 +11,16 @@ public class OrderResultQueryService {
     private final RSet<OrderResult> orderResultRset;
 
     @Getter
-    private final int maxCount;
+    private int availableTicket;
 
     public OrderResultQueryService(RSet orderResultRset) {
         this.orderResultRset = orderResultRset;
-        this.maxCount= 100;
+        this.availableTicket = 100;
     }
 
     public boolean isOrderApplyNotFull(){
         int count = getCurrentCount();
-
-        return count < maxCount;
+        return availableTicket-count>0;
     }
 
     private int getCurrentCount() {
