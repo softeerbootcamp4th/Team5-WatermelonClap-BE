@@ -111,4 +111,12 @@ public class LotteryServiceImpl implements LotteryService {
         lotteryApplier.lotteryWinnerCheck();
         lotteryApplierRepository.save(lotteryApplier);
     }
+
+    @Transactional //처음 상태와 변경 후 상태의 원자성 보장 필요.
+    @Override
+    public void partsWinnerCheck(String uid) {
+        LotteryApplier lotteryApplier = lotteryApplierRepository.findByUid(uid).orElseThrow();
+        lotteryApplier.partsWinnerCheck();
+        lotteryApplierRepository.save(lotteryApplier);
+    }
 }
