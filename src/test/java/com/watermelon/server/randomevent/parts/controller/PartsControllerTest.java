@@ -102,6 +102,7 @@ class PartsControllerTest {
 
     }
 
+    @Test
     @DisplayName("남은 파츠 뽑기 횟수를 반환한다.")
     void getRemainChance() throws Exception {
 
@@ -124,6 +125,7 @@ class PartsControllerTest {
 
     }
 
+    @Test
     @DisplayName("자신의 파츠 목록을 반환한다.")
     void getMyPartsList() throws Exception {
 
