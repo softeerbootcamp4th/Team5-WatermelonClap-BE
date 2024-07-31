@@ -20,6 +20,7 @@ public class OrderResultQueryService {
 
     public boolean isOrderApplyNotFull(){
         int count = getCurrentCount();
+
         return count < maxCount;
     }
 
