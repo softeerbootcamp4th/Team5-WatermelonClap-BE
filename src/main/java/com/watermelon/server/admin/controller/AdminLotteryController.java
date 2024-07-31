@@ -55,4 +55,16 @@ public class AdminLotteryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/admin/event/lotteries")
+    public ResponseEntity<Void> lottery() {
+        lotteryService.lottery();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/event/parts")
+    public ResponseEntity<Void> partsLottery(){
+        lotteryService.partsLottery();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

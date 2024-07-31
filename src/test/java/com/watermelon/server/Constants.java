@@ -30,6 +30,12 @@ public class Constants {
     public static final String PATH_ADMIN_PARTS_WINNER_CHECK = "/admin/event/parts/{uid}/done";
     public static final String DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK = "admin/event/parts/done";
 
+    public static final String PATH_LOTTERY = "/admin/event/lotteries";
+    public static final String DOCUMENT_NAME_LOTTERY = "admin/event/lotteries";
+
+    public static final String PATH_PARTS_LOTTERY = "/admin/event/parts";
+    public static final String DOCUMENT_NAME_PARTS_LOTTERY = "admin/event/parts";
+
 }
 
 

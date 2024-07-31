@@ -136,4 +136,30 @@ class AdminLotteryControllerTest {
 
     }
 
+    @Test
+    @DisplayName("추첨 이벤트 응모자에 대해 추첨을 진행한다.")
+    void lottery() throws Exception {
+
+        this.mockMvc.perform(post(PATH_LOTTERY)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_LOTTERY));
+
+        verify(lotteryService).lottery();
+
+    }
+
+    @Test
+    @DisplayName("파츠 이벤트 응모자에 대해 추첨을 진행한다.")
+    void partsLottery() throws Exception {
+
+        this.mockMvc.perform(post(PATH_PARTS_LOTTERY)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY));
+
+        verify(lotteryService).partsLottery();
+
+    }
+
 }

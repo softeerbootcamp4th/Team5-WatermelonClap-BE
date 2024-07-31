@@ -95,4 +95,14 @@ public interface LotteryService {
      */
     void partsWinnerCheck(String uid);
 
+    /**
+     * 추첨 이벤트 응모 인원에 대해 뽑기를 진행한다.
+     */
+    void lottery();
+
+    /**
+     * 파츠 이벤트 응모 인원에 대해 뽑기를 진행한다.
+     */
+    void partsLottery();
+
 }
