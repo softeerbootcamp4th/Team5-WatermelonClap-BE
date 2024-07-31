@@ -73,4 +73,19 @@ public class LotteryApplier extends BaseEntity {
         this.isLotteryApplier = true;
     }
 
+    public void lotteryWinnerCheck(){
+        this.isLotteryWinnerCheckedByAdmin = true;
+    }
+
+    public void partsWinnerCheck(){
+        this.isPartsWinner = true;
+    }
+
+    public void setLotteryReward(LotteryReward reward) {
+        this.lotteryRank = reward.getRank();
+    }
+
+    public void partsLotteryWin(){
+        this.isPartsWinner = true;
+    }
 }

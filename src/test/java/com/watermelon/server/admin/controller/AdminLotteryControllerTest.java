@@ -22,9 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static com.watermelon.server.Constants.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(AdminLotteryController.class)
@@ -85,6 +88,7 @@ class AdminLotteryControllerTest {
     }
 
     @Test
+    @DisplayName("파츠 당첨자 명단을 반환한다.")
     void getPartsWinners() throws Exception {
 
         //given
@@ -103,4 +107,59 @@ class AdminLotteryControllerTest {
                 .andDo(document(DOCUMENT_NAME_PARTS_WINNERS));
 
     }
+
+    @Test
+    @DisplayName("추첨 당첨자를 확인처리 한다.")
+    void lotteryWinnerCheckDone() throws Exception {
+
+        //when & then
+        this.mockMvc.perform(post(PATH_ADMIN_LOTTERY_WINNER_CHECK, TEST_UID)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK));
+
+        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+
+    }
+
+    @Test
+    @DisplayName("파츠 추첨 당첨자를 확인처리 한다.")
+    void partsWinnerCheckDone() throws Exception {
+
+        //when & then
+        this.mockMvc.perform(post(PATH_ADMIN_PARTS_WINNER_CHECK, TEST_UID)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
+                ).andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK));
+
+        verify(lotteryService).partsWinnerCheck(TEST_UID);
+
+    }
+
+    @Test
+    @DisplayName("추첨 이벤트 응모자에 대해 추첨을 진행한다.")
+    void lottery() throws Exception {
+
+        this.mockMvc.perform(post(PATH_LOTTERY)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_LOTTERY));
+
+        verify(lotteryService).lottery();
+
+    }
+
+    @Test
+    @DisplayName("파츠 이벤트 응모자에 대해 추첨을 진행한다.")
+    void partsLottery() throws Exception {
+
+        this.mockMvc.perform(post(PATH_PARTS_LOTTERY)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY));
+
+        verify(lotteryService).partsLottery();
+
+    }
+
 }

@@ -83,4 +83,26 @@ public interface LotteryService {
      */
     List<ResponseAdminPartsWinnerDto> getAdminPartsWinners();
 
+    /**
+     * uid 에 해당하는 당첨자 어드민 확인 상태를 참으로 변경
+     * @param uid 당첨자의 uid
+     */
+    void lotteryWinnerCheck(String uid);
+
+    /**
+     * uid 에 해당하는 당첨자 파츠 추첨 어드민 확인 상태를 참으로 변경
+     * @param uid 당첨자의 uid
+     */
+    void partsWinnerCheck(String uid);
+
+    /**
+     * 추첨 이벤트 응모 인원에 대해 뽑기를 진행한다.
+     */
+    void lottery();
+
+    /**
+     * 파츠 이벤트 응모 인원에 대해 뽑기를 진행한다.
+     */
+    void partsLottery();
+
 }
