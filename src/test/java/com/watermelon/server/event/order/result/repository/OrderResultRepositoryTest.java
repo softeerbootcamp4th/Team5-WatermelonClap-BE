@@ -1,7 +1,8 @@
 package com.watermelon.server.event.order.result.repository;
 
 import com.watermelon.server.event.order.result.domain.OrderResult;
-import com.watermelon.server.redis.config.RedissonConfig;
+import com.watermelon.server.redis.config.EmbeddedRedisConfig;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.Bean;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(classes = RedissonConfig.class)
+@SpringBootTest(classes = EmbeddedRedisConfig.class)
 class OrderResultRepositoryTest {
     @Autowired
     private RSet<OrderResult> orderResults;
