@@ -37,4 +37,8 @@ public class LotteryApplierParts extends BaseEntity {
         return lotteryApplierParts;
     }
 
+    public void toggleEquipped() {
+        isEquipped = !isEquipped;
+    }
+
 }

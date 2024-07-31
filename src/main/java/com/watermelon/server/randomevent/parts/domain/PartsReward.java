@@ -1,24 +1,22 @@
-package com.watermelon.server.randomevent.domain;
+package com.watermelon.server.randomevent.parts.domain;
 
 import com.watermelon.server.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class Link extends BaseEntity {
+public class PartsReward extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
 
-    private int viewCount;
+    private int rank;
 
-    private String link;
+    private String imgSrc;
 
-    @OneToOne
-    private LotteryApplier lotteryApplier;
+    private int winnerCount;
 
 }

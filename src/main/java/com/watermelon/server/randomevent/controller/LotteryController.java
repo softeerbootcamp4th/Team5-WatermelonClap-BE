@@ -5,6 +5,7 @@ import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.randomevent.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.randomevent.service.LotteryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,13 @@ public class LotteryController {
             return new ResponseEntity<>(ResponseLotteryRankDto.createNotApplied(), HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/reward/{rank}")
+    public ResponseEntity<ResponseRewardInfoDto> getRewardInfo(
+            @PathVariable int rank
+    ){
+        return new ResponseEntity<>(lotteryService.getRewardInfo(rank), HttpStatus.OK);
     }
 
 }

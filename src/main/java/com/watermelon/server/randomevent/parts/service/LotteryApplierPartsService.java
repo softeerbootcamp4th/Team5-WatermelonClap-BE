@@ -18,6 +18,8 @@ public interface LotteryApplierPartsService {
      */
     LotteryApplierParts addPartsAndGet(LotteryApplier lotteryApplier, Parts parts);
 
+    void toggleEquipped(String uid, Long partsId);
+  
     /**
      * uid 에 대한 응모자의 응모자-파츠 목록을 반환
      * @param uid 응모자의 uid

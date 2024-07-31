@@ -5,6 +5,7 @@ import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 import com.watermelon.server.randomevent.parts.exception.PartsNotExistException;
 import com.watermelon.server.randomevent.parts.repository.PartsRepository;
 import com.watermelon.server.randomevent.service.LotteryService;
@@ -42,6 +43,14 @@ public class PartsServiceImpl implements PartsService {
     }
 
     @Override
+    public void toggleParts(String uid, Long partId) {
+        lotteryApplierPartsService.toggleEquipped(uid, partId);
+    }
+
+    public ResponseRemainChanceDto getRemainChance(String uid) {
+        return ResponseRemainChanceDto.create(lotteryService.getRemainChance(uid));
+    }
+  
     public List<ResponseMyPartsListDto> getMyParts(String uid) {
         return ResponseMyPartsListDto.createDtoListByCategory(
                 lotteryApplierPartsService.getListByApplier(uid)

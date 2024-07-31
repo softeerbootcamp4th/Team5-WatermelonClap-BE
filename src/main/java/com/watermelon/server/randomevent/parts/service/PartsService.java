@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.parts.service;
 
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 
 import java.util.List;
 
@@ -13,6 +14,10 @@ public interface PartsService {
      * @return 파츠 뽑기 결과
      */
     ResponsePartsDrawDto drawParts(String uid);
+
+    void toggleParts(String uid, Long partId);
+  
+    ResponseRemainChanceDto getRemainChance(String uid);
 
     /**
      * uid 에 대한 유저의 파츠 목록을 dto 형식으로 반환
