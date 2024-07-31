@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 @Service
-//@RequiredArgsConstructor
 public class OrderResultQueryService {
     private final OrderResultRepository orderResultRepository;
 
@@ -15,7 +14,7 @@ public class OrderResultQueryService {
 
     public OrderResultQueryService(OrderResultRepository orderResultRepository) {
         this.orderResultRepository = orderResultRepository;
-        this.maxCount= 10;
+        this.maxCount= 100;
     }
 
     public boolean isOrderApplyNotFull(){

@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.data.redis.core.RedisHash;
 
-@Entity
+
+@RedisHash(value ="order-result")
 @Getter
 @RequiredArgsConstructor
 public class OrderResult {

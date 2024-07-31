@@ -25,8 +25,9 @@ public class RedisDistributedLockAop {
     private final RedissonClient redissonClient;
     private final AopForTransaction aopForTransaction;
 
-    
 
+    //@Around: 메소드 호출 자체를 가로챈다.
+    @Around("@annotation(com.watermelon.server.redis.annotation.RedisDistributedLock)")
     public Object lock(final ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         //현재 실행중인 method 객체를 가져온다
@@ -42,9 +43,9 @@ public class RedisDistributedLockAop {
                     redisDistributedLock.timeUnit());
             if(!lockObtainable) return false;
 
-            /*lock을 가질 수 있다면 별개의 트랜잭션을 만들어서 수행한다
+            /*lock을 가질 수 있다면 가로친 메소드를 별개의 트랜잭션을 만들어서 수행한다
             그치만 트랜잭션으로 Blocking이 가능한 것인가?
-            왜 굳이 Propagation.Required.new를 해야하는 것인가*/
+            왜 굳이 Propagation.Required.new로 새로 트랜잭션을 만들어야 해야하는 것인가*/
             return aopForTransaction.proceed(joinPoint);
         }
         catch (InterruptedException e){
