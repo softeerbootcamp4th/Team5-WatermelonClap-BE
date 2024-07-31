@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.service;
 
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
+import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
@@ -12,7 +13,6 @@ import com.watermelon.server.randomevent.repository.LotteryApplierRepository;
 import com.watermelon.server.randomevent.repository.LotteryRewardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +93,13 @@ public class LotteryServiceImpl implements LotteryService {
     public List<ResponseAdminLotteryWinnerDto> getAdminLotteryWinners() {
         return lotteryApplierRepository.findByLotteryRankNot(NOT_RANKED).stream()
                 .map(ResponseAdminLotteryWinnerDto::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ResponseAdminPartsWinnerDto> getAdminPartsWinners() {
+        return lotteryApplierRepository.findByIsPartsWinnerTrue().stream()
+                .map(ResponseAdminPartsWinnerDto::from)
                 .collect(Collectors.toList());
     }
 }

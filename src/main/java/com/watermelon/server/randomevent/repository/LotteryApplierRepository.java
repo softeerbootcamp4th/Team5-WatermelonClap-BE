@@ -18,4 +18,6 @@ public interface LotteryApplierRepository extends JpaRepository<LotteryApplier, 
 
     Page<LotteryApplier> findByIsLotteryApplierTrue(Pageable pageable);
 
+    List<LotteryApplier> findByIsPartsWinnerTrue();
+
 }
