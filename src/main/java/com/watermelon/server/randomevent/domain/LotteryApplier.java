@@ -52,6 +52,8 @@ public class LotteryApplier extends BaseEntity {
     @OneToOne(mappedBy = "lotteryApplier")
     private Link link;
 
+    @OneToOne(mappedBy = "lotteryApplier")
+    private Expectation expectation;
     @OneToMany(mappedBy = "lotteryApplier")
     private List<LotteryApplierParts> lotteryApplierParts;
 
