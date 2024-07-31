@@ -1,6 +1,7 @@
 package com.watermelon.server.admin.dto.response;
 
 import com.watermelon.server.randomevent.domain.AdminCheckStatus;
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,6 +25,19 @@ public class ResponseAdminLotteryWinnerDto {
                 .address("address")
                 .rank(1)
                 .status(AdminCheckStatus.READY)
+                .build();
+
+    }
+
+    public static ResponseAdminLotteryWinnerDto from(LotteryApplier lotteryApplier){
+
+        return ResponseAdminLotteryWinnerDto.builder()
+                .uid(lotteryApplier.getUid())
+                .name(lotteryApplier.getName())
+                .phoneNumber(lotteryApplier.getPhoneNumber())
+                .address(lotteryApplier.getAddress())
+                .rank(lotteryApplier.getLotteryRank())
+                .status(AdminCheckStatus.getStatus(lotteryApplier.isCheckedByAdmin()))
                 .build();
 
     }

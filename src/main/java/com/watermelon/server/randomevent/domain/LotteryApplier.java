@@ -43,6 +43,9 @@ public class LotteryApplier extends BaseEntity {
 
     private String address;
 
+    @Builder.Default
+    private boolean isCheckedByAdmin = false;
+
     @OneToOne(mappedBy = "lotteryApplier")
     private Link link;
 

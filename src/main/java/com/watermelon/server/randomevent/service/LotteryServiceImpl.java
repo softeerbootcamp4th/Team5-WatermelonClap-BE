@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
@@ -86,5 +87,12 @@ public class LotteryServiceImpl implements LotteryService {
     public Page<ResponseLotteryApplierDto> getApplierInfoPage(Pageable pageable) {
         return lotteryApplierRepository.findByIsLotteryApplierTrue(pageable)
                 .map(ResponseLotteryApplierDto::from);
+    }
+
+    @Override
+    public List<ResponseAdminLotteryWinnerDto> getAdminLotteryWinners() {
+        return lotteryApplierRepository.findByLotteryRankNot(NOT_RANKED).stream()
+                .map(ResponseAdminLotteryWinnerDto::from)
+                .collect(Collectors.toList());
     }
 }
