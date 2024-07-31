@@ -9,5 +9,5 @@ spring:
         format_sql: true      # 쿼리 로그 포맷 (정렬)
         show_sql: true        # 쿼리 로그 출력
   config:
-    import: classpath:application-local-db.yml,classpath:application-local-token.yml,classpath:application-dev-db.yml
+    import: classpath:application-local-db.yml,classpath:application-local-token.yml
 
