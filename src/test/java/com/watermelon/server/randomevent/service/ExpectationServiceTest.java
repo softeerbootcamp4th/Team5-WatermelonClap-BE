@@ -3,6 +3,7 @@ package com.watermelon.server.randomevent.service;
 import com.watermelon.server.randomevent.domain.Expectation;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestExpectationDto;
+import com.watermelon.server.randomevent.dto.response.ResponseExpectationDto;
 import com.watermelon.server.randomevent.error.ExpectationAlreadyExistError;
 import com.watermelon.server.randomevent.repository.ExpectationRepository;
 import org.assertj.core.api.Assertions;
@@ -16,6 +17,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,10 +38,12 @@ class ExpectationServiceTest {
 
 
     private LotteryApplier applier;
+    private RequestExpectationDto requestExpectationDto;
 
     @BeforeEach
     void setUp() {
         applier = new LotteryApplier();
+        requestExpectationDto = RequestExpectationDto.makeExpectation("ex");
     }
 
     @Test
@@ -45,22 +51,32 @@ class ExpectationServiceTest {
     void makeExpectation() {
         Mockito.when(lotteryService.findLotteryApplierByUid(any())).thenReturn(applier);
         assertDoesNotThrow(()->
-                expectationService.makeExpectation("uid",RequestExpectationDto.makeExpectation("ex")));
+                expectationService.makeExpectation("uid",requestExpectationDto));
     }
 
     @Test
     @DisplayName("기대평 이미 작성됨")
     void expectationAlreadyExist()  {
         Mockito.when(lotteryService.findLotteryApplierByUid(any())).thenReturn(applier);
-        RequestExpectationDto requestExpectationDto = RequestExpectationDto.makeExpectation("ex");
         Expectation.makeExpectation(requestExpectationDto,applier); //기대평 한 번 작성
-
-
         Assertions.assertThatCode(()-> expectationService.makeExpectation("uid",requestExpectationDto))
                 .isInstanceOf(ExpectationAlreadyExistError.class);
 
+    }
+
+    @Test
+    @DisplayName("기대평 유저용 (기대평 내용 NotNull 다른 것은 Not Null)")
+    void getExpectationsForUser() {
+        List<Expectation> expectations = new ArrayList<>();
+        expectations.add(Expectation.makeExpectation(RequestExpectationDto.makeExpectation("ex"),applier));
+        Mockito.when(expectationRepository.findTop30ByIsApprovedTrueOrderByCreatedAtDesc()).thenReturn(expectations);
 
 
-
+        expectationService.getExpectationsForUser().forEach(
+                responseExpectationDto -> {
+                    Assertions.assertThat(responseExpectationDto.getExpectation()).isNotNull();
+                    Assertions.assertThat(responseExpectationDto.getExpectationId()).isNull();
+                }
+        );
     }
 }

@@ -34,7 +34,7 @@ public class ExpectationService {
     public List<ResponseExpectationDto> getExpectationsForUser() {
         List<Expectation> expectations =
                 expectationRepository
-                        .findTop30ByApprovedIsTrueOrderByCreatedAtDesc();
+                        .findTop30ByIsApprovedTrueOrderByCreatedAtDesc();
         List<ResponseExpectationDto> responseExpectationDtos = new ArrayList<>();
         expectations.forEach(expectation -> {
             responseExpectationDtos.add(ResponseExpectationDto.forUser(expectation));

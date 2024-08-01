@@ -23,17 +23,7 @@ public class Expectation extends BaseEntity {
     private String expectation;
 
     private boolean isApproved;
-    public static  Expectation makeExpectation(
-            RequestExpectationDto requestExpectationDto
-            ,LotteryApplier lotteryApplier){
-       Expectation expectation = Expectation.builder()
-                .isApproved(false)
-                .expectation(requestExpectationDto.getExpectation())
-                .lotteryApplier(lotteryApplier)
-                .build();
-       lotteryApplier.addNewExpectation(expectation);
-       return expectation;
-    }
+
 
     @Builder
     public Expectation(LotteryApplier lotteryApplier, String expectation, boolean isApproved) {
@@ -41,4 +31,21 @@ public class Expectation extends BaseEntity {
         this.expectation = expectation;
         this.isApproved = isApproved;
     }
+
+    public static  Expectation makeExpectation(
+            RequestExpectationDto requestExpectationDto
+            ,LotteryApplier lotteryApplier){
+        Expectation expectation = Expectation.builder()
+                .isApproved(false)
+                .expectation(requestExpectationDto.getExpectation())
+                .lotteryApplier(lotteryApplier)
+                .build();
+        lotteryApplier.addNewExpectation(expectation);
+        return expectation;
+    }
+
+    public void toggleApproved(){
+        isApproved = !isApproved;
+    }
+
 }
