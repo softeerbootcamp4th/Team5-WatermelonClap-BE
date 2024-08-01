@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.parts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
@@ -15,17 +16,18 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.watermelon.server.Constants.TEST_PARTS_ID;
-import static com.watermelon.server.Constants.TEST_UID;
+import static com.watermelon.server.Constants.*;
+import static com.watermelon.server.Constants.TEST_TOKEN;
+import static com.watermelon.server.common.constants.HttpConstants.HEADER_UID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import java.util.List;
 
-import static com.watermelon.server.Constants.TEST_UID;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PartsController.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
+@Import(MockLoginInterceptorConfig.class)
 class PartsControllerTest {
 
     @Autowired
@@ -61,7 +64,7 @@ class PartsControllerTest {
 
         //when & then
         this.mockMvc.perform(post(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponseBody))
                 .andDo(document(DOCUMENT_NAME));
@@ -79,7 +82,7 @@ class PartsControllerTest {
 
         //when & then
         this.mockMvc.perform(post(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isTooManyRequests())
                 .andDo(document(DOCUMENT_NAME));
 
@@ -94,7 +97,7 @@ class PartsControllerTest {
 
         //when & then
         this.mockMvc.perform(patch(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENT_NAME));
 
@@ -118,7 +121,7 @@ class PartsControllerTest {
 
         //when & then
         this.mockMvc.perform(get(PATH)
-                .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponseBody))
                 .andDo(document(DOCUMENT_NAME));
@@ -143,7 +146,7 @@ class PartsControllerTest {
 
         //when & then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected))
                 .andDo(document(DOCUMENT_NAME));

@@ -1,7 +1,7 @@
 package com.watermelon.server.randomevent.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
+import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LotteryController.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
+@Import(MockLoginInterceptorConfig.class)
 class LotteryControllerTest {
 
     @Autowired
@@ -88,7 +90,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(TEST_NAME))
                 .andExpect(jsonPath("$.address").value(TEST_ADDRESS))
@@ -115,7 +117,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(post(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
@@ -136,7 +138,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(jsonPath("$.rank").value(-1))
                 .andExpect(jsonPath("$.applied").value(false))
                 .andDo(document(DOCUMENT_NAME)
@@ -158,7 +160,7 @@ class LotteryControllerTest {
 
         //then
         this.mockMvc.perform(get(PATH)
-                        .header(UidArgumentResolver.HEADER_UID, TEST_UID))
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rank").value(TEST_RANK))
                 .andExpect(jsonPath("$.applied").value(true))

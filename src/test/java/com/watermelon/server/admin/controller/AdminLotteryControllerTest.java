@@ -1,6 +1,7 @@
 package com.watermelon.server.admin.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AdminLotteryController.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
+@Import(MockLoginInterceptorConfig.class)
 class AdminLotteryControllerTest {
 
     @Autowired
