@@ -1,13 +1,10 @@
 package com.watermelon.server.admin.service;
 
 import com.watermelon.server.event.order.domain.OrderEvent;
-import com.watermelon.server.event.order.domain.OrderEventWinner;
-import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
-import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,16 +17,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AdminOrderServiceTest {
+class AdminOrderEventServiceTest {
 
     @InjectMocks
-    private AdminOrderService adminOrderService;
+    private AdminOrderEventService adminOrderEventService;
 
     @Mock
     private OrderEventRepository orderEventRepository;
@@ -52,7 +48,7 @@ class AdminOrderServiceTest {
     void getOrderEvents() {
         when(orderEventRepository.findAll()).thenReturn(orderEvents);
 
-        List<ResponseOrderEventDto> responseOrderEventDtos = adminOrderService.getOrderEventsForAdmin();
+        List<ResponseOrderEventDto> responseOrderEventDtos = adminOrderEventService.getOrderEventsForAdmin();
         responseOrderEventDtos.forEach( responseOrderEventDto ->
                 Assertions.assertThat(responseOrderEventDto.getQuiz().getAnswer())
                         .isEqualTo(orderEvent.getQuiz().getAnswer())
