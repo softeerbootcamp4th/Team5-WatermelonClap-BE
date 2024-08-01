@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminControllerTest {
+class AdminOrderEventControllerTest {
 
 
     @DisplayName("선착순 이벤트 생성")

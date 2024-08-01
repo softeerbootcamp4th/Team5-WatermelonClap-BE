@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminOrderService {
+public class AdminOrderEventService {
     private final OrderEventRepository orderEventRepository;
 
 

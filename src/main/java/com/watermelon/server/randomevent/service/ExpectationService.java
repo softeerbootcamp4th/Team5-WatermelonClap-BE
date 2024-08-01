@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +33,13 @@ public class ExpectationService {
     }
 
     public List<ResponseExpectationDto> getExpectationsForUser() {
-        List<Expectation> expectations =
-                expectationRepository
-                        .findTop30ByIsApprovedTrueOrderByCreatedAtDesc();
-        List<ResponseExpectationDto> responseExpectationDtos = new ArrayList<>();
-        expectations.forEach(expectation -> {
-            responseExpectationDtos.add(ResponseExpectationDto.forUser(expectation));
-        });
-        return responseExpectationDtos;
+        return expectationRepository.findTop30ByIsApprovedTrueOrderByCreatedAtDesc().stream()
+                .map(expectation -> ResponseExpectationDto.forUser(expectation))
+                .collect(Collectors.toList());
+    }
+    public List<ResponseExpectationDto> getExpectationsForAdmin() {
+        return expectationRepository.findAll().stream()
+                .map(expectation -> ResponseExpectationDto.forAdmin(expectation))
+                .collect(Collectors.toList());
     }
 }
