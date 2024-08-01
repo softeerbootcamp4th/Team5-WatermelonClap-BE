@@ -57,6 +57,9 @@ public class LotteryApplier extends BaseEntity {
     @OneToMany(mappedBy = "lotteryApplier")
     private List<LotteryApplierParts> lotteryApplierParts;
 
+    public void addNewExpectation(Expectation expectation) {
+        this.expectation = expectation;
+    }
     public void setLotteryWinnerInfo(String address, String name, String phoneNumber){
         this.address = address;
         this.name = name;

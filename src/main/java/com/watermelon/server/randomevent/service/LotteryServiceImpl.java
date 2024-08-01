@@ -203,8 +203,8 @@ public class LotteryServiceImpl implements LotteryService {
     }
 
     @Override
-    public Optional<LotteryApplier> findLotteryApplierByUid(String uid){
-        return lotteryApplierRepository.findByUid(uid);
+    public LotteryApplier findLotteryApplierByUid(String uid){
+        return lotteryApplierRepository.findByUid(uid).orElseThrow();
     }
 
 }

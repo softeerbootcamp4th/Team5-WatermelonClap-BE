@@ -108,6 +108,6 @@ public interface LotteryService {
 
 
     /*외부에서 LotteryApplier를 찾아오려고 할 떄 사용해야하는 메소드*/
-    Optional<LotteryApplier> findLotteryApplierByUid(String uid);
+    LotteryApplier findLotteryApplierByUid(String uid);
 
 }

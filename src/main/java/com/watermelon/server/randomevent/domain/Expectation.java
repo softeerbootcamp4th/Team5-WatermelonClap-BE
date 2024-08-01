@@ -24,12 +24,13 @@ public class Expectation extends BaseEntity {
     public static  Expectation makeExpectation(
             RequestExpectationDto requestExpectationDto
             ,LotteryApplier lotteryApplier){
-        return Expectation.builder()
+       Expectation expectation = Expectation.builder()
                 .isApproved(false)
                 .expectation(requestExpectationDto.getExpectation())
                 .lotteryApplier(lotteryApplier)
                 .build();
-
+       lotteryApplier.addNewExpectation(expectation);
+       return expectation;
     }
 
     @Builder

@@ -18,9 +18,13 @@ public class ExpectationService {
 
     public void makeExpectation(String uid,RequestExpectationDto requestExpectationDto)
             throws ExpectationAlreadyExistError {
-        LotteryApplier lotteryApplier = lotteryService.findLotteryApplierByUid(uid).orElseThrow();
-        if(lotteryApplier.getExpectation()!=null)throw new ExpectationAlreadyExistError();
+        LotteryApplier lotteryApplier = lotteryService.findLotteryApplierByUid(uid);
+        if(isExpectationAlreadyExist(lotteryApplier)) throw new ExpectationAlreadyExistError();
         Expectation expectation = Expectation.makeExpectation(requestExpectationDto,lotteryApplier);
         expectationRepository.save(expectation);
+    }
+
+    private static boolean isExpectationAlreadyExist(LotteryApplier lotteryApplier) {
+        return lotteryApplier.getExpectation() != null;
     }
 }
