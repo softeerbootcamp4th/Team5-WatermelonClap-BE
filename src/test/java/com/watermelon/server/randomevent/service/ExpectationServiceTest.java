@@ -42,14 +42,15 @@ class ExpectationServiceTest {
 
     @Test
     @DisplayName("기대평 작성 정상")
-    void makeExpectation() throws ExpectationAlreadyExistError {
+    void makeExpectation() {
         Mockito.when(lotteryService.findLotteryApplierByUid(any())).thenReturn(applier);
-        expectationService.makeExpectation("uid",RequestExpectationDto.makeExpectation("ex"));
+        assertDoesNotThrow(()->
+                expectationService.makeExpectation("uid",RequestExpectationDto.makeExpectation("ex")));
     }
 
     @Test
     @DisplayName("기대평 이미 작성됨")
-    void expectationAlreadyExist() throws ExpectationAlreadyExistError {
+    void expectationAlreadyExist()  {
         Mockito.when(lotteryService.findLotteryApplierByUid(any())).thenReturn(applier);
         RequestExpectationDto requestExpectationDto = RequestExpectationDto.makeExpectation("ex");
         Expectation.makeExpectation(requestExpectationDto,applier); //기대평 한 번 작성
