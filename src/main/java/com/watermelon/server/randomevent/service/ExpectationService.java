@@ -1,10 +1,12 @@
 package com.watermelon.server.randomevent.service;
 
+import com.watermelon.server.admin.dto.response.ResponseAdminExpectationApprovedDto;
 import com.watermelon.server.randomevent.domain.Expectation;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.dto.request.RequestExpectationDto;
 import com.watermelon.server.randomevent.dto.response.ResponseExpectationDto;
 import com.watermelon.server.randomevent.error.ExpectationAlreadyExistError;
+import com.watermelon.server.randomevent.error.ExpectationNotExist;
 import com.watermelon.server.randomevent.repository.ExpectationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,10 @@ public class ExpectationService {
         return expectationRepository.findAll().stream()
                 .map(expectation -> ResponseExpectationDto.forAdmin(expectation))
                 .collect(Collectors.toList());
+    }
+    public ResponseAdminExpectationApprovedDto toggleExpectation(Long expectationId) throws ExpectationNotExist {
+        Expectation expectation = expectationRepository.findById(expectationId).orElseThrow(ExpectationNotExist::new);
+        expectation.toggleApproved();
+        return ResponseAdminExpectationApprovedDto.forAdminAfterToggleIsApproved(expectation);
     }
 }
