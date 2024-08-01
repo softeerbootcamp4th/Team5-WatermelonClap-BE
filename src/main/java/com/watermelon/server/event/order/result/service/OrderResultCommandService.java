@@ -29,7 +29,6 @@ public class OrderResultCommandService {
         return ResponseApplyTicketDto.fullApply();
     }
 
-
     @Transactional
     public boolean saveResponseResultWithOutLock(OrderResult orderResult){
         if(orderResultQueryService.isOrderApplyNotFull()){

@@ -30,4 +30,5 @@ public class ResponseApplyTicketDto {
                 .ApplyTicket(null)
                 .build();
     }
+
 }

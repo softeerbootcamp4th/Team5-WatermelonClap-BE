@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LotteryService {
 
@@ -104,5 +105,9 @@ public interface LotteryService {
      * 파츠 이벤트 응모 인원에 대해 뽑기를 진행한다.
      */
     void partsLottery();
+
+
+    /*외부에서 LotteryApplier를 찾아오려고 할 떄 사용해야하는 메소드*/
+    LotteryApplier findLotteryApplierByUid(String uid);
 
 }
