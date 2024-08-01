@@ -15,6 +15,7 @@ public class Constants {
 
     public static final String HEADER_NAME_AUTHORIZATION = "Authorization";
     public static final String HEADER_VALUE_BEARER = "Bearer";
+    public static final String HEADER_VALUE_SPACE = " ";
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_SIZE = "size";
 
