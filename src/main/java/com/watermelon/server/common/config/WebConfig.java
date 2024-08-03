@@ -33,7 +33,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns(LOTTERIES_RANK)
                 .addPathPatterns(PARTS)
                 .addPathPatterns(PARTS_EQUIP)
-                .addPathPatterns(PARTS_REMAIN);
+                .addPathPatterns(PARTS_REMAIN)
+                .addPathPatterns(MY_LINK);
     }
 
 }
