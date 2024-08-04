@@ -4,6 +4,7 @@ import com.watermelon.server.randomevent.auth.exception.AuthenticationException;
 import com.watermelon.server.randomevent.auth.utils.AuthUtils;
 import com.watermelon.server.randomevent.auth.exception.InvalidTokenException;
 import com.watermelon.server.randomevent.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.service.LotteryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static com.watermelon.server.common.constants.HttpConstants.HEADER_AUTHORIZATION;
-import static com.watermelon.server.common.constants.HttpConstants.HEADER_UID;
+import static com.watermelon.server.common.constants.HttpConstants.*;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +20,7 @@ import static com.watermelon.server.common.constants.HttpConstants.HEADER_UID;
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
     private final TokenVerifier tokenVerifier;
+    private final LotteryService lotteryService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -29,9 +30,21 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         try {
             String uid = tokenVerifier.verify(token);
             request.setAttribute(HEADER_UID, uid);
+
+            checkFirstLogin(uid);
+
             return true;
         }catch (InvalidTokenException e) {
             throw new AuthenticationException("invalid token");
         }
     }
+
+    private void checkFirstLogin(String uid){
+        if(lotteryService.isExist(uid)) return;
+
+        //만약 등록되지 않은 유저라면
+        lotteryService.registration(uid);
+
+    }
+
 }

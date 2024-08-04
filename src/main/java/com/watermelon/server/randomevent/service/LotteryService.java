@@ -110,4 +110,17 @@ public interface LotteryService {
     /*외부에서 LotteryApplier를 찾아오려고 할 떄 사용해야하는 메소드*/
     LotteryApplier findLotteryApplierByUid(String uid);
 
+    /**
+     * 추첨 응모자를 등록한다.
+     * @param uid 응모자의 uid
+     */
+    void registration(String uid);
+
+    /**
+     * uid를 가진 추첨 응모자의 존재 여부를 반환한다.
+     * @param uid 응모자의 uid
+     * @return 존재 여부
+     */
+    boolean isExist(String uid);
+
 }
