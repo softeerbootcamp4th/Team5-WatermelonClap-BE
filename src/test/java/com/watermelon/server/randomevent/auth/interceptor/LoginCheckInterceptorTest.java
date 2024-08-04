@@ -88,6 +88,22 @@ class LoginCheckInterceptorTest {
 
     }
 
+    @Test
+    @DisplayName("처음 로그인하고, 특정 링크로 부터 접속했을 경우 해당 링크의 조회수를 증가시킨다.")
+    void preHandleFirstLoginCaseLinkViewTest(){
+
+        //given
+        mockVerifyForUser();
+        Mockito.when(request.getHeader(HEADER_LINK_ID)).thenReturn(TEST_LINK);
+
+        //when
+        loginCheckInterceptor.preHandle(request, response, null);
+
+        //then
+        verify(linkService).addLinkViewCount(TEST_LINK);
+
+    }
+
     private void mockVerifyForUser(){
         Mockito.when(request.getHeader(HEADER_NAME_AUTHORIZATION)).thenReturn(HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN);
         Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
