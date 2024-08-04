@@ -19,7 +19,7 @@ public class ResponseLotteryApplierDto {
 
         return ResponseLotteryApplierDto.builder()
                 .uid(lotteryApplier.getUid())
-                .link(lotteryApplier.getLink().getLink())
+                .link(lotteryApplier.getLink().getLinkKey())
                 .remainChance(lotteryApplier.getRemainChance())
                 .rank(lotteryApplier.getLotteryRank())
                 .build();

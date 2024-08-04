@@ -9,7 +9,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -42,7 +41,7 @@ class LinkServiceImplTest {
         LotteryApplier lotteryApplier = LotteryApplier.builder()
                 .link(
                         Link.builder()
-                                .link(TEST_LINK)
+                                .linkKey(TEST_LINK)
                                 .build()
                 )
                 .build();
@@ -68,7 +67,7 @@ class LinkServiceImplTest {
         //given
         Link link = Link.createLink(Mockito.mock(LotteryApplier.class));
         int originalViewCount = link.getViewCount();
-        Mockito.when(linkRepository.findByLink(TEST_LINK)).thenReturn(Optional.ofNullable(link));
+        Mockito.when(linkRepository.findByLinkKey(TEST_LINK)).thenReturn(Optional.ofNullable(link));
 
         //when
         linkService.addLinkViewCount(TEST_LINK);

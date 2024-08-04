@@ -25,7 +25,7 @@ public class Link extends BaseEntity {
     @Builder.Default
     private int viewCount=0;
 
-    private String link;
+    private String linkKey;
 
     @OneToOne
     private LotteryApplier lotteryApplier;
@@ -34,7 +34,7 @@ public class Link extends BaseEntity {
 
         return Link.builder()
                 .lotteryApplier(lotteryApplier)
-                .link(generateLink())
+                .linkKey(generateLink())
                 .build();
 
     }
