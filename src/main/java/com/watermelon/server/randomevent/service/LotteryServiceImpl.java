@@ -207,4 +207,14 @@ public class LotteryServiceImpl implements LotteryService {
         return lotteryApplierRepository.findByUid(uid).orElseThrow();
     }
 
+    @Override
+    public void registration(String uid) {
+        lotteryApplierRepository.save(LotteryApplier.createLotteryApplier(uid));
+    }
+
+    @Override
+    public boolean isExist(String uid) {
+        return lotteryApplierRepository.existsByUid(uid);
+    }
+
 }

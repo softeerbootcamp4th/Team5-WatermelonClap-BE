@@ -49,11 +49,12 @@ public class LotteryApplier extends BaseEntity {
     @Builder.Default
     private boolean isPartsWinnerCheckedByAdmin = false;
 
-    @OneToOne(mappedBy = "lotteryApplier")
+    @OneToOne(mappedBy = "lotteryApplier", cascade = CascadeType.ALL)
     private Link link;
 
     @OneToOne(mappedBy = "lotteryApplier")
     private Expectation expectation;
+
     @OneToMany(mappedBy = "lotteryApplier")
     private List<LotteryApplierParts> lotteryApplierParts;
 
@@ -93,4 +94,16 @@ public class LotteryApplier extends BaseEntity {
     public void partsLotteryWin(){
         this.isPartsWinner = true;
     }
+
+    public static LotteryApplier createLotteryApplier(String uid){
+
+        LotteryApplier lotteryApplier = LotteryApplier.builder()
+                .uid(uid)
+                .build();
+
+        lotteryApplier.link = Link.createLink(lotteryApplier);
+
+        return lotteryApplier;
+    }
+
 }
