@@ -43,4 +43,8 @@ public class Link extends BaseEntity {
         return UUID.randomUUID().toString();
     }
 
+    public void addLinkViewCount(){
+        viewCount++;
+    }
+
 }
