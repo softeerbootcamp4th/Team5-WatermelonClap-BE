@@ -11,4 +11,5 @@ public interface LinkService {
      */
     MyLinkDto getMyLink(String uid);
 
+    void addLinkViewCount(String linkId);
 }
