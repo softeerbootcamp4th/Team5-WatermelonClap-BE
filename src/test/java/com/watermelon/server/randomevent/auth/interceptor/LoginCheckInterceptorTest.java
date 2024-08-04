@@ -2,6 +2,8 @@ package com.watermelon.server.randomevent.auth.interceptor;
 
 import com.watermelon.server.randomevent.auth.exception.AuthenticationException;
 import com.watermelon.server.randomevent.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.link.service.LinkService;
+import com.watermelon.server.randomevent.service.LotteryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.assertj.core.api.Assertions;
@@ -14,8 +16,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.watermelon.server.Constants.*;
+import static com.watermelon.server.common.constants.HttpConstants.HEADER_LINK_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class LoginCheckInterceptorTest {
@@ -23,18 +27,27 @@ class LoginCheckInterceptorTest {
     @Mock
     private TokenVerifier tokenVerifier;
 
+    @Mock
+    private LotteryService lotteryService;
+
+    @Mock
+    private LinkService linkService;
+
     @InjectMocks
     private LoginCheckInterceptor loginCheckInterceptor;
+
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private HttpServletResponse response;
 
     @Test
     @DisplayName("tokenVerifier 가 UID 를 정상적으로 반환하면 true 를 반환한다.")
     void preHandleSuccessCase() {
-        //given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
 
-        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
-        Mockito.when(request.getHeader(HEADER_NAME_AUTHORIZATION)).thenReturn(HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN);
+        //given
+        mockVerifyForUser();
 
         //when
         boolean actual = loginCheckInterceptor.preHandle(
@@ -50,17 +63,39 @@ class LoginCheckInterceptorTest {
     void preHandleFailureCase() {
 
         //given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        Mockito.doThrow(AuthenticationException.class).when(tokenVerifier).verify(TEST_TOKEN);
-        Mockito.when(request.getHeader(HEADER_NAME_AUTHORIZATION)).thenReturn(HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN);
+        mockNotVerifyForUser();
 
         //when & then
         Assertions.assertThatThrownBy(() -> loginCheckInterceptor.preHandle(
                 request,
                 response, null)).isInstanceOf(AuthenticationException.class);
 
+    }
+
+    @Test
+    @DisplayName("처음 로그인할 경우 회원가입한다.")
+    void preHandleFirstLoginCaseRegistrationTest(){
+
+        //given
+        mockVerifyForUser();
+        Mockito.when(lotteryService.isExist(TEST_UID)).thenReturn(false);
+
+        //when
+        loginCheckInterceptor.preHandle(request, response, null);
+
+        //then
+        verify(lotteryService).registration(TEST_UID);
+
+    }
+
+    private void mockVerifyForUser(){
+        Mockito.when(request.getHeader(HEADER_NAME_AUTHORIZATION)).thenReturn(HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN);
+        Mockito.when(tokenVerifier.verify(TEST_TOKEN)).thenReturn(TEST_UID);
+    }
+
+    private void mockNotVerifyForUser(){
+        Mockito.doThrow(AuthenticationException.class).when(tokenVerifier).verify(TEST_TOKEN);
+        Mockito.when(request.getHeader(HEADER_NAME_AUTHORIZATION)).thenReturn(HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TEST_TOKEN);
     }
 
 }
