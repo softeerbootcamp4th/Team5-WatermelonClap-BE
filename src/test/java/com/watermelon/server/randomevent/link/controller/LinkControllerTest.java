@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.Constants;
 import com.watermelon.server.DocumentConstants;
 import com.watermelon.server.MockLoginInterceptorConfig;
+import com.watermelon.server.annotations.ControllerTest;
 import com.watermelon.server.randomevent.controller.LotteryController;
 import com.watermelon.server.randomevent.link.dto.MyLinkDto;
 import com.watermelon.server.randomevent.link.service.LinkService;
@@ -26,10 +27,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ControllerTest
 @WebMvcTest(LinkController.class)
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-@Import(MockLoginInterceptorConfig.class)
 class LinkControllerTest {
 
     @Autowired

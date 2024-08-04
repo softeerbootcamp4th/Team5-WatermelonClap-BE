@@ -5,6 +5,8 @@ import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
+import com.watermelon.server.annotations.ControllerTest;
+import com.watermelon.server.randomevent.controller.LotteryController;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,11 +33,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@ControllerTest
 @WebMvcTest(AdminLotteryController.class)
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-@Import(MockLoginInterceptorConfig.class)
 class AdminLotteryControllerTest {
 
     @Autowired

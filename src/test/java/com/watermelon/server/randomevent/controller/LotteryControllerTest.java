@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.MockLoginInterceptorConfig;
+import com.watermelon.server.annotations.ControllerTest;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -31,10 +32,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ControllerTest
 @WebMvcTest(LotteryController.class)
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-@Import(MockLoginInterceptorConfig.class)
 class LotteryControllerTest {
 
     @Autowired
