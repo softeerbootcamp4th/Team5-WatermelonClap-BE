@@ -26,4 +26,11 @@ public interface PartsService {
      */
     List<ResponseMyPartsListDto> getMyParts(String uid);
 
+    /**
+     * 링크 키에 대한 유저의 파츠 목록 반환
+     * @param linkKey 링크 키
+     * @return 링크에 대한 유저의 파츠 목록
+     */
+    List<ResponseMyPartsListDto> getPartsList(String linkKey);
+
 }
