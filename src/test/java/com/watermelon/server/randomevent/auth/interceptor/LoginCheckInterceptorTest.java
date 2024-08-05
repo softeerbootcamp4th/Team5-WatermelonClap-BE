@@ -17,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.common.constants.HttpConstants.HEADER_LINK_ID;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -94,13 +93,13 @@ class LoginCheckInterceptorTest {
 
         //given
         mockVerifyForUser();
-        Mockito.when(request.getHeader(HEADER_LINK_ID)).thenReturn(TEST_LINK);
+        Mockito.when(request.getHeader(HEADER_LINK_ID)).thenReturn(TEST_URI);
 
         //when
         loginCheckInterceptor.preHandle(request, response, null);
 
         //then
-        verify(linkService).addLinkViewCount(TEST_LINK);
+        verify(linkService).addLinkViewCount(TEST_URI);
 
     }
 

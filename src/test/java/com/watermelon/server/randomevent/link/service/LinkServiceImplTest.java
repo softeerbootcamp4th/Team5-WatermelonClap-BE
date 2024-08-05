@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.watermelon.server.Constants.TEST_LINK;
+import static com.watermelon.server.Constants.TEST_URI;
 import static com.watermelon.server.Constants.TEST_UID;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +41,7 @@ class LinkServiceImplTest {
         LotteryApplier lotteryApplier = LotteryApplier.builder()
                 .link(
                         Link.builder()
-                                .linkKey(TEST_LINK)
+                                .uri(TEST_URI)
                                 .build()
                 )
                 .build();
@@ -50,7 +50,7 @@ class LinkServiceImplTest {
                 lotteryApplier
         );
 
-        MyLinkDto expected = MyLinkDto.create(TEST_LINK);
+        MyLinkDto expected = MyLinkDto.create(TEST_URI);
 
         //when
         MyLinkDto actual = linkService.getMyLink(TEST_UID);
@@ -67,10 +67,10 @@ class LinkServiceImplTest {
         //given
         Link link = Link.createLink(Mockito.mock(LotteryApplier.class));
         int originalViewCount = link.getViewCount();
-        Mockito.when(linkRepository.findByLinkKey(TEST_LINK)).thenReturn(Optional.ofNullable(link));
+        Mockito.when(linkRepository.findByUri(TEST_URI)).thenReturn(Optional.ofNullable(link));
 
         //when
-        linkService.addLinkViewCount(TEST_LINK);
+        linkService.addLinkViewCount(TEST_URI);
         int newViewCount = link.getViewCount();
 
         //then

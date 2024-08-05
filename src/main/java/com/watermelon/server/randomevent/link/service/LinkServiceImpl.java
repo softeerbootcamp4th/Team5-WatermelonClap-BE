@@ -24,26 +24,26 @@ public class LinkServiceImpl implements LinkService{
         return MyLinkDto.create(
                 lotteryApplier
                         .getLink()
-                        .getLinkKey()
+                        .getUri()
         );
     }
 
     @Override
     @Transactional
-    public void addLinkViewCount(String linkKey) {
-        Link link = findLink(linkKey);
+    public void addLinkViewCount(String uri) {
+        Link link = findLink(uri);
         link.addLinkViewCount();
         linkRepository.save(link);
     }
 
     @Override
-    public LotteryApplier getApplierByLinkKey(String linkKey) {
-        Link link = findLink(linkKey);
+    public LotteryApplier getApplierByLinkKey(String uri) {
+        Link link = findLink(uri);
         return link.getLotteryApplier();
     }
 
-    private Link findLink(String linkKey){
-        return linkRepository.findByLinkKey(linkKey).orElseThrow(LinkNotFoundException::new);
+    private Link findLink(String uri){
+        return linkRepository.findByUri(uri).orElseThrow(LinkNotFoundException::new);
     }
 
 }

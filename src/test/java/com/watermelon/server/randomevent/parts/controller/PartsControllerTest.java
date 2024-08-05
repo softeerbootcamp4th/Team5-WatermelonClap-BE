@@ -2,10 +2,7 @@ package com.watermelon.server.randomevent.parts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.DocumentConstants;
-import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.annotations.ControllerTest;
-import com.watermelon.server.common.constants.PathConstants;
-import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
@@ -15,18 +12,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.Constants.TEST_TOKEN;
-import static com.watermelon.server.common.constants.HttpConstants.HEADER_UID;
 import static com.watermelon.server.common.constants.PathConstants.PARTS_LINK_LIST;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -162,10 +154,10 @@ class PartsControllerTest {
         //given
         List<ResponseMyPartsListDto> responseMyPartsListDtos = ResponseMyPartsListDto.createTestDtoList();
 
-        Mockito.when(partsService.getPartsList(TEST_LINK)).thenReturn(responseMyPartsListDtos);
+        Mockito.when(partsService.getPartsList(TEST_URI)).thenReturn(responseMyPartsListDtos);
 
         //when & then
-        this.mockMvc.perform(get(PARTS_LINK_LIST, TEST_LINK))
+        this.mockMvc.perform(get(PARTS_LINK_LIST, TEST_URI))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         objectMapper.writeValueAsString(responseMyPartsListDtos)
