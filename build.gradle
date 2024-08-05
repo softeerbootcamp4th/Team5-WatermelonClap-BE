@@ -29,6 +29,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+
 	//firebase
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 
@@ -39,6 +40,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
