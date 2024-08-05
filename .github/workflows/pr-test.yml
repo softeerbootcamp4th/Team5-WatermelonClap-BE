@@ -56,7 +56,7 @@ jobs:
 
       - name: Docker build
         run: |
-          cd /home/runner/work/Team5-WatermelonClap-BE/Team6-WatermelonClap-BE
+          cd /home/runner/work/Team5-WatermelonClap-BE/Team5-WatermelonClap-BE
           ls -al
 
 
