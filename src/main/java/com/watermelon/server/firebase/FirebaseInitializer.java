@@ -7,9 +7,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * firebase 초기 설정 및 빈 등록
@@ -27,7 +29,8 @@ public class FirebaseInitializer {
     public FirebaseApp firebaseApp() throws IOException {
         log.info("Initializing Firebase.");
         //TODO 환경변수로 변경 필요
-        FileInputStream serviceAccount = new FileInputStream("./src/main/resources/firebase.json");
+        ClassPathResource resource = new ClassPathResource("firebase.json");
+        InputStream serviceAccount = resource.getInputStream();
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
