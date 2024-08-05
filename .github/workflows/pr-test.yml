@@ -83,5 +83,5 @@ jobs:
       - name: 🔧 Build Spring server
         run: |
           chmod +x ./gradlew
-          ./gradlew clean build -x test
+          ./gradlew clean build 
           ls -al
