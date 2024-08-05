@@ -13,7 +13,7 @@ public class PartsReward extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
-    private int rank;
+    private int partsRank;
 
     private String imgSrc;
 
