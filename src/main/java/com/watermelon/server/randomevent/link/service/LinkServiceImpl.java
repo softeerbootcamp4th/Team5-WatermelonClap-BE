@@ -5,6 +5,7 @@ import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.link.dto.MyLinkDto;
 import com.watermelon.server.randomevent.link.exception.LinkNotFoundException;
 import com.watermelon.server.randomevent.link.repository.LinkRepository;
+import com.watermelon.server.randomevent.link.utils.LinkUtils;
 import com.watermelon.server.randomevent.service.LotteryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,11 @@ public class LinkServiceImpl implements LinkService{
     public LotteryApplier getApplierByLinkKey(String uri) {
         Link link = findLink(uri);
         return link.getLotteryApplier();
+    }
+
+    @Override
+    public String getUrl(String shortedUri) {
+        return LinkUtils.fromBase62(shortedUri);
     }
 
     private Link findLink(String uri){
