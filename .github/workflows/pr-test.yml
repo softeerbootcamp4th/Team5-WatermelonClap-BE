@@ -34,7 +34,7 @@ jobs:
           echo "${{ secrets.DEPLOY }}" | base64 --decode > src/main/resources/application-deploy.yml
           echo "${{ secrets.DEPLOY_DB }}" | base64 --decode > src/main/resources/application-deploy-db.yml
           echo "${{ secrets.DEPLOY_JWT_TOKEN }}" | base64 --decode > src/main/resources/application-deploy-token.yml
-          echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
+          echo "${{ secrets.FIREBASE }}" | base64 --decode > src/main/resources/firebase.json
           find src
 
       # Gradle wrapper 파일 실행 권한주기
