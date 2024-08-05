@@ -27,7 +27,7 @@ public class FirebaseInitializer {
     public FirebaseApp firebaseApp() throws IOException {
         log.info("Initializing Firebase.");
         //TODO 환경변수로 변경 필요
-        FileInputStream serviceAccount = new FileInputStream("firebase.json");
+        FileInputStream serviceAccount = new FileInputStream("./src/main/resources/firebase.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
