@@ -1,8 +1,10 @@
 package com.watermelon.server.randomevent.parts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watermelon.server.DocumentConstants;
 import com.watermelon.server.MockLoginInterceptorConfig;
 import com.watermelon.server.annotations.ControllerTest;
+import com.watermelon.server.common.constants.PathConstants;
 import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
@@ -23,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.Constants.TEST_TOKEN;
 import static com.watermelon.server.common.constants.HttpConstants.HEADER_UID;
+import static com.watermelon.server.common.constants.PathConstants.PARTS_LINK_LIST;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -91,7 +94,7 @@ class PartsControllerTest {
     @DisplayName("파츠 상태 변경에 성공")
     void toggleParts() throws Exception {
 
-        final String PATH = "/event/parts/1/"+TEST_PARTS_ID;
+        final String PATH = "/event/parts/"+TEST_PARTS_ID;
         final String DOCUMENT_NAME = "event/parts/equip";
 
         //when & then
@@ -151,4 +154,24 @@ class PartsControllerTest {
                 .andDo(document(DOCUMENT_NAME));
 
     }
+
+    @Test
+    @DisplayName("링크 키의 주인에 대한 파츠 목록을 반환한다.")
+    void getLinkPartsList() throws Exception {
+
+        //given
+        List<ResponseMyPartsListDto> responseMyPartsListDtos = ResponseMyPartsListDto.createTestDtoList();
+
+        Mockito.when(partsService.getPartsList(TEST_LINK)).thenReturn(responseMyPartsListDtos);
+
+        //when & then
+        this.mockMvc.perform(get(PARTS_LINK_LIST, TEST_LINK))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        objectMapper.writeValueAsString(responseMyPartsListDtos)
+                ))
+                .andDo(document(DocumentConstants.PARTS_LINK_LIST));
+
+    }
+
 }
