@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.repository;
 
+import com.watermelon.server.randomevent.domain.Link;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,4 +64,22 @@ class LotteryApplierRepositoryTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("LotteryApplier 를 저장하면 Link 도 함께 저장된다.")
+    void saveLotteryApplierWithLinkTest(){
+
+        //given
+        LotteryApplier lotteryApplier = LotteryApplier.createLotteryApplier(TEST_UID);
+        Link link = lotteryApplier.getLink();
+
+        //when
+        lotteryApplierRepository.save(lotteryApplier);
+
+        //then
+        LotteryApplier savedLotteryApplier = lotteryApplierRepository.findByUid(TEST_UID).orElseThrow();
+        assertThat(link.getLinkKey()).isEqualTo(savedLotteryApplier.getLink().getLinkKey());
+
+    }
+
 }

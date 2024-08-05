@@ -23,6 +23,7 @@ import java.util.Optional;
 import static com.watermelon.server.Constants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -171,6 +172,35 @@ class LotteryServiceImplTest {
         //then
         verify(lotteryApplierRepository).save(captor.capture());
         assertThat(captor.getValue().isLotteryApplier()).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("회원가입")
+    void registration() {
+
+        //given
+        ArgumentCaptor<LotteryApplier> captor = ArgumentCaptor.forClass(LotteryApplier.class);
+
+        //when
+        lotteryService.registration(TEST_UID);
+
+        //then
+        verify(lotteryApplierRepository, times(1)).save(captor.capture());
+
+        assertThat(captor.getValue().getUid()).isEqualTo(TEST_UID);
+
+    }
+
+    @Test
+    @DisplayName("응모자가 이미 존재")
+    void isExist() {
+
+        //when
+        lotteryService.isExist(TEST_UID);
+
+        //then
+        verify(lotteryApplierRepository).existsByUid(TEST_UID);
 
     }
 }

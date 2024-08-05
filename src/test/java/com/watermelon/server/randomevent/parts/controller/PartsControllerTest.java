@@ -2,6 +2,7 @@ package com.watermelon.server.randomevent.parts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.MockLoginInterceptorConfig;
+import com.watermelon.server.annotations.ControllerTest;
 import com.watermelon.server.randomevent.auth.resolver.UidArgumentResolver;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
@@ -33,10 +34,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ControllerTest
 @WebMvcTest(PartsController.class)
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-@Import(MockLoginInterceptorConfig.class)
 class PartsControllerTest {
 
     @Autowired

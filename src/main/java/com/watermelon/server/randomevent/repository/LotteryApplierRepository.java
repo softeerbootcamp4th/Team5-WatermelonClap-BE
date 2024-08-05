@@ -24,6 +24,6 @@ public interface LotteryApplierRepository extends JpaRepository<LotteryApplier, 
 
     List<LotteryApplier> findByIsPartsApplierTrue();
 
-
+    boolean existsByUid(String uid);
 
 }
