@@ -75,7 +75,7 @@ jobs:
             docker tag ${{ secrets.DOCKER_USERNAME }}/watermelon:latest watermelon:latest
             docker stop watermelon:latest
           
-            docker run -d --rm -p 8080:8080 --net watermelon:latest
+            docker run -d --name watermelon --rm -p 8080:8080 watermelon:latest
             docker rm $(docker ps --filter 'status=exited' -a -q)
             # 실행 중이지 않으 모든 컨테인 삭제
             docker image prune -a -f
