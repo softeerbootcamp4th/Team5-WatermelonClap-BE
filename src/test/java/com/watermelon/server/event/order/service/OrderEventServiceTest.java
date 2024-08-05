@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 
 //@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //replace None 사용시 실제 DB사용
-@TestPropertySource("classpath:application-local-db.yml")
+//@TestPropertySource("classpath:application-local-db.yml")
 @SpringBootTest(classes = ServerApplication.class)
 class OrderEventServiceTest {
 
