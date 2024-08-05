@@ -77,7 +77,7 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/watermelon:latest
             docker tag ${{ secrets.DOCKER_USERNAME }}/watermelon:latest watermelon:latest
-            docker stop watermelon:latest
+            docker stop watermelon
             
             docker run -d --name watermelon --rm -p 8080:8080 watermelon:latest
             docker rm $(docker ps --filter 'status=exited' -a -q)
