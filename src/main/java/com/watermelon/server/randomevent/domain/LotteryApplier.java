@@ -87,7 +87,7 @@ public class LotteryApplier extends BaseEntity {
     }
 
     public void setLotteryReward(LotteryReward reward) {
-        this.lotteryRank = reward.getRank();
+        this.lotteryRank = reward.getLotteryRank();
     }
 
     public void partsLotteryWin(){
