@@ -16,4 +16,6 @@ public interface LinkService {
      * @param linkId 링크 키
      */
     void addLinkViewCount(String linkId);
+
+    String getApplierByLinkKey(String linkKey);
 }
