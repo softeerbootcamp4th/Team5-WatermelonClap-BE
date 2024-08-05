@@ -72,6 +72,7 @@ jobs:
         run: |
           mkdir -p src/main/resources
           echo "${{ secrets.DEPLOY_DB }}" | base64 --decode > src/main/resources/application-deploy-db.yml
+          echo "${{ secrets.DEPLOY_JWT_TOKEN }}" | base64 --decode > src/main/resources/application-local-token.yml
           echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
           find src
           
