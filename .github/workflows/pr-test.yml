@@ -64,7 +64,24 @@ jobs:
           docker push ${{secrets.DOCKER_USERNAME}}/watermelon:latest
         
           
+      - name: deploy in aws
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{secrets.SSH_KEY}}
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USER}}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/watermelon:latest
+            docker tag ${{ secrets.DOCKER_USERNAME }}/watermelon:latest watermelon:latest
+            docker stop watermelon:latest
           
+            docker run -d --rm -p 8080:8080 --net watermelon:latest
+            docker rm $(docker ps --filter 'status=exited' -a -q)
+            # 실행 중이지 않으 모든 컨테인 삭제
+            docker image prune -a -f
+            # 사용하지않은 모든 이미지 삭제
+          
+
 
 #  deploy:
 #    runs-on: ubuntu-latest
