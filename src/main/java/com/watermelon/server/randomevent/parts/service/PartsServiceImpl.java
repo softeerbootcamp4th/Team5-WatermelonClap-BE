@@ -61,7 +61,8 @@ public class PartsServiceImpl implements PartsService {
 
     @Override
     public List<ResponseMyPartsListDto> getPartsList(String linkKey) {
-        return getMyParts(linkService.getApplierByLinkKey(linkKey));
+        LotteryApplier lotteryApplier = linkService.getApplierByLinkKey(linkKey);
+        return getMyParts(lotteryApplier.getUid());
     }
 
     /**

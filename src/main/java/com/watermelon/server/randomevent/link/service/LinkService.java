@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.link.service;
 
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.link.dto.MyLinkDto;
 
 public interface LinkService {
@@ -17,5 +18,5 @@ public interface LinkService {
      */
     void addLinkViewCount(String linkId);
 
-    String getApplierByLinkKey(String linkKey);
+    LotteryApplier getApplierByLinkKey(String linkKey);
 }

@@ -30,9 +30,20 @@ public class LinkServiceImpl implements LinkService{
 
     @Override
     @Transactional
-    public void addLinkViewCount(String linkId) {
-        Link link = linkRepository.findByLinkKey(linkId).orElseThrow(LinkNotFoundException::new);
+    public void addLinkViewCount(String linkKey) {
+        Link link = findLink(linkKey);
         link.addLinkViewCount();
         linkRepository.save(link);
     }
+
+    @Override
+    public LotteryApplier getApplierByLinkKey(String linkKey) {
+        Link link = findLink(linkKey);
+        return link.getLotteryApplier();
+    }
+
+    private Link findLink(String linkKey){
+        return linkRepository.findByLinkKey(linkKey).orElseThrow(LinkNotFoundException::new);
+    }
+
 }
