@@ -27,6 +27,7 @@ jobs:
       - name: Set YML
         run: |
           mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_LOCAL}}" | base64 --decode > src/main/resources/application-local.yml
           echo "${{ secrets.APPLICATION_LOCAL_DB }}" | base64 --decode > src/main/resources/application-local-db.yml
           echo "${{ secrets.APPLICATION_LOCAL_TOKEN }}" | base64 --decode > src/main/resources/application-local-token.yml
           echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
@@ -55,7 +56,7 @@ jobs:
 
       - name: Docker build
         run: |
-          cd /home/runner/work/Team5-WatermelonClap-Be
+          cd /home/runner/work/Team5-WatermelonClap-BE/Team6-WatermelonClap-BE
           ls -al
 
 

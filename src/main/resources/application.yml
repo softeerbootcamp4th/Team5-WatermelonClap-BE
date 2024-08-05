@@ -1,13 +1,3 @@
 spring:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create # DB 초기화 전략 (none, create, create-drop, update, validate)
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true      # 쿼리 로그 포맷 (정렬)
-        show_sql: true        # 쿼리 로그 출력
-  config:
-    import: classpath:application-local-db.yml,classpath:application-local-token.yml,classpath:application-deploy-db.yml
-
+  profiles:
+    active: ${name:local}
