@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      
 
       - name: Set YML
         run: |
@@ -43,3 +44,10 @@ jobs:
         if: ${{ always() }}  # 테스트가 실패하여도 Report를 보기 위해 `always`로 설정
         with:
           files: build/test-results/**/*.xml
+
+
+      - name: 🔧 Build Spring server
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build -x test
+          ls -al
