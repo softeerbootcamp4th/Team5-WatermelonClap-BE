@@ -57,9 +57,14 @@ jobs:
       - name: Docker build
         run: |
           cd /home/runner/work/Team5-WatermelonClap-BE/Team5-WatermelonClap-BE
-          ls -al
-
-
+          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+          docker build -t app .
+          
+          docker tag app ${{secrets.DOCKER_USERNAME}}/watermelon:latest
+          docker push ${{secrets.DOCKER_USERNAME}}/watermelon:latest
+        
+          
+          
 
 #  deploy:
 #    runs-on: ubuntu-latest
