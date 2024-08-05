@@ -68,24 +68,32 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-gradle-
 
-      - name: make application-deploy-db.yml
+#      - name: make application-deploy-db.yml
+#        run: |
+#          cd ./src/main/resources
+#          touch ./application-deploy-db.yml
+#          echo "${{ secrets.DEPLOY_DB}}" > ./application-deploy.db.yml
+#        shell: bash
+#
+#      - name: make chagok-project-firebase-secure.json
+#        id: create-json
+#        uses: jsdaniell/create-json@v1.2.2
+#        with:
+#            name: "firebase.json"
+#            json: ${{ secrets.FIREBASE }}
+#            dir: './src/main/resources'
+#
+#
+
+      - name: Set YML
         run: |
-          cd ./src/main/resources
-          touch ./application-deploy-db.yml
-          echo "${{ secrets.DEPLOY_DB}}" > ./application-deploy.db.yml
-        shell: bash
-
-      - name: make chagok-project-firebase-secure.json
-        id: create-json
-        uses: jsdaniell/create-json@v1.2.2
-        with:
-            name: "firebase.json"
-            json: ${{ secrets.FIREBASE }}
-            dir: './src/main/resources'
-
+          mkdir -p src/main/resources
+          echo "${{ secrets.DEPLOY_DB }}" | base64 --decode > src/main/resources/application-deploy-db.yml
+          echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
+          find src
 
       - name: 🔧 Build Spring server
         run: |
-            chmod +x ./gradlew
-            ./gradlew clean build -x test
-            ls -al
+          chmod +x ./gradlew
+          ./gradlew clean build -x test
+          ls -al
