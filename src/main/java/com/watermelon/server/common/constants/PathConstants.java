@@ -24,4 +24,6 @@ public class PathConstants {
 
     public static String PARTS_LINK_LIST = "/event/parts/link/{link_key}";
 
+    public static String SHORTED_LINK = "/link/{shortedUri}";
+
 }
