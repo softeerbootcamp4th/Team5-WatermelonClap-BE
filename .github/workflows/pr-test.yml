@@ -30,7 +30,8 @@ jobs:
           echo "${{ secrets.APPLICATION_LOCAL}}" | base64 --decode > src/main/resources/application-local.yml
           echo "${{ secrets.APPLICATION_LOCAL_DB }}" | base64 --decode > src/main/resources/application-local-db.yml
           echo "${{ secrets.APPLICATION_LOCAL_TOKEN }}" | base64 --decode > src/main/resources/application-local-token.yml
-          
+
+          echo "${{ secrets.DEPLOY }}" | base64 --decode > src/main/resources/application-deploy.yml
           echo "${{ secrets.DEPLOY_DB }}" | base64 --decode > src/main/resources/application-deploy-db.yml
           echo "${{ secrets.DEPLOY_JWT_TOKEN }}" | base64 --decode > src/main/resources/application-deploy-token.yml
           echo "${{ secrets.FIREBASE }}" | base64 --decode > firebase.json
