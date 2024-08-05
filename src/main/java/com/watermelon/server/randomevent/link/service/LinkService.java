@@ -19,4 +19,11 @@ public interface LinkService {
     void addLinkViewCount(String linkId);
 
     LotteryApplier getApplierByLinkKey(String linkKey);
+
+    /**
+     * 단축된 uri 의 원래 uri 를 반환.
+     * @param shortedUri 단축된 uri
+     * @return 원래 uri
+     */
+    String getUrl(String shortedUri);
 }
