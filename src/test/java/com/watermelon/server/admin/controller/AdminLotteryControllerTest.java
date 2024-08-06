@@ -1,23 +1,19 @@
 package com.watermelon.server.admin.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
-import com.watermelon.server.annotations.ControllerTestAnno;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 

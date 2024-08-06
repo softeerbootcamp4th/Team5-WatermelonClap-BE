@@ -3,7 +3,6 @@ package com.watermelon.server.randomevent.link.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.DocumentConstants;
-import com.watermelon.server.annotations.ControllerTestAnno;
 import com.watermelon.server.randomevent.link.dto.MyLinkDto;
 import com.watermelon.server.randomevent.link.service.LinkService;
 import com.watermelon.server.randomevent.link.utils.LinkUtils;
@@ -20,7 +19,6 @@ import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.common.constants.PathConstants.MY_LINK;
 import static com.watermelon.server.common.constants.PathConstants.SHORTED_LINK;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(LinkController.class)

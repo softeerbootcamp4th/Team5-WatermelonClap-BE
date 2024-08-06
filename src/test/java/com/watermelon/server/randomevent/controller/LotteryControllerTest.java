@@ -1,8 +1,6 @@
 package com.watermelon.server.randomevent.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.ControllerTest;
-import com.watermelon.server.annotations.ControllerTestAnno;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -12,11 +10,9 @@ import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.NoSuchElementException;
