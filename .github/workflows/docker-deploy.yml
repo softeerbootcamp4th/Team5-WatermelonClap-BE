@@ -69,7 +69,7 @@ jobs:
           ls -al build/resources/main/static
           ls -al build/resources/main/static/docs
           rm build/resources/main/static/index.html
-          mv build/resources/static/docs/* build/resources/static/
+          mv build/resources/main/static/docs/* build/resources/main/static/
           ls -al build/resources/main/static
 
       - name: Docker build
