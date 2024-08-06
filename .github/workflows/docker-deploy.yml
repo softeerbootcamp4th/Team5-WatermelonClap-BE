@@ -80,6 +80,8 @@ jobs:
             docker stop watermelon
             
             docker run -d --name watermelon --rm -p 8080:8080 watermelon:latest
+            docker logs -f watermelon
+            
             docker rm $(docker ps --filter 'status=exited' -a -q)
             # 실행 중이지 않으 모든 컨테인 삭제
             docker image prune -a -f
