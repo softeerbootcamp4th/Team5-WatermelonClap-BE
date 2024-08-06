@@ -68,6 +68,7 @@ tasks.named('test') {
 bootJar {
 	dependsOn 'openapi3'
 	dependsOn 'customGenerateSwaggerUI'
+	dependsOn 'copySwaggerUI'
 }
 
 //OpenAPI Spec 지정
@@ -83,15 +84,13 @@ openapi3 {
 	}
 }
 
-build {
-	//build 전 실행되도록
-	dependsOn 'copySwaggerUI'
-}
-
 // Swagger UI 파일 복사 태스크 등록
 tasks.register('copySwaggerUI', Copy) {
-	dependsOn bootJar
 	dependsOn jar
+	dependsOn compileTestJava
+	dependsOn test
+	dependsOn customGenerateSwaggerUI
+	dependsOn resolveMainClassName
 	from("build/swagger-ui-watermelon")
 	into("build/resources/main/static/docs")
 }
