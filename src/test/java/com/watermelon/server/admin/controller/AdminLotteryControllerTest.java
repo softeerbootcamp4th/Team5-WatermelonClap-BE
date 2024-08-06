@@ -1,22 +1,18 @@
 package com.watermelon.server.admin.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.watermelon.server.MockLoginInterceptorConfig;
+import com.watermelon.server.ControllerTest;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
-import com.watermelon.server.annotations.ControllerTest;
-import com.watermelon.server.randomevent.controller.LotteryController;
+import com.watermelon.server.annotations.ControllerTestAnno;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,18 +29,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ControllerTest
 @WebMvcTest(AdminLotteryController.class)
-class AdminLotteryControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class AdminLotteryControllerTest extends ControllerTest {
 
     @MockBean
     private LotteryService lotteryService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     void getLotteryAppliers() throws Exception {
