@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @MockBean(JpaMetamodelMappingContext.class)
-@Import(MockLoginInterceptorConfig.class)
+@Import({MockLoginInterceptorConfig.class, MockAdminAuthorizationInterceptorConfig.class})
 public abstract class ControllerTest {
 
     @Autowired
