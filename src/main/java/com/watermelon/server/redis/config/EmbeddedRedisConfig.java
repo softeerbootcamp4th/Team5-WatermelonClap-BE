@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
 
-
+@Profile("local")
 @Configuration
 public class EmbeddedRedisConfig {
     private RedisServer redisServer;
