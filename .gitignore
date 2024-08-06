@@ -69,4 +69,7 @@ node_modules
 # bin
 *.bin
 
+# yaml
+*.yaml
+
 firebase.json
