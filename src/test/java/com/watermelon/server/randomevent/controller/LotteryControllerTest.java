@@ -20,9 +20,9 @@ import java.util.NoSuchElementException;
 import static com.watermelon.server.Constants.*;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(LotteryController.class)
