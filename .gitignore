@@ -18,8 +18,12 @@ derby.log
 
 #properties
 
+/src/main/resources/application-local.yml
 /src/main/resources/application-local-db.yml
 /src/main/resources/application-local-token.yml
+/src/main/resources/application-deploy-token.yml
+/src/main/resources/application-deploy-db.yml
+/src/main/resources/application-deploy.yml
 
 # Gradle artifacts
 .gradle

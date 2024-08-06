@@ -45,7 +45,9 @@ dependencies {
 	swaggerUI 'org.webjars:swagger-ui:3.52.5'
 	swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.47'  // or Swagger Codegen V3
 
+	//db
 	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.redisson:redisson-spring-boot-starter:3.24.3'

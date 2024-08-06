@@ -13,7 +13,7 @@ public class LotteryReward extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
-    private int rank;
+    private int lotteryRank;
 
     private String imgSrc;
 
