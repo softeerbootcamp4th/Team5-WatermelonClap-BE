@@ -67,6 +67,7 @@ jobs:
           ./gradlew clean build 
           ls -al    
           ls -al build/resources/main/static
+          ls -al build/resources/main/static/docs
 
       - name: Docker build
         run: |
