@@ -23,6 +23,15 @@ jobs:
         with:
           java-version: 17
 
+      - name: 💾 Cache Gradle & Spring
+        uses: actions/cache@v3
+        with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
 
       - name: Set YML
         run: |
@@ -80,7 +89,6 @@ jobs:
             docker stop watermelon
             
             docker run -d --name watermelon --rm -p 8080:8080 watermelon:latest
-            docker logs -f watermelon
             
             docker rm $(docker ps --filter 'status=exited' -a -q)
             # 실행 중이지 않으 모든 컨테인 삭제
