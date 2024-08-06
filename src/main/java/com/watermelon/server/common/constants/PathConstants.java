@@ -8,7 +8,7 @@ public class PathConstants {
     public static String LOTTERIES_REWARD = "/event/lotteries/reward/{rank}";
 
     public static String PARTS = "/event/parts";
-    public static String PARTS_EQUIP = "/event/parts/{catergory}/{partsId}";
+    public static String PARTS_EQUIP = "/event/parts/{partsId}";
     public static String PARTS_REMAIN = "/event/parts/remain";
 
     public static String ADMIN_PARTS_WINNER = "/admin/event/parts";
@@ -21,5 +21,9 @@ public class PathConstants {
     public static String EXPECTATIONS = "/expectations";
 
     public static String MY_LINK = "/link";
+
+    public static String PARTS_LINK_LIST = "/event/parts/link/{link_key}";
+
+    public static String SHORTED_LINK = "/link/{shortedUri}";
 
 }

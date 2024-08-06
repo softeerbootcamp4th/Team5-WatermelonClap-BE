@@ -36,9 +36,8 @@ public class PartsController {
         }
     }
 
-    @PatchMapping("/{category}/{partsId}")
+    @PatchMapping("/{partsId}")
     public ResponseEntity<Void> equipParts(
-            @PathVariable String category,
             @PathVariable Long partsId,
             @Uid String uid
     ){
@@ -58,6 +57,13 @@ public class PartsController {
     ){
         return new ResponseEntity<>(partsService.getMyParts(uid), HttpStatus.OK);
 
+    }
+
+    @GetMapping("/link/{link_key}")
+    public ResponseEntity<List<ResponseMyPartsListDto>> getLinkPartsList(
+            @PathVariable String link_key
+    ){
+        return new ResponseEntity<>(partsService.getPartsList(link_key), HttpStatus.OK);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.watermelon.server.randomevent.parts.service;
 
 import com.watermelon.server.randomevent.domain.LotteryApplier;
+import com.watermelon.server.randomevent.link.service.LinkService;
 import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
 import com.watermelon.server.randomevent.parts.domain.Parts;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
@@ -22,6 +23,7 @@ public class PartsServiceImpl implements PartsService {
     private final PartsRepository partsRepository;
     private final LotteryService lotteryService;
     private final LotteryApplierPartsService lotteryApplierPartsService;
+    private final LinkService linkService;
 
     @Override
     @Transactional //remain chance 를 조회하는 쿼리와 파츠를 저장하는 쿼리 원자성 보장 필요
@@ -55,6 +57,12 @@ public class PartsServiceImpl implements PartsService {
         return ResponseMyPartsListDto.createDtoListByCategory(
                 lotteryApplierPartsService.getListByApplier(uid)
         );
+    }
+
+    @Override
+    public List<ResponseMyPartsListDto> getPartsList(String linkKey) {
+        LotteryApplier lotteryApplier = linkService.getApplierByLinkKey(linkKey);
+        return getMyParts(lotteryApplier.getUid());
     }
 
     /**

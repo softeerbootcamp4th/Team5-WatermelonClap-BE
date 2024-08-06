@@ -1,5 +1,6 @@
 package com.watermelon.server.randomevent.link.service;
 
+import com.watermelon.server.randomevent.domain.LotteryApplier;
 import com.watermelon.server.randomevent.link.dto.MyLinkDto;
 
 public interface LinkService {
@@ -16,4 +17,13 @@ public interface LinkService {
      * @param linkId 링크 키
      */
     void addLinkViewCount(String linkId);
+
+    LotteryApplier getApplierByLinkKey(String linkKey);
+
+    /**
+     * 단축된 uri 의 원래 uri 를 반환.
+     * @param shortedUri 단축된 uri
+     * @return 원래 uri
+     */
+    String getUrl(String shortedUri);
 }

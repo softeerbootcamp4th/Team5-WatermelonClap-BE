@@ -78,7 +78,7 @@ class LotteryApplierRepositoryTest {
 
         //then
         LotteryApplier savedLotteryApplier = lotteryApplierRepository.findByUid(TEST_UID).orElseThrow();
-        assertThat(link.getLinkKey()).isEqualTo(savedLotteryApplier.getLink().getLinkKey());
+        assertThat(link.getUri()).isEqualTo(savedLotteryApplier.getLink().getUri());
 
     }
 

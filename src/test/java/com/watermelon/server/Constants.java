@@ -12,9 +12,11 @@ public class Constants {
     public static final String TEST_IMGSRC = "imgsrc";
     public static final int TEST_PAGE_NUMBER = 1;
     public static final int TEST_PAGE_SIZE = 2;
-    public static final String TEST_LINK = "link";
+    public static final String TEST_URI = "link";
+    public static final String TEST_SHORTED_URI = "shortedUri";
 
     public static final String HEADER_NAME_AUTHORIZATION = "Authorization";
+    public static final String HEADER_NAME_LOCATION = "Location";
     public static final String HEADER_VALUE_BEARER = "Bearer";
     public static final String HEADER_VALUE_SPACE = " ";
     public static final String PARAM_PAGE = "page";
