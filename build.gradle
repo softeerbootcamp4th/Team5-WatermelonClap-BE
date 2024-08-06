@@ -3,6 +3,8 @@ plugins {
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.5'
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
+	id 'com.epages.restdocs-api-spec' version '0.18.2'
+	id 'org.hidetake.swagger.generator' version '2.19.2'
 }
 
 group = 'com.watermelon'
@@ -18,7 +20,6 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	asciidoctorExt
 }
 
 repositories {
@@ -37,9 +38,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
+	//rest-docs -> openApi
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.2' //2.2
+	swaggerUI 'org.webjars:swagger-ui:3.52.5'
+	swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.47'  // or Swagger Codegen V3
 
 	//db
 	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
@@ -61,27 +65,47 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-ext {
-	snippetsDir = file('build/generated-snippets')
-}
-
-test {
-	outputs.dir snippetsDir
-}
-
-asciidoctor {
-	inputs.dir snippetsDir
-	configurations 'asciidoctorExt'
-	dependsOn test
-}
-
 bootJar {
-	//build/docs/asciidoc 에 .html 생성
-	dependsOn asciidoctor
+	dependsOn 'openapi3'
+	dependsOn 'customGenerateSwaggerUI'
+}
 
-	// build/docs/asciidoc 에서 static/docs 로 복사 (jar 파일 내부에 적용됨)
-	//공식 문서에는 ${asciidoctor.outputDir}/html5 이렇게 되어 있는데 html5 를 없애야 동작함.
-	from ("${asciidoctor.outputDir}") {
-		into 'static/docs'
+//OpenAPI Spec 지정
+openapi3 {
+	title = 'Watermelon REST API'
+	description = 'Watermelon API 문서입니다.'
+	version = '0.1.0'
+	servers = [ { url = 'http://localhost:8080' } ]
+	format = 'yaml'
+	contact = {
+		name = 'watermelon'
+		email = 'watermelon@gmail.com'
 	}
+}
+
+build {
+	//build 전 실행되도록
+	dependsOn 'copySwaggerUI'
+}
+
+// Swagger UI 파일 복사 태스크 등록
+tasks.register('copySwaggerUI', Copy) {
+	dependsOn bootJar
+	dependsOn jar
+	from("build/swagger-ui-watermelon")
+	into("build/resources/main/static/docs")
+}
+
+tasks.register('customGenerateSwaggerUI', GenerateSwaggerUI) {
+	dependsOn 'openapi3'
+	inputFile = file('build/api-spec/openapi3.yaml')
+	outputDir = file("build/swagger-ui-watermelon")
+	wipeOutputDir = true
+}
+
+swaggerSources {
+	watermelon {
+		inputFile = file('build/api-spec/openapi3.yaml') //openapi3 파일 위치 지정
+	}
+
 }
