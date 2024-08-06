@@ -66,6 +66,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew clean build 
           ls -al    
+          ls -al build/resources/main/static
 
       - name: Docker build
         run: |
