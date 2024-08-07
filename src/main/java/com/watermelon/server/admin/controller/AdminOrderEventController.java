@@ -20,7 +20,7 @@ public class AdminOrderEventController {
 
     private final AdminOrderEventService adminOrderEventService;
     @PostMapping("/event/order")
-    public void makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
+    public void makeOrderEvent(@RequestBody RequestOrderEventDto requestOrderEventDto){
         adminOrderEventService.makeOrderEvent(requestOrderEventDto);
     }
 
@@ -33,6 +33,9 @@ public class AdminOrderEventController {
     public List<ResponseOrderEventWinnerDto> getOrderEventWinnersForAdmin(@PathVariable("eventId") Long eventId) throws WrongOrderEventFormatException {
         return adminOrderEventService.getOrderEventWinnersForAdmin(eventId);
     }
+
+
+
 
 
 
