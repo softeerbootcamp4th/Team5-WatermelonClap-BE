@@ -1,4 +1,4 @@
-package com.watermelon.server.parts.domain;
+package com.watermelon.server.randomevent.parts.domain;
 
 import com.watermelon.server.BaseEntity;
 import jakarta.persistence.Entity;

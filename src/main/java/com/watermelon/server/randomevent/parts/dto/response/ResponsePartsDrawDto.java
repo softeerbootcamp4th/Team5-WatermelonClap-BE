@@ -1,6 +1,6 @@
-package com.watermelon.server.parts.dto.response;
+package com.watermelon.server.randomevent.parts.dto.response;
 
-import com.watermelon.server.parts.domain.Parts;
+import com.watermelon.server.randomevent.parts.domain.Parts;
 import lombok.Builder;
 import lombok.Data;
 

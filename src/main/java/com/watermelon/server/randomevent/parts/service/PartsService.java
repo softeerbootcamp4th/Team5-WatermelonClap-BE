@@ -1,8 +1,8 @@
-package com.watermelon.server.parts.service;
+package com.watermelon.server.randomevent.parts.service;
 
-import com.watermelon.server.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.parts.dto.response.ResponseRemainChanceDto;
-import com.watermelon.server.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
 
 import java.util.List;
 

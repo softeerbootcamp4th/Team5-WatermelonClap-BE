@@ -1,14 +1,12 @@
 package com.watermelon.server.randomevent.parts.service;
 
-import com.watermelon.server.parts.service.LotteryApplierPartsService;
-import com.watermelon.server.parts.service.PartsServiceImpl;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
-import com.watermelon.server.parts.domain.LotteryApplierParts;
-import com.watermelon.server.parts.domain.Parts;
-import com.watermelon.server.parts.domain.PartsCategory;
-import com.watermelon.server.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.parts.exception.PartsDrawLimitExceededException;
-import com.watermelon.server.parts.repository.PartsRepository;
+import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
+import com.watermelon.server.randomevent.parts.domain.Parts;
+import com.watermelon.server.randomevent.parts.domain.PartsCategory;
+import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
+import com.watermelon.server.randomevent.parts.repository.PartsRepository;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

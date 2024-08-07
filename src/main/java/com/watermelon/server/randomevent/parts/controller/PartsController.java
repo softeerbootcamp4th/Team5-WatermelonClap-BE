@@ -1,11 +1,11 @@
-package com.watermelon.server.parts.controller;
+package com.watermelon.server.randomevent.parts.controller;
 
 import com.watermelon.server.auth.annotations.Uid;
-import com.watermelon.server.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.parts.dto.response.ResponseRemainChanceDto;
-import com.watermelon.server.parts.exception.PartsDrawLimitExceededException;
-import com.watermelon.server.parts.service.PartsService;
-import com.watermelon.server.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
+import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
+import com.watermelon.server.randomevent.parts.service.PartsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
