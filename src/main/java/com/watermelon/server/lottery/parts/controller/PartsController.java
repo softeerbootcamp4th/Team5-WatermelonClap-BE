@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.parts.controller;
 
-import com.watermelon.server.lottery.auth.annotations.Uid;
+import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import com.watermelon.server.lottery.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.lottery.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.lottery.parts.dto.response.ResponseRemainChanceDto;

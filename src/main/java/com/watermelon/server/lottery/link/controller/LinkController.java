@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.link.controller;
 
-import com.watermelon.server.lottery.auth.annotations.Uid;
+import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import com.watermelon.server.lottery.link.dto.MyLinkDto;
 import com.watermelon.server.lottery.link.service.LinkService;
 import lombok.RequiredArgsConstructor;

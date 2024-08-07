@@ -1,8 +1,8 @@
 package com.watermelon.server.common.config;
 
 import com.watermelon.server.admin.interceptor.AdminAuthorizationInterceptor;
-import com.watermelon.server.lottery.auth.interceptor.LoginCheckInterceptor;
-import com.watermelon.server.lottery.auth.resolver.UidArgumentResolver;
+import com.watermelon.server.event.lottery.auth.interceptor.LoginCheckInterceptor;
+import com.watermelon.server.event.lottery.auth.resolver.UidArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.auth.annotations;
+package com.watermelon.server.event.lottery.auth.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

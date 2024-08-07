@@ -1,6 +1,6 @@
-package com.watermelon.server.lottery.auth.resolver;
+package com.watermelon.server.event.lottery.auth.resolver;
 
-import com.watermelon.server.lottery.auth.annotations.Uid;
+import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

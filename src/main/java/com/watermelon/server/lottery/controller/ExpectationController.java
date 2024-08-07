@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.controller;
 
-import com.watermelon.server.lottery.auth.annotations.Uid;
+import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import com.watermelon.server.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.lottery.error.ExpectationAlreadyExistError;

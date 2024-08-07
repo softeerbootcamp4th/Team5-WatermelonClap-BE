@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.controller;
 
-import com.watermelon.server.lottery.auth.annotations.Uid;
+import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;

@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.auth.exception;
+package com.watermelon.server.event.lottery.auth.exception;
 
 public class AuthenticationException extends RuntimeException{
 
