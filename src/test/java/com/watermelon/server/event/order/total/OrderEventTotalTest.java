@@ -8,7 +8,10 @@ import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
+import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
+import com.watermelon.server.token.ApplyTokenProvider;
+import com.watermelon.server.token.JwtPayload;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +29,9 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Autowired
     private OrderEventRepository orderEventRepository;
+
+    @Autowired
+    private ApplyTokenProvider applyTokenProvider;
     private OrderEvent soonOpenOrderEvent;
     private OrderEvent openOrderEvent;
     private OrderEvent unOpenOrderEvent;
@@ -147,16 +153,20 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞지 않음")
+    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞음")
     public void orderEventApplyTicketWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
+        String applyTicket = applyTokenProvider.createTokenByOrderEventId(
+                JwtPayload.from(String.valueOf(openOrderEvent.getId()))
+        );
+
         OrderEventWinnerRequestDto emptyPhoneNumberDto =
                 OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234");
         mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
-                        .header("ApplyTicket","ex"))
-                .andExpect(status().isUnauthorized())
+                        .header("ApplyTicket",applyTicket))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

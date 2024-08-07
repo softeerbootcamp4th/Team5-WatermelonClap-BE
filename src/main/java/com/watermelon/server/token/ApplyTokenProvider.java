@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 
 
-@PropertySource(value = "classpath:application-local-token.yml",factory = YamlLoadFactory.class)
+
 @Component
 public class ApplyTokenProvider {
     private static final Logger log = LoggerFactory.getLogger(ApplyTokenProvider.class);
