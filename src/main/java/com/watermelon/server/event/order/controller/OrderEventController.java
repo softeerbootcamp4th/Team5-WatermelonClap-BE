@@ -8,10 +8,13 @@ import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
+import com.watermelon.server.event.order.error.PhoneNumberNotExistException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.service.OrderEventCommandService;
 import com.watermelon.server.event.order.service.OrderEventQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,8 +57,24 @@ public class OrderEventController {
                           @PathVariable("quizId") Long quizId,
                           @RequestBody OrderEventWinnerRequestDto orderEventWinnerRequestDto)
             throws ApplyTicketWrongException
-            , WrongOrderEventFormatException {
+            , WrongOrderEventFormatException, PhoneNumberNotExistException {
         orderEventCommandService.makeOrderEventWinner(applyTicket,eventId,orderEventWinnerRequestDto);
     }
+
+    @ExceptionHandler(PhoneNumberNotExistException.class)
+    public ResponseEntity<String> handlePhoneNumberNotExistException(PhoneNumberNotExistException phoneNumberNotExistException){
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(phoneNumberNotExistException.getMessage());
+    }
+    @ExceptionHandler(WrongOrderEventFormatException.class)
+    public ResponseEntity<String> handleWrongOrderEventFormatException(WrongOrderEventFormatException wrongOrderEventFormatException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(wrongOrderEventFormatException.getMessage());
+    }
+    @ExceptionHandler(ApplyTicketWrongException.class)
+    public ResponseEntity<String> handleApplyTicketWrongException(ApplyTicketWrongException applyTicketWrongException){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(applyTicketWrongException.getMessage());
+    }
+}
+
+
 
 }
