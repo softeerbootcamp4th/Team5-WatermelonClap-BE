@@ -6,6 +6,7 @@ import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.event.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,6 +35,9 @@ class AdminLotteryControllerTest extends ControllerTest {
 
     @MockBean
     private LotteryService lotteryService;
+
+    @MockBean
+    private LotteryWinnerService lotteryWinnerService;
 
     @Test
     @DisplayName("응모자 명단을 반환한다.")
@@ -81,7 +85,7 @@ class AdminLotteryControllerTest extends ControllerTest {
                 ResponseAdminLotteryWinnerDto.createTestDto()
         );
 
-        Mockito.when(lotteryService.getAdminLotteryWinners())
+        Mockito.when(lotteryWinnerService.getAdminLotteryWinners())
                 .thenReturn(expected);
 
         //when & then
@@ -124,7 +128,7 @@ class AdminLotteryControllerTest extends ControllerTest {
                 .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK,
                         resourceSnippetAuthed("추첨 당첨자 확인처리")));
 
-        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+        verify(lotteryWinnerService).lotteryWinnerCheck(TEST_UID);
 
     }
 

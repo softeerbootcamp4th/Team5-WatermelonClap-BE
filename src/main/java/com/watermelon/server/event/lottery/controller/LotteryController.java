@@ -7,6 +7,7 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.event.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,18 @@ import java.util.NoSuchElementException;
 public class LotteryController {
 
     private final LotteryService lotteryService;
+    private final LotteryWinnerService lotteryWinnerService;
 
     @GetMapping
     public ResponseEntity<List<ResponseLotteryWinnerDto>> getLotteryWinnerList(){
-        return new ResponseEntity<>(lotteryService.getLotteryWinners(), HttpStatus.OK);
+        return new ResponseEntity<>(lotteryWinnerService.getLotteryWinners(), HttpStatus.OK);
     }
 
     @GetMapping("/info")
     public ResponseEntity<ResponseLotteryWinnerInfoDto> getLotteryWinnerInfo(
             @Uid String uid
     ){
-        return new ResponseEntity<>(lotteryService.getLotteryWinnerInfo(uid), HttpStatus.OK);
+        return new ResponseEntity<>(lotteryWinnerService.getLotteryWinnerInfo(uid), HttpStatus.OK);
     }
 
     @PostMapping("/info")
@@ -39,7 +41,7 @@ public class LotteryController {
             @RequestBody RequestLotteryWinnerInfoDto dto,
             @Uid String uid
     ){
-        lotteryService.createLotteryWinnerInfo(uid, dto);
+        lotteryWinnerService.createLotteryWinnerInfo(uid, dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

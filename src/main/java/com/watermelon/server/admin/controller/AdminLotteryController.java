@@ -4,6 +4,7 @@ import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.event.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import java.util.List;
 public class AdminLotteryController {
 
     private final LotteryService lotteryService;
+    private final LotteryWinnerService lotteryWinnerService;
 
     @GetMapping("admin/event/applier")
     public Page<ResponseLotteryApplierDto> getLotteryAppliers(
@@ -31,7 +33,7 @@ public class AdminLotteryController {
 
     @GetMapping("admin/lotteries")
     public ResponseEntity<List<ResponseAdminLotteryWinnerDto>> getLotteryWinners() {
-        return new ResponseEntity<>(lotteryService.getAdminLotteryWinners(), HttpStatus.OK);
+        return new ResponseEntity<>(lotteryWinnerService.getAdminLotteryWinners(), HttpStatus.OK);
     }
 
     @GetMapping("admin/event/parts")
@@ -43,7 +45,7 @@ public class AdminLotteryController {
     public ResponseEntity<Void> lotteryWinnerCheckDone(
             @PathVariable String uid
     ){
-        lotteryService.lotteryWinnerCheck(uid);
+        lotteryWinnerService.lotteryWinnerCheck(uid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

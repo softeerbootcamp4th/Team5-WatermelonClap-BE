@@ -10,6 +10,7 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.event.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -36,6 +37,9 @@ class LotteryControllerTest extends ControllerTest {
     @MockBean
     private LotteryService lotteryService;
 
+    @MockBean
+    private LotteryWinnerService lotteryWinnerService;
+
     @Test
     @DisplayName("추첨자 명단을 반환한다.")
     void testGetOrderEventResultSuccess() throws Exception {
@@ -49,7 +53,7 @@ class LotteryControllerTest extends ControllerTest {
                 ResponseLotteryWinnerDto.from("email2@email.com", 1)
         );
 
-        Mockito.when(lotteryService.getLotteryWinners())
+        Mockito.when(lotteryWinnerService.getLotteryWinners())
                 .thenReturn(expectedResponse);
 
         String expectedJson = objectMapper.writeValueAsString(expectedResponse);
@@ -77,7 +81,7 @@ class LotteryControllerTest extends ControllerTest {
                 .phoneNumber(TEST_PHONE_NUMBER)
                 .build();
 
-        Mockito.when(lotteryService.getLotteryWinnerInfo(TEST_UID)).thenReturn(expected);
+        Mockito.when(lotteryWinnerService.getLotteryWinnerInfo(TEST_UID)).thenReturn(expected);
 
         //then
         this.mockMvc.perform(get(PATH)
