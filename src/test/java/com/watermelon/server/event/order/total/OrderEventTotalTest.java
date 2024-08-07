@@ -154,7 +154,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Test
     @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞음")
-    public void orderEventApplyTicketWrong() throws Exception {
+    public void orderEventApplyTicketNotWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
         String applyTicket = applyTokenProvider.createTokenByOrderEventId(
                 JwtPayload.from(String.valueOf(openOrderEvent.getId()))
@@ -167,6 +167,24 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                         .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
                         .header("ApplyTicket",applyTicket))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞지 않음(다른 Claim key)")
+    public void orderEventApplyTicketEventIdWrong() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        String applyTicket = applyTokenProvider.createTokenByOrderEventId(
+                JwtPayload.from(String.valueOf(openOrderEvent.getId()+1))
+        );
+
+        OrderEventWinnerRequestDto emptyPhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234");
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
+                        .header("ApplyTicket",applyTicket))
+                .andExpect(status().isUnauthorized())
                 .andDo(print());
     }
 
