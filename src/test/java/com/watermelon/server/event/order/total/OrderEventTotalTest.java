@@ -117,7 +117,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨 (에러)")
+    @DisplayName("[통합] 선착순 퀴즈 번호 제출-  전화 번호 형식 잘못됨 (에러)")
     public void orderEventApplyPhoneNumberFormatWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
         OrderEventWinnerRequestDto emptyPhoneNumberDto =
@@ -147,7 +147,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨 (에러)")
+    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞지 않음")
     public void orderEventApplyTicketWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
         OrderEventWinnerRequestDto emptyPhoneNumberDto =
@@ -156,7 +156,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
                         .header("ApplyTicket","ex"))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isUnauthorized())
                 .andDo(print());
     }
 
