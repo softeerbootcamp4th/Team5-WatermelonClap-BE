@@ -44,29 +44,10 @@ public interface LotteryService {
      */
     Page<ResponseLotteryApplierDto> getApplierInfoPage(Pageable pageable);
 
-
-    /**
-     * 파츠 추첨 당첨자 명단을 반환
-     * @return 파츠 추첨 당첨자 리스트
-     */
-    List<ResponseAdminPartsWinnerDto> getAdminPartsWinners();
-
-
-    /**
-     * uid 에 해당하는 당첨자 파츠 추첨 어드민 확인 상태를 참으로 변경
-     * @param uid 당첨자의 uid
-     */
-    void partsWinnerCheck(String uid);
-
     /**
      * 추첨 이벤트 응모 인원에 대해 뽑기를 진행한다.
      */
     void lottery();
-
-    /**
-     * 파츠 이벤트 응모 인원에 대해 뽑기를 진행한다.
-     */
-    void partsLottery();
 
 
     /*외부에서 LotteryApplier를 찾아오려고 할 떄 사용해야하는 메소드*/

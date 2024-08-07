@@ -3,6 +3,7 @@ package com.watermelon.server.admin.controller;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
+import com.watermelon.server.event.lottery.parts.service.PartsService;
 import com.watermelon.server.event.lottery.service.LotteryService;
 import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class AdminLotteryController {
 
     private final LotteryService lotteryService;
     private final LotteryWinnerService lotteryWinnerService;
+    private final PartsService partsService;
 
     @GetMapping("admin/event/applier")
     public Page<ResponseLotteryApplierDto> getLotteryAppliers(
@@ -38,7 +40,7 @@ public class AdminLotteryController {
 
     @GetMapping("admin/event/parts")
     public ResponseEntity<List<ResponseAdminPartsWinnerDto>> getPartsWinners(){
-        return new ResponseEntity<>(lotteryService.getAdminPartsWinners(), HttpStatus.OK);
+        return new ResponseEntity<>(partsService.getAdminPartsWinners(), HttpStatus.OK);
     }
 
     @PostMapping("/admin/event/lotteries/{uid}/done")
@@ -53,7 +55,7 @@ public class AdminLotteryController {
     public ResponseEntity<Void> partsWinnerCheckDone(
             @PathVariable String uid
     ){
-        lotteryService.partsWinnerCheck(uid);
+        partsService.partsWinnerCheck(uid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -65,7 +67,7 @@ public class AdminLotteryController {
 
     @PostMapping("/admin/event/parts")
     public ResponseEntity<Void> partsLottery(){
-        lotteryService.partsLottery();
+        partsService.partsLottery();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
