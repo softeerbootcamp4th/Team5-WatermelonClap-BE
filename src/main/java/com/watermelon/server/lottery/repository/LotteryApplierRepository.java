@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.repository;
 
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

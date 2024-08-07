@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.link.repository;
 
-import com.watermelon.server.lottery.domain.Link;
+import com.watermelon.server.event.lottery.domain.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

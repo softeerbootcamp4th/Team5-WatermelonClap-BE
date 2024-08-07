@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.domain;
+package com.watermelon.server.event.lottery.domain;
 
 public enum AdminCheckStatus {
     DONE, READY;

@@ -1,8 +1,8 @@
 package com.watermelon.server.lottery.service;
 
 import com.watermelon.server.admin.dto.response.ResponseAdminExpectationApprovedDto;
-import com.watermelon.server.lottery.domain.Expectation;
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.Expectation;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.lottery.error.ExpectationAlreadyExistError;

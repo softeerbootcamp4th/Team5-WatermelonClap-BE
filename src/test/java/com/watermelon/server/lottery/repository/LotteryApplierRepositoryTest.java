@@ -1,7 +1,7 @@
 package com.watermelon.server.lottery.repository;
 
-import com.watermelon.server.lottery.domain.Link;
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.Link;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.watermelon.server.lottery.dto.response;
 
 
-import com.watermelon.server.lottery.domain.Expectation;
+import com.watermelon.server.event.lottery.domain.Expectation;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

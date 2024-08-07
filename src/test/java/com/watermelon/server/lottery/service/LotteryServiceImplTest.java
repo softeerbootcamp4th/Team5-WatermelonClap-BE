@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.service;
 
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;

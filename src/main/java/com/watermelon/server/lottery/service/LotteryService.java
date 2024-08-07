@@ -3,7 +3,7 @@ package com.watermelon.server.lottery.service;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;

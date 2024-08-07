@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.link.service;
 
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.lottery.link.dto.MyLinkDto;
 
 public interface LinkService {

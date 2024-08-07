@@ -1,7 +1,7 @@
 package com.watermelon.server.admin.dto.response;
 
-import com.watermelon.server.lottery.domain.AdminCheckStatus;
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.AdminCheckStatus;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import lombok.Builder;
 import lombok.Data;
 

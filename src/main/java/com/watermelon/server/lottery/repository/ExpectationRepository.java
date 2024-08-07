@@ -1,6 +1,6 @@
 package com.watermelon.server.lottery.repository;
 
-import com.watermelon.server.lottery.domain.Expectation;
+import com.watermelon.server.event.lottery.domain.Expectation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

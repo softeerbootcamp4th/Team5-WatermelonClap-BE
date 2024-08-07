@@ -1,7 +1,7 @@
 package com.watermelon.server.lottery.parts.domain;
 
 import com.watermelon.server.BaseEntity;
-import com.watermelon.server.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import jakarta.persistence.*;
 import lombok.Getter;
 
