@@ -81,11 +81,11 @@ class PartsControllerTest extends ControllerTest {
     @DisplayName("파츠 상태 변경에 성공")
     void toggleParts() throws Exception {
 
-        final String PATH = "/event/parts/" + TEST_PARTS_ID;
+        final String PATH = "/event/parts/{parts_id}";
         final String DOCUMENT_NAME = "event/parts/equip";
 
         //when & then
-        this.mockMvc.perform(patch(PATH)
+        this.mockMvc.perform(patch(PATH, TEST_PARTS_ID)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + HEADER_VALUE_SPACE + TEST_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENT_NAME,
