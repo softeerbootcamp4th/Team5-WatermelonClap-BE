@@ -35,6 +35,7 @@ public class OrderEventCommandService {
         this.orderEventCheckService = orderEventCheckService;
         findOrderEventToMakeInProgress();
     }
+
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
         orderEventCheckService.checkingInfoErrors(orderEventId,quizId);

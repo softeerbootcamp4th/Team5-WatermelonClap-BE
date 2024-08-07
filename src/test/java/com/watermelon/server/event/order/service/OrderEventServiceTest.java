@@ -6,6 +6,7 @@ import com.watermelon.server.event.order.domain.OrderEventStatus;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
+import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +64,7 @@ class OrderEventServiceTest {
     @Order(2)
     public void checkOrderEventNotExist(){
         Long orderEventId = orderEvent.getId()+100;
-        org.junit.jupiter.api.Assertions.assertThrows(NoSuchElementException.class, () -> {
+        org.junit.jupiter.api.Assertions.assertThrows(WrongOrderEventFormatException.class, () -> {
             orderEventQueryService.getOrderEvent(orderEventId);
         });
     }

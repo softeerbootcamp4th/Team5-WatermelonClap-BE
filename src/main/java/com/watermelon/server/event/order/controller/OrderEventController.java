@@ -73,4 +73,9 @@ public class OrderEventController {
     public ResponseEntity<String> handleApplyTicketWrongException(ApplyTicketWrongException applyTicketWrongException){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(applyTicketWrongException.getMessage());
     }
+    @ExceptionHandler(NotDuringEventPeriodException.class)
+    public ResponseEntity<String> handleNotDuringEventPeriodException(NotDuringEventPeriodException notDuringEventPeriodException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(notDuringEventPeriodException.getMessage());
+    }
+
 }

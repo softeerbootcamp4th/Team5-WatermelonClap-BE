@@ -1,6 +1,7 @@
 package com.watermelon.server.event.order.total;
 
 import com.watermelon.server.BaseIntegrationTest;
+import com.watermelon.server.event.order.domain.ApplyTicketStatus;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
 import com.watermelon.server.event.order.domain.Quiz;
@@ -32,7 +33,6 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     private OrderEvent soonOpenOrderEvent;
     private OrderEvent openOrderEvent;
     private OrderEvent unOpenOrderEvent;
-
 
     @BeforeEach
     void setUp(){
@@ -168,8 +168,6 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andDo(print());
     }
 
-
-
     @Test
     @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞지 않음(다른 Claim key)")
     public void orderEventApplyTicketEventIdWrong() throws Exception {
@@ -202,6 +200,48 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 제출 - 실패(에러 - 현재 진행되지 않는 이벤트,퀴즈 ID)")
+    public void orderEventApplyWrongEventId() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        orderEventCheckService.refreshOrderEventInProgress(openOrderEvent);
+        Quiz quiz = openOrderEvent.getQuiz();
+        RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer());
+        mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId()+1L,quiz.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
 
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 제출 - 실패(에러 - 기간이 틀림)")
+    public void orderEventApplyWrongDuration() throws Exception {
+        orderEventRepository.save(unOpenOrderEvent);
+        orderEventCheckService.refreshOrderEventInProgress(unOpenOrderEvent);
+        Quiz quiz = unOpenOrderEvent.getQuiz();
+        RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer());
+        mvc.perform(post("/event/order/{eventId}/{quizId}",unOpenOrderEvent.getId(),quiz.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 제출 - 실패(정답이 틀림)")
+    public void orderEventApplyWrongAnswer() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        orderEventCheckService.refreshOrderEventInProgress(openOrderEvent);
+        Quiz quiz = openOrderEvent.getQuiz();
+        RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer()+"/wrong");
+        mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").value(ApplyTicketStatus.WRONG.toString()))
+                .andExpect(jsonPath("$.applyTicket").doesNotExist())
+                .andDo(print());
+    }
 
 }
