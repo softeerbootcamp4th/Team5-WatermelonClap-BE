@@ -69,6 +69,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     @AfterEach
     void tearDown(){
         orderEventRepository.deleteAll();
+        orderResultQueryService.getOrderResultRset().clear();
     }
 
     @Test
@@ -262,7 +263,11 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
         Quiz quiz = openOrderEvent.getQuiz();
         RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer());
-        log.debug(String.valueOf(orderResultQueryService.getAvailableTicket()));
+
+
+        /**
+         * 선착순 최대 인원 수만큼 응모 추가
+         */
         for(int i=0;i<orderResultQueryService.getAvailableTicket();i++){
             mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -271,6 +276,8 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                     .andExpect(jsonPath("$.result").value(ApplyTicketStatus.SUCCESS.toString()))
                     .andExpect(jsonPath("$.applyTicket").exists());
         }
+
+
         Assertions.assertThat(orderResultQueryService.getOrderResultRset().size()).isEqualTo(100);
         mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
                         .contentType(MediaType.APPLICATION_JSON)
