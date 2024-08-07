@@ -1,8 +1,6 @@
 package com.watermelon.server.randomevent.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.watermelon.server.MockLoginInterceptorConfig;
-import com.watermelon.server.annotations.ControllerTest;
+import com.watermelon.server.ControllerTest;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
@@ -12,14 +10,9 @@ import com.watermelon.server.randomevent.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,23 +20,16 @@ import java.util.NoSuchElementException;
 import static com.watermelon.server.Constants.*;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ControllerTest
 @WebMvcTest(LotteryController.class)
-class LotteryControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class LotteryControllerTest extends ControllerTest {
 
     @MockBean
     private LotteryService lotteryService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("추첨자 명단을 반환한다.")

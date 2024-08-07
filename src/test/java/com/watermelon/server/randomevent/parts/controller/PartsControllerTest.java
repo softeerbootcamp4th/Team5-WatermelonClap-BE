@@ -1,8 +1,7 @@
 package com.watermelon.server.randomevent.parts.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watermelon.server.ControllerTest;
 import com.watermelon.server.DocumentConstants;
-import com.watermelon.server.annotations.ControllerTest;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
 import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
@@ -11,36 +10,26 @@ import com.watermelon.server.randomevent.parts.service.PartsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.Constants.TEST_TOKEN;
 import static com.watermelon.server.common.constants.PathConstants.PARTS_LINK_LIST;
 import static org.mockito.Mockito.verify;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import java.util.List;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ControllerTest
 @WebMvcTest(PartsController.class)
-class PartsControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class PartsControllerTest extends ControllerTest {
 
     @MockBean
     private PartsService partsService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("파츠 뽑기 결과를 반환한다.")
