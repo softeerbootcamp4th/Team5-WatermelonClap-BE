@@ -37,7 +37,7 @@ class OrderResultCommandServiceTest {
         when(applyTokenProvider.createTokenByOrderEventId(any())).thenReturn(applyToken);
     }
     @Test
-    @DisplayName("선착순 응모 결과 생성(정상) ")
+    @DisplayName("선착순 응모 결과 생성(정상)")
     public void makeOrderResult() {
         when(orderResultSet.add(any())).thenReturn(true);
         when(orderResultQueryService.isOrderApplyNotFull()).thenReturn(true);

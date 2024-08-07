@@ -37,14 +37,14 @@ public class OrderEventController {
 //    }
 
     @GetMapping(path = "/event/order/{eventId}")
-    public ResponseOrderEventDto getOrderEvent(@PathVariable Long orderEventId){
+    public ResponseOrderEventDto getOrderEvent(@PathVariable("eventId") Long orderEventId) throws WrongOrderEventFormatException {
         return orderEventQueryService.getOrderEvent(orderEventId);
     }
 
     @PostMapping(path = "/event/order/{eventId}/{quizId}")
     public ResponseApplyTicketDto makeApplyTicket(@RequestBody RequestAnswerDto requestAnswerDto,
-                                                  @PathVariable Long orderEventId,
-                                                  @PathVariable Long quizId)
+                                                  @PathVariable("eventId") Long orderEventId,
+                                                  @PathVariable("quizId") Long quizId)
             throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
         return orderEventCommandService.makeApplyTicket(requestAnswerDto,orderEventId,quizId);

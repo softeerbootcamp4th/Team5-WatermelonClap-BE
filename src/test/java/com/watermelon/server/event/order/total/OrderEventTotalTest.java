@@ -58,7 +58,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     public void getOpenOrderEvent() throws Exception {
         orderEventRepository.save(openOrderEvent);
         openOrderEvent.setOrderEventStatus(OrderEventStatus.OPEN);
-        ResultActions resultActions = mvc.perform(get("/event/order"))
+        mvc.perform(get("/event/order"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].eventId").value(openOrderEvent.getId()))
@@ -73,7 +73,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     public void getOpenOrderEventQuizAnswerNotExit() throws Exception {
         orderEventRepository.save(openOrderEvent);
         openOrderEvent.setOrderEventStatus(OrderEventStatus.OPEN);
-        ResultActions resultActions = mvc.perform(get("/event/order"))
+        mvc.perform(get("/event/order"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].quiz.answer").doesNotExist())
                 .andDo(print());
@@ -92,6 +92,31 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$[0].quiz").doesNotExist())
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("[통합] 존재하는 선착순 이벤트 가져오기")
+    public void getExistOpenOrderEvent() throws Exception {
+        orderEventRepository.save(unOpenOrderEvent);
+        mvc.perform(get("/event/order/{eventId}",unOpenOrderEvent.getId()))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+    @Test
+    @DisplayName("[통합] 존재하는 선착순 이벤트 가져오기")
+    public void getNotExistOpenOrderEvent() throws Exception {
+        orderEventRepository.save(unOpenOrderEvent);
+        mvc.perform(get("/event/order/{eventId}",unOpenOrderEvent.getId()+1))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨(에러)")
+    public void orderEventApplyPhoneNumberNotExist(){
+
+
+    }
+
 
 
 }
