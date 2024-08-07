@@ -1,17 +1,22 @@
 package com.watermelon.server.event.order.total;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.BaseIntegrationTest;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
+import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -24,6 +29,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     private OrderEvent soonOpenOrderEvent;
     private OrderEvent openOrderEvent;
     private OrderEvent unOpenOrderEvent;
+
 
     @BeforeEach
     void setUp(){
@@ -111,10 +117,17 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨(에러)")
-    public void orderEventApplyPhoneNumberNotExist(){
-
-
+    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨 (에러)")
+    public void orderEventApplyPhoneNumberNotExist() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        OrderEventWinnerRequestDto emptyPhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("123");
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
+                        .header("ApplyTicket","ex"))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
 

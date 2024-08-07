@@ -9,6 +9,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import javax.crypto.SecretKey;
 @PropertySource(value = "classpath:application-local-token.yml",factory = YamlLoadFactory.class)
 @Component
 public class ApplyTokenProvider {
+    private static final Logger log = LoggerFactory.getLogger(ApplyTokenProvider.class);
     private final SecretKey TOKEN_SECRET;
     @Value("${apply.token.issuer}")
     private String tokenIssuer;
@@ -45,6 +48,10 @@ public class ApplyTokenProvider {
                     .build();
         }
         catch (SignatureException e){
+            throw new ApplyTicketWrongException();
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
             throw new ApplyTicketWrongException();
         }
     }

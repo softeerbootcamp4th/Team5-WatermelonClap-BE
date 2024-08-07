@@ -21,4 +21,6 @@ public class BaseIntegrationTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
+
+
 }

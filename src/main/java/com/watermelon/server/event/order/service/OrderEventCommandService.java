@@ -6,7 +6,7 @@ import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
-import com.watermelon.server.event.order.error.PhoneNumberNotExistException;
+import com.watermelon.server.event.order.error.WrongPhoneNumberFormatException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
@@ -46,7 +46,7 @@ public class OrderEventCommandService {
         return orderResultCommandService.isOrderResultFullElseMake(orderEventId);
     }
     @Transactional
-    public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException, PhoneNumberNotExistException {
+    public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException, WrongPhoneNumberFormatException {
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
         orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
