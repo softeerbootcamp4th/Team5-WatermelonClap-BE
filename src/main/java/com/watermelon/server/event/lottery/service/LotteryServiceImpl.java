@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LotteryServiceImpl implements LotteryService, LotteryRewardService{
+public class LotteryServiceImpl implements LotteryService{
 
     private final LotteryApplierRepository lotteryApplierRepository;
     private final LotteryRewardRepository lotteryRewardRepository;
@@ -50,13 +50,6 @@ public class LotteryServiceImpl implements LotteryService, LotteryRewardService{
     @Override
     public int getRemainChance(String uid) {
         return lotteryApplierRepository.findByUid(uid).orElseThrow().getRemainChance();
-    }
-
-    @Override
-    public ResponseRewardInfoDto getRewardInfo(int rank) {
-        return ResponseRewardInfoDto.from(
-                lotteryRewardRepository.findLotteryRewardByLotteryRank(rank).orElseThrow()
-        );
     }
 
     @Override
