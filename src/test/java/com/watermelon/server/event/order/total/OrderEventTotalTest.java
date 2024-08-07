@@ -118,10 +118,40 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Test
     @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨 (에러)")
-    public void orderEventApplyPhoneNumberNotExist() throws Exception {
+    public void orderEventApplyPhoneNumberFormatWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
         OrderEventWinnerRequestDto emptyPhoneNumberDto =
-                OrderEventWinnerRequestDto.makeWithPhoneNumber("123");
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("");
+        OrderEventWinnerRequestDto notStartWith010PhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("23434343333");
+        OrderEventWinnerRequestDto toLongPhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("010232323435");
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
+                        .header("ApplyTicket","ex"))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(notStartWith010PhoneNumberDto))
+                        .header("ApplyTicket","ex"))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(toLongPhoneNumberDto))
+                        .header("ApplyTicket","ex"))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 경품 정보 -  전화 번호 형식 잘못됨 (에러)")
+    public void orderEventApplyTicketWrong() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        OrderEventWinnerRequestDto emptyPhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234");
         mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
