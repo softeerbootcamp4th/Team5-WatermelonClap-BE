@@ -27,40 +27,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LotteryServiceImpl implements LotteryService, LotteryWinnerService, LotteryRewardService{
-
-    private final int NOT_RANKED = -1;
+public class LotteryServiceImpl implements LotteryService, LotteryRewardService{
 
     private final LotteryApplierRepository lotteryApplierRepository;
     private final LotteryRewardRepository lotteryRewardRepository;
-
-    @Override
-    public List<ResponseLotteryWinnerDto> getLotteryWinners() {
-        return lotteryApplierRepository.findByLotteryRankNot(NOT_RANKED).stream()
-                .map(participant -> ResponseLotteryWinnerDto.from(
-                        participant.getEmail(),
-                        participant.getLotteryRank())
-                )
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ResponseLotteryWinnerInfoDto getLotteryWinnerInfo(String uid) {
-        return ResponseLotteryWinnerInfoDto.from(
-                lotteryApplierRepository.findByUid(uid).orElseThrow()
-        );
-    }
-
-    @Override
-    public void createLotteryWinnerInfo(String uid, RequestLotteryWinnerInfoDto requestLotteryWinnerInfoDto) {
-        LotteryApplier lotteryApplier = lotteryApplierRepository.findByUid(uid).orElseThrow();
-        lotteryApplier.setLotteryWinnerInfo(
-                requestLotteryWinnerInfoDto.getAddress(),
-                requestLotteryWinnerInfoDto.getName(),
-                requestLotteryWinnerInfoDto.getPhoneNumber()
-        );
-        lotteryApplierRepository.save(lotteryApplier);
-    }
 
     @Override
     public ResponseLotteryRankDto getLotteryRank(String uid) {
@@ -94,23 +64,6 @@ public class LotteryServiceImpl implements LotteryService, LotteryWinnerService,
         return lotteryApplierRepository.findByIsLotteryApplierTrue(pageable)
                 .map(ResponseLotteryApplierDto::from);
     }
-
-    @Override
-    public List<ResponseAdminLotteryWinnerDto> getAdminLotteryWinners() {
-        return lotteryApplierRepository.findByLotteryRankNot(NOT_RANKED).stream()
-                .map(ResponseAdminLotteryWinnerDto::from)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional //처음 상태와 변경 후 상태의 원자성 보장 필요.
-    @Override
-    public void lotteryWinnerCheck(String uid) {
-        LotteryApplier lotteryApplier = lotteryApplierRepository.findByUid(uid).orElseThrow();
-        lotteryApplier.lotteryWinnerCheck();
-        lotteryApplierRepository.save(lotteryApplier);
-    }
-
-
 
     @Transactional
     @Override
