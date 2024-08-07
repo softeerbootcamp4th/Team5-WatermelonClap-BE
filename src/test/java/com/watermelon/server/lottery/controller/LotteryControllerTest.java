@@ -9,6 +9,7 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
+import com.watermelon.server.event.lottery.service.LotteryRewardService;
 import com.watermelon.server.event.lottery.service.LotteryService;
 import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +40,9 @@ class LotteryControllerTest extends ControllerTest {
 
     @MockBean
     private LotteryWinnerService lotteryWinnerService;
+
+    @MockBean
+    private LotteryRewardService lotteryRewardService;
 
     @Test
     @DisplayName("추첨자 명단을 반환한다.")
@@ -176,7 +180,7 @@ class LotteryControllerTest extends ControllerTest {
         final String DOCUMENT_NAME = "event/lotteries/rank";
 
         //when
-        Mockito.when(lotteryService.getRewardInfo(TEST_RANK)).thenReturn(
+        Mockito.when(lotteryRewardService.getRewardInfo(TEST_RANK)).thenReturn(
                 new ResponseRewardInfoDto(TEST_IMGSRC, TEST_NAME)
         );
 

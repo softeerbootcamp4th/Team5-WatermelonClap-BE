@@ -38,13 +38,6 @@ public interface LotteryService {
     int getRemainChance(String uid);
 
     /**
-     * rank 에 대한 경품 정보를 반환한다.
-     * @param rank 순위
-     * @return 경품 정보
-     */
-    ResponseRewardInfoDto getRewardInfo(int rank);
-
-    /**
      * 응모자 정보를 페이지로 반환
      * @param pageable 페이지 정보
      * @return 응모자 정보 페이지

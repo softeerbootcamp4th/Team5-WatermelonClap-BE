@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LotteryServiceImpl implements LotteryService, LotteryWinnerService{
+public class LotteryServiceImpl implements LotteryService, LotteryWinnerService, LotteryRewardService{
 
     private final int NOT_RANKED = -1;
 

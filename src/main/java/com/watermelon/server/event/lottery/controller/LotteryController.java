@@ -6,6 +6,7 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
+import com.watermelon.server.event.lottery.service.LotteryRewardService;
 import com.watermelon.server.event.lottery.service.LotteryService;
 import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class LotteryController {
 
     private final LotteryService lotteryService;
     private final LotteryWinnerService lotteryWinnerService;
+    private final LotteryRewardService lotteryRewardService;
 
     @GetMapping
     public ResponseEntity<List<ResponseLotteryWinnerDto>> getLotteryWinnerList(){
@@ -61,7 +63,7 @@ public class LotteryController {
     public ResponseEntity<ResponseRewardInfoDto> getRewardInfo(
             @PathVariable int rank
     ){
-        return new ResponseEntity<>(lotteryService.getRewardInfo(rank), HttpStatus.OK);
+        return new ResponseEntity<>(lotteryRewardService.getRewardInfo(rank), HttpStatus.OK);
     }
 
 }
