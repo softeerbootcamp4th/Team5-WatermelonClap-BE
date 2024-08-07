@@ -2,7 +2,6 @@ package com.watermelon.server;
 
 import com.epages.restdocs.apispec.ResourceSnippet;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import com.epages.restdocs.apispec.Schema;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -27,7 +26,7 @@ public abstract class ControllerTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    protected ResourceSnippet descriptionOnly(String description) {
+    protected ResourceSnippet resourceSnippet(String description) {
         return resource(
                 ResourceSnippetParameters.builder()
                         .description(description)
@@ -35,7 +34,7 @@ public abstract class ControllerTest {
         );
     }
 
-    protected ResourceSnippet descriptionAndAuthHeader(String description){
+    protected ResourceSnippet resourceSnippetAuthed(String description){
 
         return resource(
                 ResourceSnippetParameters.builder()

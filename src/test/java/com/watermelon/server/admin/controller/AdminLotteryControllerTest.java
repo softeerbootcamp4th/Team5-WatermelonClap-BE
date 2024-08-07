@@ -32,6 +32,7 @@ class AdminLotteryControllerTest extends ControllerTest {
     private LotteryService lotteryService;
 
     @Test
+    @DisplayName("응모자 명단을 반환한다.")
     void getLotteryAppliers() throws Exception {
 
         //given
@@ -46,10 +47,11 @@ class AdminLotteryControllerTest extends ControllerTest {
 
         //when & then
         this.mockMvc.perform(get(PATH_ADMIN_APPLIER)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .param(PARAM_PAGE, String.valueOf(TEST_PAGE_NUMBER))
                         .param(PARAM_SIZE, String.valueOf(TEST_PAGE_SIZE))
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER));
+                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER, resourceSnippetAuthed("응모자 명단을 반환")));
 
     }
 
@@ -70,7 +72,7 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(get(PATH_ADMIN_LOTTERY_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS));
+                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS, resourceSnippetAuthed("추첨 당첨자 명단을 반환")));
 
     }
 
@@ -91,7 +93,7 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(get(PATH_ADMIN_PARTS_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS));
+                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS, resourceSnippetAuthed("파츠 당첨자 명단을 반환")));
 
     }
 
@@ -103,7 +105,8 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_ADMIN_LOTTERY_WINNER_CHECK, TEST_UID)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK));
+                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK,
+                        resourceSnippetAuthed("추첨 당첨자를 확인처리")));
 
         verify(lotteryService).lotteryWinnerCheck(TEST_UID);
 
@@ -117,7 +120,8 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_ADMIN_PARTS_WINNER_CHECK, TEST_UID)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK));
+                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK,
+                        resourceSnippetAuthed("파츠 추첨 당첨자를 확인처리")));
 
         verify(lotteryService).partsWinnerCheck(TEST_UID);
 
@@ -130,7 +134,8 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_LOTTERY)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
                 .andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_LOTTERY));
+                .andDo(document(DOCUMENT_NAME_LOTTERY,
+                        resourceSnippetAuthed("추첨 이벤트 응모자에 대해 추첨")));
 
         verify(lotteryService).lottery();
 
@@ -143,7 +148,8 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_PARTS_LOTTERY)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
                 .andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY));
+                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY,
+                        resourceSnippetAuthed("파츠 이벤트 응모자에 대해 추첨")));
 
         verify(lotteryService).partsLottery();
 
