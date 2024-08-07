@@ -1,8 +1,8 @@
 package com.watermelon.server.randomevent.domain;
 
 import com.watermelon.server.BaseEntity;
-import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
-import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
+import com.watermelon.server.parts.domain.LotteryApplierParts;
+import com.watermelon.server.parts.exception.PartsDrawLimitExceededException;
 import jakarta.persistence.*;
 import lombok.*;
 

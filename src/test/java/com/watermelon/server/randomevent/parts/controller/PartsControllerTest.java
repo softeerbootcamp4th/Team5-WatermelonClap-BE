@@ -2,11 +2,12 @@ package com.watermelon.server.randomevent.parts.controller;
 
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.DocumentConstants;
-import com.watermelon.server.randomevent.parts.dto.response.ResponseMyPartsListDto;
-import com.watermelon.server.randomevent.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.randomevent.parts.dto.response.ResponseRemainChanceDto;
-import com.watermelon.server.randomevent.parts.exception.PartsDrawLimitExceededException;
-import com.watermelon.server.randomevent.parts.service.PartsService;
+import com.watermelon.server.parts.controller.PartsController;
+import com.watermelon.server.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.parts.dto.response.ResponseRemainChanceDto;
+import com.watermelon.server.parts.exception.PartsDrawLimitExceededException;
+import com.watermelon.server.parts.service.PartsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

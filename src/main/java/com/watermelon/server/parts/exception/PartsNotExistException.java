@@ -1,4 +1,4 @@
-package com.watermelon.server.randomevent.parts.exception;
+package com.watermelon.server.parts.exception;
 
 public class PartsNotExistException extends RuntimeException {
 }

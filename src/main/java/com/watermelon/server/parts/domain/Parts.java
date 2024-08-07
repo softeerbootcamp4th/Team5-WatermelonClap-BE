@@ -1,4 +1,4 @@
-package com.watermelon.server.randomevent.parts.domain;
+package com.watermelon.server.parts.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

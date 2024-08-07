@@ -1,9 +1,11 @@
 package com.watermelon.server.randomevent.parts.dto.response;
 
+import com.watermelon.server.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.parts.dto.response.ResponsePartsListDto;
 import com.watermelon.server.randomevent.domain.LotteryApplier;
-import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
-import com.watermelon.server.randomevent.parts.domain.Parts;
-import com.watermelon.server.randomevent.parts.domain.PartsCategory;
+import com.watermelon.server.parts.domain.LotteryApplierParts;
+import com.watermelon.server.parts.domain.Parts;
+import com.watermelon.server.parts.domain.PartsCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

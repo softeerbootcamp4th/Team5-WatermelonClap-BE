@@ -1,6 +1,6 @@
-package com.watermelon.server.randomevent.parts.repository;
+package com.watermelon.server.parts.repository;
 
-import com.watermelon.server.randomevent.parts.domain.LotteryApplierParts;
+import com.watermelon.server.parts.domain.LotteryApplierParts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
