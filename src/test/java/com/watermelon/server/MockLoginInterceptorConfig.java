@@ -1,6 +1,6 @@
 package com.watermelon.server;
 
-import com.watermelon.server.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.auth.service.TokenVerifier;
 import com.watermelon.server.randomevent.link.service.LinkService;
 import com.watermelon.server.randomevent.service.LotteryService;
 import org.mockito.Mockito;

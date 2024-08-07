@@ -1,6 +1,6 @@
-package com.watermelon.server.auth.resolver;
+package com.watermelon.server.randomevent.auth.resolver;
 
-import com.watermelon.server.auth.annotations.Uid;
+import com.watermelon.server.randomevent.auth.annotations.Uid;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

@@ -1,4 +1,4 @@
-package com.watermelon.server.auth.utils;
+package com.watermelon.server.randomevent.auth.utils;
 
 public class AuthUtils {
 

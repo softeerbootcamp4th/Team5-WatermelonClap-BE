@@ -1,8 +1,7 @@
 package com.watermelon.server.randomevent.auth.interceptor;
 
-import com.watermelon.server.auth.exception.AuthenticationException;
-import com.watermelon.server.auth.interceptor.LoginCheckInterceptor;
-import com.watermelon.server.auth.service.TokenVerifier;
+import com.watermelon.server.randomevent.auth.exception.AuthenticationException;
+import com.watermelon.server.randomevent.auth.service.TokenVerifier;
 import com.watermelon.server.randomevent.link.service.LinkService;
 import com.watermelon.server.randomevent.service.LotteryService;
 import jakarta.servlet.http.HttpServletRequest;

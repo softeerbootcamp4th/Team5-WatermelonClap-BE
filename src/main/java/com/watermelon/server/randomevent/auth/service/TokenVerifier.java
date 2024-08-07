@@ -1,6 +1,6 @@
-package com.watermelon.server.auth.service;
+package com.watermelon.server.randomevent.auth.service;
 
-import com.watermelon.server.auth.exception.InvalidTokenException;
+import com.watermelon.server.randomevent.auth.exception.InvalidTokenException;
 
 /**
  * 토큰을 검사하는 인터페이스

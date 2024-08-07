@@ -1,6 +1,6 @@
 package com.watermelon.server.randomevent.controller;
 
-import com.watermelon.server.auth.annotations.Uid;
+import com.watermelon.server.randomevent.auth.annotations.Uid;
 import com.watermelon.server.randomevent.dto.request.RequestLotteryWinnerInfoDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.randomevent.dto.response.ResponseLotteryWinnerDto;
