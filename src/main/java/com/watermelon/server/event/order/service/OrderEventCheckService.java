@@ -28,7 +28,7 @@ public class OrderEventCheckService {
         this.endDate = endDate;
     }
 
-    public void refreshInforMation(OrderEvent orderEvent){
+    public void refreshOrderEventInProgress(OrderEvent orderEvent){
         this.eventId = orderEvent.getId();
         this.quizId =orderEvent.getQuiz().getId();
         this.answer = orderEvent.getQuiz().getAnswer();
@@ -44,7 +44,7 @@ public class OrderEventCheckService {
         return false;
     }
     public boolean isEventAndQuizIdWrong( Long eventId,Long quizId) {
-        if(this.eventId.equals(eventId) && this.quizId.equals(quizId)) return true;
+        if(this.eventId !=null && this.eventId.equals(eventId) && this.quizId.equals(quizId)) return true;
         return false;
     }
     public void checkingInfoErrors( Long eventId, Long quizId)

@@ -1,22 +1,17 @@
 package com.watermelon.server.event.order.total;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watermelon.server.BaseIntegrationTest;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
-import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
-import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
-import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
-import com.watermelon.server.event.order.dto.request.RequestQuizDto;
-import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
+import com.watermelon.server.event.order.domain.Quiz;
+import com.watermelon.server.event.order.dto.request.*;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
+import com.watermelon.server.event.order.service.OrderEventCheckService;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,6 +24,8 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Autowired
     private OrderEventRepository orderEventRepository;
+    @Autowired
+    private OrderEventCheckService orderEventCheckService;
 
     @Autowired
     private ApplyTokenProvider applyTokenProvider;
@@ -59,6 +56,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                                 RequestOrderRewardDto.makeForTest()
                         )
         );
+
     }
     @AfterEach
     void tearDown(){
@@ -123,6 +121,24 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
+    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - 성공")
+    public void orderEventApplyTicketNotWrong() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        String applyTicket = applyTokenProvider.createTokenByOrderEventId(
+                JwtPayload.from(String.valueOf(openOrderEvent.getId()))
+        );
+
+        OrderEventWinnerRequestDto emptyPhoneNumberDto =
+                OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234");
+        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
+                        .header("ApplyTicket",applyTicket))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
     @DisplayName("[통합] 선착순 퀴즈 번호 제출-  전화 번호 형식 잘못됨 (에러)")
     public void orderEventApplyPhoneNumberFormatWrong() throws Exception {
         orderEventRepository.save(openOrderEvent);
@@ -152,23 +168,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andDo(print());
     }
 
-    @Test
-    @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞음")
-    public void orderEventApplyTicketNotWrong() throws Exception {
-        orderEventRepository.save(openOrderEvent);
-        String applyTicket = applyTokenProvider.createTokenByOrderEventId(
-                JwtPayload.from(String.valueOf(openOrderEvent.getId()))
-        );
 
-        OrderEventWinnerRequestDto emptyPhoneNumberDto =
-                OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234");
-        mvc.perform(post("/event/order/{eventId}/{quizId}/apply",openOrderEvent.getId(),1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
-                        .header("ApplyTicket",applyTicket))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 
     @Test
     @DisplayName("[통합] 선착순 퀴즈 번호 제출 - ApplyTicket 형식 맞지 않음(다른 Claim key)")
@@ -185,6 +185,20 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                         .content(objectMapper.writeValueAsString(emptyPhoneNumberDto))
                         .header("ApplyTicket",applyTicket))
                 .andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 제출 - 성공")
+    public void orderEventApply() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        orderEventCheckService.refreshOrderEventInProgress(openOrderEvent);
+        Quiz quiz = openOrderEvent.getQuiz();
+        RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer());
+        mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

@@ -33,7 +33,7 @@ public class OrderEventCommandService {
         this.orderEventWinnerService = orderEventWinnerService;
         this.orderResultCommandService = orderResultCommandService;
         this.orderEventCheckService = orderEventCheckService;
-        setOrderEventCheckService();
+        findOrderEventToMakeInProgress();
     }
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
@@ -51,13 +51,12 @@ public class OrderEventCommandService {
         orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
 
-    public void setOrderEventCheckService(){
+    @Transactional
+    public void findOrderEventToMakeInProgress(){
         //현재 OrderEvent의 상태를 주기적으로 변경
         List<OrderEvent> orderEvent = orderEventRepository.findAll();
         if(orderEvent.isEmpty()) return; // 이벤트 없을시 스킵
         OrderEvent currentOrderEvent = orderEvent.get(0); // 여기서 현재 이벤트를 검증해야함
-        this.orderEventCheckService.refreshInforMation(currentOrderEvent);
+        this.orderEventCheckService.refreshOrderEventInProgress(currentOrderEvent);
     }
-
-
 }
