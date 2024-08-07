@@ -58,7 +58,7 @@ class AdminLotteryControllerTest extends ControllerTest {
                 .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER,
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .description("응모자 명단을 반환")
+                                        .description("응모자 명단 조회")
                                         .requestHeaders(
                                                 headerWithName(HEADER_NAME_AUTHORIZATION).description("Bearer token for authentication"))
                                         .queryParameters(
@@ -88,7 +88,7 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(get(PATH_ADMIN_LOTTERY_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS, resourceSnippetAuthed("추첨 당첨자 명단을 반환")));
+                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS, resourceSnippetAuthed("추첨 당첨자 명단 조회")));
 
     }
 
@@ -109,7 +109,7 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(get(PATH_ADMIN_PARTS_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS, resourceSnippetAuthed("파츠 당첨자 명단을 반환")));
+                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS, resourceSnippetAuthed("파츠 당첨자 명단 조회")));
 
     }
 
@@ -122,7 +122,7 @@ class AdminLotteryControllerTest extends ControllerTest {
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
                 .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK,
-                        resourceSnippetAuthed("추첨 당첨자를 확인처리")));
+                        resourceSnippetAuthed("추첨 당첨자 확인처리")));
 
         verify(lotteryService).lotteryWinnerCheck(TEST_UID);
 
@@ -137,7 +137,7 @@ class AdminLotteryControllerTest extends ControllerTest {
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
                 .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK,
-                        resourceSnippetAuthed("파츠 추첨 당첨자를 확인처리")));
+                        resourceSnippetAuthed("파츠 추첨 당첨자 확인처리")));
 
         verify(lotteryService).partsWinnerCheck(TEST_UID);
 

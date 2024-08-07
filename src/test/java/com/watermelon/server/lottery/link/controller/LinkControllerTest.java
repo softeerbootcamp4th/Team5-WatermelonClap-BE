@@ -41,7 +41,7 @@ class LinkControllerTest extends ControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)))
 
                 .andDo(document(DocumentConstants.MY_LINK,
-                        resourceSnippetAuthed("로그인한 유저의 링크를 반환")
+                        resourceSnippetAuthed("로그인한 유저의 링크를 조회")
                 ));
 
     }
@@ -59,7 +59,7 @@ class LinkControllerTest extends ControllerTest {
                 .andExpect(header().string(HEADER_NAME_LOCATION, LinkUtils.makeUrl(TEST_URI)))
 
                 .andDo(document(DocumentConstants.SHORTED_LINK,
-                        resourceSnippet("단축된 URL 에 대한 공유 페이지로 렌더링")
+                        resourceSnippet("단축된 URL 에 대한 공유 페이지로 리디렉션")
                 ));
     }
 }

@@ -115,7 +115,7 @@ class PartsControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponseBody))
                 .andDo(document(DOCUMENT_NAME,
-                        resourceSnippetAuthed("자신의 남은 파츠 뽑기 횟수 반환")));
+                        resourceSnippetAuthed("자신의 남은 파츠 뽑기 횟수 조회")));
 
     }
 
@@ -141,7 +141,7 @@ class PartsControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected))
                 .andDo(document(DOCUMENT_NAME,
-                        resourceSnippetAuthed("자신의 파츠 목록 반환")));
+                        resourceSnippetAuthed("자신의 파츠 목록 조회")));
 
     }
 
@@ -162,7 +162,7 @@ class PartsControllerTest extends ControllerTest {
                         objectMapper.writeValueAsString(responseMyPartsListDtos)
                 ))
                 .andDo(document(DocumentConstants.PARTS_LINK_LIST,
-                        resourceSnippetAuthed("링크 키의 주인에 대한 파츠 목록 반환")));
+                        resourceSnippetAuthed("링크 키의 주인에 대한 파츠 목록 조회")));
 
     }
 
