@@ -1,6 +1,6 @@
 package com.watermelon.server.admin.dto.response;
 
-import com.watermelon.server.randomevent.domain.LotteryApplier;
+import com.watermelon.server.lottery.domain.LotteryApplier;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
