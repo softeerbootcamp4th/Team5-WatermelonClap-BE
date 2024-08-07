@@ -9,7 +9,7 @@ import com.watermelon.server.event.lottery.parts.exception.PartsNotExistExceptio
 import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
 import com.watermelon.server.event.lottery.parts.domain.Parts;
 import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
-import com.watermelon.server.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

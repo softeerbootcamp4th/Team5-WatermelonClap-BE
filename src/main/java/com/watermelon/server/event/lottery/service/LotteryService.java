@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.service;
+package com.watermelon.server.event.lottery.service;
 
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;

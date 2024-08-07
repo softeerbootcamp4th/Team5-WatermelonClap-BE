@@ -4,7 +4,7 @@ import com.watermelon.server.ControllerTest;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
-import com.watermelon.server.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

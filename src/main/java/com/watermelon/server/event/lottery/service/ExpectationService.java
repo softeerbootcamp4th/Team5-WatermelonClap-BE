@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.service;
+package com.watermelon.server.event.lottery.service;
 
 import com.watermelon.server.admin.dto.response.ResponseAdminExpectationApprovedDto;
 import com.watermelon.server.event.lottery.domain.Expectation;

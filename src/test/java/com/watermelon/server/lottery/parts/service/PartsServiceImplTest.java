@@ -9,7 +9,7 @@ import com.watermelon.server.event.lottery.parts.exception.PartsDrawLimitExceede
 import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
 import com.watermelon.server.event.lottery.parts.service.LotteryApplierPartsService;
 import com.watermelon.server.event.lottery.parts.service.PartsServiceImpl;
-import com.watermelon.server.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

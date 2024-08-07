@@ -6,7 +6,7 @@ import com.watermelon.server.event.lottery.link.exception.LinkNotFoundException;
 import com.watermelon.server.event.lottery.link.repository.LinkRepository;
 import com.watermelon.server.event.lottery.link.dto.MyLinkDto;
 import com.watermelon.server.event.lottery.link.utils.LinkUtils;
-import com.watermelon.server.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

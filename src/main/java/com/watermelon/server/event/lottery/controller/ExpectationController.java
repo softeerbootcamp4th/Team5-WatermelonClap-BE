@@ -4,7 +4,7 @@ import com.watermelon.server.event.lottery.auth.annotations.Uid;
 import com.watermelon.server.event.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.event.lottery.error.ExpectationAlreadyExistError;
-import com.watermelon.server.lottery.service.ExpectationService;
+import com.watermelon.server.event.lottery.service.ExpectationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

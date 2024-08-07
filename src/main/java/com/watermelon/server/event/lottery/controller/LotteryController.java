@@ -6,7 +6,7 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
-import com.watermelon.server.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -5,6 +5,8 @@ import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.event.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.event.lottery.error.ExpectationAlreadyExistError;
 import com.watermelon.server.event.lottery.repository.ExpectationRepository;
+import com.watermelon.server.event.lottery.service.ExpectationService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
