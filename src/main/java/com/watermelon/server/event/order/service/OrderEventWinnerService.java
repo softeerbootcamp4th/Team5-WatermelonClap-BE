@@ -5,6 +5,7 @@ import com.watermelon.server.error.ApplyTicketWrongException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventWinner;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
+import com.watermelon.server.event.order.error.PhoneNumberNotExistException;
 import com.watermelon.server.event.order.repository.OrderEventWinnerRepository;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
@@ -24,8 +25,8 @@ public class OrderEventWinnerService {
             OrderEventWinnerRequestDto orderEventWinnerRequestDto,
             String applyAnswer,
             String applyTicket)
-            throws ApplyTicketWrongException
-    {
+            throws ApplyTicketWrongException, PhoneNumberNotExistException {
+        if(orderEventWinnerRequestDto.isPhoneNumberValid()) throw new PhoneNumberNotExistException();
         JwtPayload payload = applyTokenProvider.verifyToken(applyTicket, String.valueOf(orderEvent.getId()));
         OrderEventWinner orderEventWinner = OrderEventWinner.makeWinner(orderEvent
                 , orderEventWinnerRequestDto
@@ -33,5 +34,6 @@ public class OrderEventWinnerService {
         //ApplyTicket  payload에서 applyAnswer를 담도록 하여야함
         return orderEventWinnerRepository.save(orderEventWinner);
     }
+
 
 }

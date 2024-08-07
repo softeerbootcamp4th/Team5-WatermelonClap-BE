@@ -57,7 +57,8 @@ public class OrderEventController {
                           @PathVariable("quizId") Long quizId,
                           @RequestBody OrderEventWinnerRequestDto orderEventWinnerRequestDto)
             throws ApplyTicketWrongException
-            , WrongOrderEventFormatException, PhoneNumberNotExistException {
+            , WrongOrderEventFormatException
+            , PhoneNumberNotExistException {
         orderEventCommandService.makeOrderEventWinner(applyTicket,eventId,orderEventWinnerRequestDto);
     }
 
@@ -73,8 +74,4 @@ public class OrderEventController {
     public ResponseEntity<String> handleApplyTicketWrongException(ApplyTicketWrongException applyTicketWrongException){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(applyTicketWrongException.getMessage());
     }
-}
-
-
-
 }

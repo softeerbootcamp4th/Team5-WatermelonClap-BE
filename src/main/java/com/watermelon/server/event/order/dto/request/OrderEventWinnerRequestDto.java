@@ -19,4 +19,8 @@ public class OrderEventWinnerRequestDto {
                 .phoneNumber("testPhoneNumber")
                 .build();
     }
+    public boolean isPhoneNumberValid() {
+        if(phoneNumber.isEmpty()) return false;
+        return true;
+    }
 }
