@@ -1,8 +1,8 @@
 package com.watermelon.server;
 
-import com.watermelon.server.randomevent.auth.service.TokenVerifier;
-import com.watermelon.server.randomevent.link.service.LinkService;
-import com.watermelon.server.randomevent.service.LotteryService;
+import com.watermelon.server.event.lottery.auth.service.TokenVerifier;
+import com.watermelon.server.event.lottery.link.service.LinkService;
+import com.watermelon.server.event.lottery.service.LotteryService;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

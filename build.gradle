@@ -5,6 +5,7 @@ plugins {
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
 	id 'com.epages.restdocs-api-spec' version '0.18.2'
 	id 'org.hidetake.swagger.generator' version '2.19.2'
+	id 'jacoco'
 }
 
 group = 'com.watermelon'
@@ -71,6 +72,7 @@ tasks.named('test') {
 bootJar {
 	dependsOn 'openapi3'
 	dependsOn 'customGenerateSwaggerUI'
+	dependsOn 'copySwaggerUI'
 }
 
 //OpenAPI Spec 지정
@@ -86,15 +88,13 @@ openapi3 {
 	}
 }
 
-build {
-	//build 전 실행되도록
-	dependsOn 'copySwaggerUI'
-}
-
 // Swagger UI 파일 복사 태스크 등록
 tasks.register('copySwaggerUI', Copy) {
-	dependsOn bootJar
 	dependsOn jar
+	dependsOn compileTestJava
+	dependsOn test
+	dependsOn customGenerateSwaggerUI
+	dependsOn resolveMainClassName
 	from("build/swagger-ui-watermelon")
 	into("build/resources/main/static/docs")
 }
@@ -111,4 +111,36 @@ swaggerSources {
 		inputFile = file('build/api-spec/openapi3.yaml') //openapi3 파일 위치 지정
 	}
 
+}
+
+//jacoco
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+	dependsOn 'copySwaggerUI'
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes: [
+							'**/*Application*',
+							'**/*Exception*',
+							'**/dto/**',
+					])
+				})
+		)
+	}
+}
+
+jacoco {
+	toolVersion = "0.8.11"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }

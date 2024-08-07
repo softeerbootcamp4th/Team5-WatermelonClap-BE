@@ -3,7 +3,7 @@ package com.watermelon.server.firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.watermelon.server.randomevent.auth.exception.InvalidTokenException;
+import com.watermelon.server.event.lottery.auth.exception.InvalidTokenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

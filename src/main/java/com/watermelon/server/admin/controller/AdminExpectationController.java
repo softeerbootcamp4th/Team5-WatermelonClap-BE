@@ -2,13 +2,12 @@ package com.watermelon.server.admin.controller;
 
 
 import com.watermelon.server.admin.dto.response.ResponseAdminExpectationApprovedDto;
-import com.watermelon.server.randomevent.dto.response.ResponseExpectationDto;
-import com.watermelon.server.randomevent.error.ExpectationNotExist;
-import com.watermelon.server.randomevent.service.ExpectationService;
+import com.watermelon.server.event.lottery.dto.response.ResponseExpectationDto;
+import com.watermelon.server.event.lottery.error.ExpectationNotExist;
+import com.watermelon.server.event.lottery.service.ExpectationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
