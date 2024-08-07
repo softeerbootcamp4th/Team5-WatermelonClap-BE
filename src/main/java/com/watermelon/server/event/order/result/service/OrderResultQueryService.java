@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderResultQueryService {
+    @Getter
     private final RSet<OrderResult> orderResultRset;
 
     @Getter

@@ -7,13 +7,17 @@ import com.watermelon.server.event.order.domain.OrderEventStatus;
 import com.watermelon.server.event.order.domain.Quiz;
 import com.watermelon.server.event.order.dto.request.*;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
+import com.watermelon.server.event.order.result.service.OrderResultQueryService;
 import com.watermelon.server.event.order.service.OrderEventCheckService;
 import com.watermelon.server.token.ApplyTokenProvider;
 import com.watermelon.server.token.JwtPayload;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import static java.lang.Math.log;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -21,18 +25,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @DisplayName("[통합] 사용자 선착순 이벤트 ")
+@Slf4j
 public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Autowired
     private OrderEventRepository orderEventRepository;
     @Autowired
     private OrderEventCheckService orderEventCheckService;
+    @Autowired
+    private OrderResultQueryService orderResultQueryService;
 
     @Autowired
     private ApplyTokenProvider applyTokenProvider;
     private OrderEvent soonOpenOrderEvent;
     private OrderEvent openOrderEvent;
     private OrderEvent unOpenOrderEvent;
+
 
     @BeforeEach
     void setUp(){
@@ -197,6 +205,8 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestAnswerDto)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").value(ApplyTicketStatus.SUCCESS.toString()))
+                .andExpect(jsonPath("$.applyTicket").exists())
                 .andDo(print());
     }
 
@@ -240,6 +250,33 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                         .content(objectMapper.writeValueAsString(requestAnswerDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result").value(ApplyTicketStatus.WRONG.toString()))
+                .andExpect(jsonPath("$.applyTicket").doesNotExist())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[통합] 선착순 퀴즈 제출 - 실패(선착순 마감)")
+    public void orderEventApplyClosed() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        orderEventCheckService.refreshOrderEventInProgress(openOrderEvent);
+
+        Quiz quiz = openOrderEvent.getQuiz();
+        RequestAnswerDto requestAnswerDto = RequestAnswerDto.makeWith(quiz.getAnswer());
+        log.debug(String.valueOf(orderResultQueryService.getAvailableTicket()));
+        for(int i=0;i<orderResultQueryService.getAvailableTicket();i++){
+            mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.result").value(ApplyTicketStatus.SUCCESS.toString()))
+                    .andExpect(jsonPath("$.applyTicket").exists());
+        }
+        Assertions.assertThat(orderResultQueryService.getOrderResultRset().size()).isEqualTo(100);
+        mvc.perform(post("/event/order/{eventId}/{quizId}",openOrderEvent.getId(),quiz.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestAnswerDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").value(ApplyTicketStatus.CLOSED.toString()))
                 .andExpect(jsonPath("$.applyTicket").doesNotExist())
                 .andDo(print());
     }
