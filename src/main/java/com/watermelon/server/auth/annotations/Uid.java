@@ -1,4 +1,4 @@
-package com.watermelon.server.randomevent.auth.annotations;
+package com.watermelon.server.auth.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

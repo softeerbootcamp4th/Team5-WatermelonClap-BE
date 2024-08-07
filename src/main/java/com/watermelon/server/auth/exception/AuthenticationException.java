@@ -1,4 +1,4 @@
-package com.watermelon.server.randomevent.auth.exception;
+package com.watermelon.server.auth.exception;
 
 public class AuthenticationException extends RuntimeException{
 

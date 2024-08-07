@@ -1,6 +1,6 @@
 package com.watermelon.server.randomevent.controller;
 
-import com.watermelon.server.randomevent.auth.annotations.Uid;
+import com.watermelon.server.auth.annotations.Uid;
 import com.watermelon.server.randomevent.dto.request.RequestExpectationDto;
 import com.watermelon.server.randomevent.dto.response.ResponseExpectationDto;
 import com.watermelon.server.randomevent.error.ExpectationAlreadyExistError;
