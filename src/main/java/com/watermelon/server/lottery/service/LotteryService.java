@@ -4,11 +4,11 @@ import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseRewardInfoDto;
+import com.watermelon.server.event.lottery.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

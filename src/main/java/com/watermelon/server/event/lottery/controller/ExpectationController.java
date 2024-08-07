@@ -1,8 +1,8 @@
 package com.watermelon.server.event.lottery.controller;
 
 import com.watermelon.server.event.lottery.auth.annotations.Uid;
-import com.watermelon.server.lottery.dto.request.RequestExpectationDto;
-import com.watermelon.server.lottery.dto.response.ResponseExpectationDto;
+import com.watermelon.server.event.lottery.dto.request.RequestExpectationDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.lottery.error.ExpectationAlreadyExistError;
 import com.watermelon.server.lottery.service.ExpectationService;
 import lombok.RequiredArgsConstructor;

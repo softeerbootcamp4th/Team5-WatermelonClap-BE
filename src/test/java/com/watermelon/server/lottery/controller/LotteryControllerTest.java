@@ -2,11 +2,11 @@ package com.watermelon.server.lottery.controller;
 
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.event.lottery.controller.LotteryController;
-import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseRewardInfoDto;
+import com.watermelon.server.event.lottery.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.lottery.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

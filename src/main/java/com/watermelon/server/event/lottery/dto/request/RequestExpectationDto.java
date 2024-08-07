@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.dto.request;
+package com.watermelon.server.event.lottery.dto.request;
 
 
 import lombok.Builder;

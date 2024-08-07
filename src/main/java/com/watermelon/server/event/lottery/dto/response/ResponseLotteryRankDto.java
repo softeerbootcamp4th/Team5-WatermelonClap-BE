@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.dto.response;
+package com.watermelon.server.event.lottery.dto.response;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import lombok.Builder;

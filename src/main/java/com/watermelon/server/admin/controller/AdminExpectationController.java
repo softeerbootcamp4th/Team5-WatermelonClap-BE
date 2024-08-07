@@ -2,7 +2,7 @@ package com.watermelon.server.admin.controller;
 
 
 import com.watermelon.server.admin.dto.response.ResponseAdminExpectationApprovedDto;
-import com.watermelon.server.lottery.dto.response.ResponseExpectationDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.lottery.error.ExpectationNotExist;
 import com.watermelon.server.lottery.service.ExpectationService;
 import lombok.RequiredArgsConstructor;

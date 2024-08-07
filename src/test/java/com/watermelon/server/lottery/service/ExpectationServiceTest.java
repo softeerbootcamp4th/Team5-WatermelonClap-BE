@@ -2,7 +2,7 @@ package com.watermelon.server.lottery.service;
 
 import com.watermelon.server.event.lottery.domain.Expectation;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.dto.request.RequestExpectationDto;
+import com.watermelon.server.event.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.lottery.error.ExpectationAlreadyExistError;
 import com.watermelon.server.lottery.repository.ExpectationRepository;
 import org.assertj.core.api.Assertions;

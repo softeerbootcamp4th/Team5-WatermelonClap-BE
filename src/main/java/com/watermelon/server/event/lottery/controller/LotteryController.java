@@ -1,11 +1,11 @@
 package com.watermelon.server.event.lottery.controller;
 
 import com.watermelon.server.event.lottery.auth.annotations.Uid;
-import com.watermelon.server.lottery.dto.request.RequestLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryRankDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerDto;
-import com.watermelon.server.lottery.dto.response.ResponseLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.dto.response.ResponseRewardInfoDto;
+import com.watermelon.server.event.lottery.dto.request.RequestLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
+import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.lottery.service.LotteryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
