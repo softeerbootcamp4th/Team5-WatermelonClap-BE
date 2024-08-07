@@ -2,8 +2,9 @@ package com.watermelon.server.lottery.link.service;
 
 import com.watermelon.server.event.lottery.domain.Link;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.link.dto.MyLinkDto;
-import com.watermelon.server.lottery.link.repository.LinkRepository;
+import com.watermelon.server.event.lottery.link.dto.MyLinkDto;
+import com.watermelon.server.event.lottery.link.repository.LinkRepository;
+import com.watermelon.server.event.lottery.link.service.LinkServiceImpl;
 import com.watermelon.server.lottery.service.LotteryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

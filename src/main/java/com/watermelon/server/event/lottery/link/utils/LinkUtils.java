@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.link.utils;
+package com.watermelon.server.event.lottery.link.utils;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

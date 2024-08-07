@@ -1,11 +1,11 @@
-package com.watermelon.server.lottery.link.service;
+package com.watermelon.server.event.lottery.link.service;
 
 import com.watermelon.server.event.lottery.domain.Link;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.link.dto.MyLinkDto;
-import com.watermelon.server.lottery.link.exception.LinkNotFoundException;
-import com.watermelon.server.lottery.link.repository.LinkRepository;
-import com.watermelon.server.lottery.link.utils.LinkUtils;
+import com.watermelon.server.event.lottery.link.exception.LinkNotFoundException;
+import com.watermelon.server.event.lottery.link.repository.LinkRepository;
+import com.watermelon.server.event.lottery.link.dto.MyLinkDto;
+import com.watermelon.server.event.lottery.link.utils.LinkUtils;
 import com.watermelon.server.lottery.service.LotteryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

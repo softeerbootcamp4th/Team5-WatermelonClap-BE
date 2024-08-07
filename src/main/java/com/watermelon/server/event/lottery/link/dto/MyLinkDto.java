@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.link.dto;
+package com.watermelon.server.event.lottery.link.dto;
 
 import lombok.Builder;
 import lombok.Data;

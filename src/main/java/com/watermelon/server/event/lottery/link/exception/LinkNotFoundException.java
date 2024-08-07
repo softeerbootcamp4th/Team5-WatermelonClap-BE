@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.link.exception;
+package com.watermelon.server.event.lottery.link.exception;
 
 public class LinkNotFoundException extends RuntimeException{
     public LinkNotFoundException() {

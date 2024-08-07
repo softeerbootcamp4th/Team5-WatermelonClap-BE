@@ -1,5 +1,6 @@
 package com.watermelon.server.lottery.link.utils;
 
+import com.watermelon.server.event.lottery.link.utils.LinkUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

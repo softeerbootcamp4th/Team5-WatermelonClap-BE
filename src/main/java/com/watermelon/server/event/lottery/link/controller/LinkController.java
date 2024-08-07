@@ -1,8 +1,8 @@
-package com.watermelon.server.lottery.link.controller;
+package com.watermelon.server.event.lottery.link.controller;
 
 import com.watermelon.server.event.lottery.auth.annotations.Uid;
-import com.watermelon.server.lottery.link.dto.MyLinkDto;
-import com.watermelon.server.lottery.link.service.LinkService;
+import com.watermelon.server.event.lottery.link.dto.MyLinkDto;
+import com.watermelon.server.event.lottery.link.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.watermelon.server.lottery.link.utils.LinkUtils.makeUrl;
+import static com.watermelon.server.event.lottery.link.utils.LinkUtils.makeUrl;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.watermelon.server.lottery.parts.service;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.link.service.LinkService;
+import com.watermelon.server.event.lottery.link.service.LinkService;
 import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
 import com.watermelon.server.lottery.parts.domain.Parts;
 import com.watermelon.server.lottery.parts.dto.response.ResponseMyPartsListDto;

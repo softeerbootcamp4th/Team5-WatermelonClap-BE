@@ -3,7 +3,7 @@ package com.watermelon.server.lottery.auth.interceptor;
 import com.watermelon.server.event.lottery.auth.exception.AuthenticationException;
 import com.watermelon.server.event.lottery.auth.interceptor.LoginCheckInterceptor;
 import com.watermelon.server.event.lottery.auth.service.TokenVerifier;
-import com.watermelon.server.lottery.link.service.LinkService;
+import com.watermelon.server.event.lottery.link.service.LinkService;
 import com.watermelon.server.lottery.service.LotteryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
