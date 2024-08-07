@@ -9,12 +9,14 @@ import com.watermelon.server.event.order.dto.request.RequestQuizDto;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+@DisplayName("[통합] 사용자 선착순 이벤트 ")
 public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @Autowired
@@ -52,11 +54,11 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("[통합] 선착순 이벤트 오픈된 이벤트 가져오기")
+    @DisplayName("[통합] 선착순 이벤트 오픈된 이벤트 가져오기 - quiz = not exist")
     public void getOpenOrderEvent() throws Exception {
         orderEventRepository.save(openOrderEvent);
         openOrderEvent.setOrderEventStatus(OrderEventStatus.OPEN);
-        mvc.perform(get("/event/order"))
+        ResultActions resultActions = mvc.perform(get("/event/order"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].eventId").value(openOrderEvent.getId()))
@@ -66,9 +68,18 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$[0].quiz").exists())
                 .andDo(print());
     }
-
     @Test
-    @DisplayName("[통합] 선착순 이벤트 오픈 안 된 이벤트 가져오기(NULL)")
+    @DisplayName("[통합] 선착순 이벤트 퀴즈 - answer = null")
+    public void getOpenOrderEventQuizAnswerNotExit() throws Exception {
+        orderEventRepository.save(openOrderEvent);
+        openOrderEvent.setOrderEventStatus(OrderEventStatus.OPEN);
+        ResultActions resultActions = mvc.perform(get("/event/order"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].quiz.answer").doesNotExist())
+                .andDo(print());
+    }
+    @Test
+    @DisplayName("[통합] 선착순 이벤트 오픈 안 된 이벤트 가져오기")
     public void getUnOpenOrderEvent() throws Exception {
         orderEventRepository.save(unOpenOrderEvent);
         mvc.perform(get("/event/order"))
@@ -78,7 +89,9 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$[0].startDate").value(unOpenOrderEvent.getStartDate().toString()))
                 .andExpect(jsonPath("$[0].endDate").value(unOpenOrderEvent.getEndDate().toString()))
                 .andExpect(jsonPath("$[0].status").value(unOpenOrderEvent.getOrderEventStatus().toString()))
-               .andExpect(jsonPath("$[0].quiz").doesNotExist())
+                .andExpect(jsonPath("$[0].quiz").doesNotExist())
                 .andDo(print());
     }
+
+
 }
