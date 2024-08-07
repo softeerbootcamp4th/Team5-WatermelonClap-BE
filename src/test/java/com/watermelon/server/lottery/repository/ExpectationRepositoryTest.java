@@ -1,6 +1,7 @@
 package com.watermelon.server.lottery.repository;
 
 import com.watermelon.server.event.lottery.domain.Expectation;
+import com.watermelon.server.event.lottery.repository.ExpectationRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

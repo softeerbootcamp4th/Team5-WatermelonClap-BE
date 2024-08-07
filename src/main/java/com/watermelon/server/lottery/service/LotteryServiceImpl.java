@@ -12,8 +12,8 @@ import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInf
 import com.watermelon.server.event.lottery.dto.response.ResponseRewardInfoDto;
 import com.watermelon.server.event.lottery.parts.domain.PartsReward;
 import com.watermelon.server.event.lottery.parts.repository.PartsRewardRepository;
-import com.watermelon.server.lottery.repository.LotteryApplierRepository;
-import com.watermelon.server.lottery.repository.LotteryRewardRepository;
+import com.watermelon.server.event.lottery.repository.LotteryApplierRepository;
+import com.watermelon.server.event.lottery.repository.LotteryRewardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

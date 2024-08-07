@@ -5,7 +5,7 @@ import com.watermelon.server.event.lottery.dto.request.RequestLotteryWinnerInfoD
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryRankDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseLotteryWinnerInfoDto;
-import com.watermelon.server.lottery.repository.LotteryApplierRepository;
+import com.watermelon.server.event.lottery.repository.LotteryApplierRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

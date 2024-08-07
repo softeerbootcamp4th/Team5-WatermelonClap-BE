@@ -1,4 +1,4 @@
-package com.watermelon.server.lottery.repository;
+package com.watermelon.server.event.lottery.repository;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import org.springframework.data.domain.Page;

@@ -7,7 +7,7 @@ import com.watermelon.server.event.lottery.dto.request.RequestExpectationDto;
 import com.watermelon.server.event.lottery.dto.response.ResponseExpectationDto;
 import com.watermelon.server.event.lottery.error.ExpectationAlreadyExistError;
 import com.watermelon.server.event.lottery.error.ExpectationNotExist;
-import com.watermelon.server.lottery.repository.ExpectationRepository;
+import com.watermelon.server.event.lottery.repository.ExpectationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
