@@ -1,5 +1,6 @@
 package com.watermelon.server.admin.controller;
 
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
@@ -17,11 +18,14 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.watermelon.server.Constants.*;
 import static org.mockito.Mockito.verify;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,7 +55,19 @@ class AdminLotteryControllerTest extends ControllerTest {
                         .param(PARAM_PAGE, String.valueOf(TEST_PAGE_NUMBER))
                         .param(PARAM_SIZE, String.valueOf(TEST_PAGE_SIZE))
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER, resourceSnippetAuthed("응모자 명단을 반환")));
+                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER,
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .description("응모자 명단을 반환")
+                                        .requestHeaders(
+                                                headerWithName(HEADER_NAME_AUTHORIZATION).description("Bearer token for authentication"))
+                                        .queryParameters(
+                                                parameterWithName(PARAM_PAGE).description("페이지"),
+                                                parameterWithName(PARAM_SIZE).description("페이지 크기")
+                                        )
+                                        .build()
+                        )
+                ));
 
     }
 
