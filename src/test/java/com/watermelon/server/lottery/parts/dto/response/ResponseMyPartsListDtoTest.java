@@ -1,9 +1,11 @@
 package com.watermelon.server.lottery.parts.dto.response;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
-import com.watermelon.server.lottery.parts.domain.Parts;
-import com.watermelon.server.lottery.parts.domain.PartsCategory;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
+import com.watermelon.server.event.lottery.parts.domain.Parts;
+import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponsePartsListDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

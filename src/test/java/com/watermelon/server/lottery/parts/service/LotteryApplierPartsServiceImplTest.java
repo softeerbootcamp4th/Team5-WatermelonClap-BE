@@ -1,10 +1,11 @@
 package com.watermelon.server.lottery.parts.service;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
-import com.watermelon.server.lottery.parts.domain.Parts;
-import com.watermelon.server.lottery.parts.domain.PartsCategory;
-import com.watermelon.server.lottery.parts.repository.LotteryApplierPartsRepository;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
+import com.watermelon.server.event.lottery.parts.domain.Parts;
+import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
+import com.watermelon.server.event.lottery.parts.repository.LotteryApplierPartsRepository;
+import com.watermelon.server.event.lottery.parts.service.LotteryApplierPartsServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

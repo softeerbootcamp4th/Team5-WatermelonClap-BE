@@ -1,8 +1,8 @@
-package com.watermelon.server.lottery.parts.service;
+package com.watermelon.server.event.lottery.parts.service;
 
-import com.watermelon.server.lottery.parts.dto.response.ResponseMyPartsListDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponseRemainChanceDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseRemainChanceDto;
 
 import java.util.List;
 

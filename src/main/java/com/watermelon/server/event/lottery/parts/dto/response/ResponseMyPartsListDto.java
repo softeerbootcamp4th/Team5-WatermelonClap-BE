@@ -1,8 +1,8 @@
-package com.watermelon.server.lottery.parts.dto.response;
+package com.watermelon.server.event.lottery.parts.dto.response;
 
-import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
-import com.watermelon.server.lottery.parts.domain.Parts;
-import com.watermelon.server.lottery.parts.domain.PartsCategory;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
+import com.watermelon.server.event.lottery.parts.domain.Parts;
+import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
-package com.watermelon.server.lottery.parts.service;
+package com.watermelon.server.event.lottery.parts.service;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
-import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
-import com.watermelon.server.lottery.parts.domain.Parts;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
+import com.watermelon.server.event.lottery.parts.domain.Parts;
 
 import java.util.List;
 

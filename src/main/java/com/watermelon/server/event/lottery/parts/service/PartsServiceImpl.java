@@ -1,14 +1,14 @@
-package com.watermelon.server.lottery.parts.service;
+package com.watermelon.server.event.lottery.parts.service;
 
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.event.lottery.link.service.LinkService;
-import com.watermelon.server.lottery.parts.domain.LotteryApplierParts;
-import com.watermelon.server.lottery.parts.domain.Parts;
-import com.watermelon.server.lottery.parts.dto.response.ResponseMyPartsListDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponseRemainChanceDto;
-import com.watermelon.server.lottery.parts.exception.PartsNotExistException;
-import com.watermelon.server.lottery.parts.repository.PartsRepository;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseRemainChanceDto;
+import com.watermelon.server.event.lottery.parts.exception.PartsNotExistException;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
+import com.watermelon.server.event.lottery.parts.domain.Parts;
+import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
 import com.watermelon.server.lottery.service.LotteryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -2,11 +2,12 @@ package com.watermelon.server.lottery.parts.controller;
 
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.DocumentConstants;
-import com.watermelon.server.lottery.parts.dto.response.ResponseMyPartsListDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponsePartsDrawDto;
-import com.watermelon.server.lottery.parts.dto.response.ResponseRemainChanceDto;
-import com.watermelon.server.lottery.parts.exception.PartsDrawLimitExceededException;
-import com.watermelon.server.lottery.parts.service.PartsService;
+import com.watermelon.server.event.lottery.parts.controller.PartsController;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseMyPartsListDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponsePartsDrawDto;
+import com.watermelon.server.event.lottery.parts.dto.response.ResponseRemainChanceDto;
+import com.watermelon.server.event.lottery.parts.exception.PartsDrawLimitExceededException;
+import com.watermelon.server.event.lottery.parts.service.PartsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
