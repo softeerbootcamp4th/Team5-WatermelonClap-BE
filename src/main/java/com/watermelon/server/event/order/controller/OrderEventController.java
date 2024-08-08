@@ -4,14 +4,16 @@ package com.watermelon.server.event.order.controller;
 import com.watermelon.server.error.ApplyTicketWrongException;
 import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
-import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
+import com.watermelon.server.event.order.error.WrongPhoneNumberFormatException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.service.OrderEventCommandService;
 import com.watermelon.server.event.order.service.OrderEventQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class OrderEventController {
 
     @GetMapping(path = "/event/order")
     public List<ResponseOrderEventDto> getOrderEvents(){
+
         return orderEventQueryService.getOrderEvents();
     }
 //    @PostMapping(path = "/apply")
@@ -33,14 +36,14 @@ public class OrderEventController {
 //    }
 
     @GetMapping(path = "/event/order/{eventId}")
-    public ResponseOrderEventDto getOrderEvent(@PathVariable Long orderEventId){
+    public ResponseOrderEventDto getOrderEvent(@PathVariable("eventId") Long orderEventId) throws WrongOrderEventFormatException {
         return orderEventQueryService.getOrderEvent(orderEventId);
     }
 
     @PostMapping(path = "/event/order/{eventId}/{quizId}")
     public ResponseApplyTicketDto makeApplyTicket(@RequestBody RequestAnswerDto requestAnswerDto,
-                                                  @PathVariable Long orderEventId,
-                                                  @PathVariable Long quizId)
+                                                  @PathVariable("eventId") Long orderEventId,
+                                                  @PathVariable("quizId") Long quizId)
             throws WrongOrderEventFormatException, NotDuringEventPeriodException {
 
         return orderEventCommandService.makeApplyTicket(requestAnswerDto,orderEventId,quizId);
@@ -53,8 +56,26 @@ public class OrderEventController {
                           @PathVariable("quizId") Long quizId,
                           @RequestBody OrderEventWinnerRequestDto orderEventWinnerRequestDto)
             throws ApplyTicketWrongException
-            , WrongOrderEventFormatException {
+            , WrongOrderEventFormatException
+            , WrongPhoneNumberFormatException {
         orderEventCommandService.makeOrderEventWinner(applyTicket,eventId,orderEventWinnerRequestDto);
+    }
+
+    @ExceptionHandler(WrongPhoneNumberFormatException.class)
+    public ResponseEntity<String> handlePhoneNumberNotExistException(WrongPhoneNumberFormatException wrongPhoneNumberFormatException){
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(wrongPhoneNumberFormatException.getMessage());
+    }
+    @ExceptionHandler(WrongOrderEventFormatException.class)
+    public ResponseEntity<String> handleWrongOrderEventFormatException(WrongOrderEventFormatException wrongOrderEventFormatException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(wrongOrderEventFormatException.getMessage());
+    }
+    @ExceptionHandler(ApplyTicketWrongException.class)
+    public ResponseEntity<String> handleApplyTicketWrongException(ApplyTicketWrongException applyTicketWrongException){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(applyTicketWrongException.getMessage());
+    }
+    @ExceptionHandler(NotDuringEventPeriodException.class)
+    public ResponseEntity<String> handleNotDuringEventPeriodException(NotDuringEventPeriodException notDuringEventPeriodException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(notDuringEventPeriodException.getMessage());
     }
 
 }

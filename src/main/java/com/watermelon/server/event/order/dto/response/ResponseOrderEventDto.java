@@ -21,6 +21,7 @@ public class ResponseOrderEventDto {
     private ResponseRewardDto reward;
 
 
+
     public static ResponseOrderEventDto forUser(OrderEvent orderEvent) {
         ResponseQuizDto responseQuizDto = null;
         //열리지 않거나
@@ -49,6 +50,18 @@ public class ResponseOrderEventDto {
                 .endDate(orderEvent.getEndDate())
                 .quiz(responseQuizDto)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseOrderEventDto{" +
+                "eventId=" + eventId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
+                ", quiz=" + quiz +
+                ", reward=" + reward +
+                '}';
     }
 
 }
