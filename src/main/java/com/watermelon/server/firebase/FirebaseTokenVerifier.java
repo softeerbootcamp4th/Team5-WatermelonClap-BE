@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseToken;
 import com.watermelon.server.event.lottery.auth.exception.InvalidTokenException;
 import com.watermelon.server.event.lottery.auth.service.TokenVerifier;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Profile("!local")
 public class FirebaseTokenVerifier implements TokenVerifier {
 
     private final FirebaseAuth firebaseAuth;
