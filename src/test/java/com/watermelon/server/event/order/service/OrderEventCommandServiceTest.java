@@ -48,7 +48,7 @@ class OrderEventCommandServiceTest {
 
     @BeforeEach
     @DisplayName("응모 생성")
-     void makeOrderEvent(){
+     void makeOrderEventWithOutImageWithOutImage(){
         LocalDateTime now = LocalDateTime.now();
         startDateTime = now;
         endDateTime = now.plusSeconds(10);
@@ -103,6 +103,6 @@ class OrderEventCommandServiceTest {
 
     @Test
     @DisplayName("선착순 당첨자 등록")
-    void makeOrderEventWinner() {
+    void makeOrderEventWithOutImageWithOutImageWinner() {
     }
 }

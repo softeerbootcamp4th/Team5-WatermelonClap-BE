@@ -38,7 +38,7 @@ class AdminOrderEventServiceTest {
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
-        orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
         orderEvents.add(orderEvent);
         Assertions.assertThat(orderEvents.size()).isEqualTo(1);
     }
