@@ -84,7 +84,7 @@ jobs:
           username: ${{secrets.SSH_USER}}
           script: |
             
-            docker stop watermelon
+            docker kill watermelon
             docker pull ${{ secrets.DOCKER_USERNAME }}/watermelon:latest
             docker tag ${{ secrets.DOCKER_USERNAME }}/watermelon:latest watermelon:latest
           
