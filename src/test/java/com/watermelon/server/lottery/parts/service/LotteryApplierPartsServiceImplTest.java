@@ -116,7 +116,7 @@ class LotteryApplierPartsServiceImplTest {
         LotteryApplier lotteryApplier = Mockito.mock(LotteryApplier.class);
         Parts parts = Mockito.mock(Parts.class);
         Mockito.when(partsRepository.count()).thenReturn(4L);
-        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsByLotteryApplier(lotteryApplier))
+        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsCategoryByLotteryApplier(lotteryApplier))
                 .thenReturn(4L);
 
         //when
@@ -135,7 +135,7 @@ class LotteryApplierPartsServiceImplTest {
         LotteryApplier lotteryApplier = Mockito.mock(LotteryApplier.class);
         Parts parts = Mockito.mock(Parts.class);
         Mockito.when(partsRepository.count()).thenReturn(4L);
-        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsByLotteryApplier(lotteryApplier))
+        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsCategoryByLotteryApplier(lotteryApplier))
                 .thenReturn(3L);
 
         //when
