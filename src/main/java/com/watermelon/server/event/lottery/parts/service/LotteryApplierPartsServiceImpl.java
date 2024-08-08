@@ -4,6 +4,7 @@ import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
 import com.watermelon.server.event.lottery.parts.domain.Parts;
 import com.watermelon.server.event.lottery.parts.repository.LotteryApplierPartsRepository;
+import com.watermelon.server.event.lottery.service.LotteryApplierService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,18 @@ import java.util.List;
 public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsService{
 
     private final LotteryApplierPartsRepository lotteryApplierPartsRepository;
+    private final LotteryApplierService lotteryApplierService;
 
     @Override
     public LotteryApplierParts addPartsAndGet(LotteryApplier lotteryApplier, Parts parts) {
 
         boolean isFirst = isFirstPartsInCategory(lotteryApplier, parts);
+
+        //만약 모든 카테고리의 파츠를 모았다면
+        if(lotteryApplierPartsRepository.hasAllCategoriesParts(lotteryApplier)) {
+            //파츠 응모 처리 후 저장
+            lotteryApplierService.applyLotteryApplier(lotteryApplier);
+        }
 
         return lotteryApplierPartsRepository.save(
                 LotteryApplierParts.createApplierParts(isFirst, lotteryApplier, parts)

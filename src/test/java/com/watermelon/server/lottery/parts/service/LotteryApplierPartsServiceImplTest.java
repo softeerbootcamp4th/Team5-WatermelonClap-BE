@@ -6,9 +6,12 @@ import com.watermelon.server.event.lottery.parts.domain.Parts;
 import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
 import com.watermelon.server.event.lottery.parts.repository.LotteryApplierPartsRepository;
 import com.watermelon.server.event.lottery.parts.service.LotteryApplierPartsServiceImpl;
+import com.watermelon.server.event.lottery.service.LotteryApplierService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,8 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static com.watermelon.server.Constants.TEST_UID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 //TODO 구현필요
@@ -27,6 +32,9 @@ class LotteryApplierPartsServiceImplTest {
 
     @Mock
     private LotteryApplierPartsRepository lotteryApplierPartsRepository;
+
+    @Mock
+    private LotteryApplierService lotteryApplierService;
 
     @InjectMocks
     private LotteryApplierPartsServiceImpl lotteryApplierPartsService;
@@ -99,5 +107,25 @@ class LotteryApplierPartsServiceImplTest {
         assertThat(capturedArgument.isEquipped()).isFalse();
     }
 
+    @DisplayName("파츠 응모권 부여 테스트")
+    @ParameterizedTest
+    @CsvSource({
+            "true", "false"
+    })
+    void addPartsAndGetHasAllPartsCase(boolean hasAllParts) {
+
+        //given
+        LotteryApplier lotteryApplier = Mockito.mock(LotteryApplier.class);
+        Parts parts = Mockito.mock(Parts.class);
+        Mockito.when(lotteryApplierPartsRepository.hasAllCategoriesParts(lotteryApplier)).thenReturn(hasAllParts);
+
+        //when
+        lotteryApplierPartsService.addPartsAndGet(lotteryApplier, parts);
+
+        //then
+        if(hasAllParts) verify(lotteryApplierService).applyLotteryApplier(lotteryApplier);
+        else verify(lotteryApplierService, never()).applyLotteryApplier(lotteryApplier);
+
+    }
 
 }
