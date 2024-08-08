@@ -34,33 +34,64 @@ public class OrderEvent extends BaseEntity {
     private int currentWinnerCount;
     @Setter
     private OrderEventStatus orderEventStatus;
-    @Builder
+
     public OrderEvent(Quiz quiz, LocalDateTime startDate, LocalDateTime endDate) {
         this.quiz = quiz;
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
-    OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
+    @Builder
+    OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward,Long id){
         this.winnerCount = winnerCount;
         this.endDate = endDate;
         this.startDate = startDate;
         this.quiz = quiz;
         this.orderEventReward = orderEventReward;
         this.orderEventStatus = OrderEventStatus.UPCOMING;
+        this.id = id;
     }
+
+
 
     public static OrderEvent makeOrderEventWithOutImage(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
         OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
-        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
+        return OrderEvent.builder()
+                .quiz(quiz)
+                .startDate(requestOrderEventDto.getStartDate())
+                .endDate(requestOrderEventDto.getEndDate())
+                .orderEventReward(reward)
+                .winnerCount(requestOrderEventDto.getWinnerCount())
+                .build();
+    }
+    public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String rewardImage){
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
+        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),rewardImage);
+        return OrderEvent.builder()
+                .quiz(quiz)
+                .startDate(requestOrderEventDto.getStartDate())
+                .endDate(requestOrderEventDto.getEndDate())
+                .orderEventReward(reward)
+                .winnerCount(requestOrderEventDto.getWinnerCount())
+                .build();
     }
 
-    public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String image){
-        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
-        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),image);
-        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
+    public static OrderEvent makeOrderEventWithInputIdForDocumentation(RequestOrderEventDto requestOrderEventDto, Long id){
+        Quiz quiz = Quiz.makeQuizInputId(requestOrderEventDto.getRequestQuizDto(),id);
+        OrderEventReward reward = OrderEventReward.makeRewardInputId(requestOrderEventDto.getRequestOrderRewardDto(),id);
+        return OrderEvent.builder()
+                .id(id)
+                .quiz(quiz)
+                .startDate(requestOrderEventDto.getStartDate())
+                .endDate(requestOrderEventDto.getEndDate())
+                .orderEventReward(reward)
+                .winnerCount(requestOrderEventDto.getWinnerCount())
+                .build();
     }
+
+
+
+
 
     public void changeOrderEventStatusByTime(LocalDateTime now){
         if(orderEventStatus.equals(OrderEventStatus.END)||orderEventStatus.equals(OrderEventStatus.CLOSED)) return;

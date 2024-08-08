@@ -15,7 +15,6 @@ public class RequestOrderEventDto {
 
     private RequestQuizDto requestQuizDto;
     private RequestOrderRewardDto requestOrderRewardDto;
-
     @Builder
     public RequestOrderEventDto(LocalDateTime startDate, LocalDateTime endDate, int winnerCount, RequestQuizDto requestQuizDto, RequestOrderRewardDto requestOrderRewardDto) {
         this.startDate = startDate.truncatedTo(ChronoUnit.SECONDS);
@@ -24,6 +23,9 @@ public class RequestOrderEventDto {
         this.requestQuizDto = requestQuizDto;
         this.requestOrderRewardDto = requestOrderRewardDto;
     }
+
+
+
 
     public static RequestOrderEventDto makeForTestOpen10HoursLater(RequestQuizDto requestQuizDto, RequestOrderRewardDto requestOrderRewardDto){
         return RequestOrderEventDto.builder()
