@@ -106,4 +106,11 @@ public class LotteryApplier extends BaseEntity {
         return lotteryApplier;
     }
 
+    /**
+     * 파츠 추첨 응모
+     */
+    public void applyPartsLottery(){
+        this.isPartsApplier = true;
+    }
+
 }
