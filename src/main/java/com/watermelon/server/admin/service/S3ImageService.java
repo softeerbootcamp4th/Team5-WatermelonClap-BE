@@ -22,7 +22,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class S3ImageService {
-    private AmazonS3 s3Client;
+
+    private final AmazonS3 s3Client;
     private List<String> allowedImageExtentionList = Arrays.asList("jpg","jped","png","gif");
 
     @Value("${cloud.aws.s3.bucket}")
