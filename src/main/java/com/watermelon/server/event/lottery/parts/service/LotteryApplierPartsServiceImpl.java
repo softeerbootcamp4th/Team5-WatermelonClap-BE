@@ -8,12 +8,14 @@ import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
 import com.watermelon.server.event.lottery.service.LotteryApplierService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsService{
 
     private final LotteryApplierPartsRepository lotteryApplierPartsRepository;
@@ -25,21 +27,23 @@ public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsServic
 
         boolean isFirst = isFirstPartsInCategory(lotteryApplier, parts);
 
+        LotteryApplierParts lotteryApplierParts = lotteryApplierPartsRepository.save(
+                LotteryApplierParts.createApplierParts(isFirst, lotteryApplier, parts)
+        );
+
         //만약 모든 카테고리의 파츠를 모았다면
         if(hasAllCategoriesParts(lotteryApplier)) {
             //파츠 응모 처리 후 저장
             lotteryApplierService.applyPartsLotteryApplier(lotteryApplier);
         }
 
-        return lotteryApplierPartsRepository.save(
-                LotteryApplierParts.createApplierParts(isFirst, lotteryApplier, parts)
-        );
+        return lotteryApplierParts;
 
     }
 
     boolean hasAllCategoriesParts(LotteryApplier lotteryApplier){
-        long partsCount = partsRepository.count();
-        long lotteryApplierDistinctCount = lotteryApplierPartsRepository.countDistinctPartsByLotteryApplier(lotteryApplier);
+        long partsCount = partsRepository.countCategoryDistinct();
+        long lotteryApplierDistinctCount = lotteryApplierPartsRepository.countDistinctPartsCategoryByLotteryApplier(lotteryApplier);
         return lotteryApplierDistinctCount == partsCount;
     }
 
