@@ -42,13 +42,13 @@ public class OrderEvent extends BaseEntity {
     }
     @Builder
     OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward,Long id){
+        this.id = id;
         this.winnerCount = winnerCount;
         this.endDate = endDate;
         this.startDate = startDate;
         this.quiz = quiz;
         this.orderEventReward = orderEventReward;
         this.orderEventStatus = OrderEventStatus.UPCOMING;
-        this.id = id;
     }
 
 
