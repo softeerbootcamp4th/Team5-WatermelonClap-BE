@@ -71,7 +71,7 @@ public class S3ImageService {
             //실제로 S3에 이미지 데이터를 넣는 부분이다.
             s3Client.putObject(putObjectRequest); // put image to S3
         }catch (Exception e){
-            throw new S3ImageFormatException("");
+            throw new S3ImageFormatException(e.getMessage());
         }finally {
             byteArrayInputStream.close();
             is.close();

@@ -5,47 +5,46 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.watermelon.server.admin.exception.S3ImageFormatException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 
-
-
-
-@ContextConfiguration(classes = S3ImageServiceTest.S3ImageServiceTestConfiguration.class)
+@SpringBootTest
 class S3ImageServiceTest {
 
+    private static final Logger log = LoggerFactory.getLogger(S3ImageServiceTest.class);
+    @Autowired
+    private S3ImageService s3ImageService;
+
     @Test
-    void uploadImage() {
+    void uploadImage() throws S3ImageFormatException, IOException {
+        String dirName ="image/png";
+        MockMultipartFile image = new MockMultipartFile(
+                "image",
+                "test.jpg",
+                "image/jpeg",
+                dirName.getBytes(StandardCharsets.UTF_8));
+        String imageUrl = s3ImageService.uploadImage(image);
+        System.out.println(imageUrl);
     }
 
-
-
-    @TestConfiguration
-    static class S3ImageServiceTestConfiguration {
-        @Value("${cloud.aws.credentials.access-key}")
-        private String accessKey;
-        @Value("${cloud.aws.credentials.secret-key}")
-        private String secretKey;
-        @Value("{cloud.aws.region.static}")
-        private String region;
-
-        @Bean
-        public AmazonS3 amazonS3() {
-            AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-            return AmazonS3ClientBuilder
-                    .standard()
-                    .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                    .withRegion(region)
-                    .build();
-        }
-        @Bean
-        public S3ImageService s3ImageService() {
-            return new S3ImageService(amazonS3());
-        }
-    }
 }

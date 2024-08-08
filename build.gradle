@@ -40,6 +40,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'io.findify:s3mock_2.13:0.2.6'
 
 	//rest-docs -> openApi
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.2' //2.2
