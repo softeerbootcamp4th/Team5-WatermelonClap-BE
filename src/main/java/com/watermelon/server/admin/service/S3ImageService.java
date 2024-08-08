@@ -25,7 +25,7 @@ public class S3ImageService {
     private AmazonS3 s3Client;
     private List<String> allowedImageExtentionList = Arrays.asList("jpg","jped","png","gif");
 
-    @Value("${cloud.aws.s3.bucketName}")
+    @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
     public String uploadImage(MultipartFile image) throws S3ImageFormatException {

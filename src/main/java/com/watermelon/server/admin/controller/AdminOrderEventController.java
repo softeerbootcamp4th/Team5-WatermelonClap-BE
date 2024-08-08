@@ -21,15 +21,14 @@ import java.util.List;
 @RequestMapping(path = "/admin")
 public class AdminOrderEventController {
     // 변환 작업 필요
-    private S3ImageService s3ImageService;
     private final AdminOrderEventService adminOrderEventService;
     @PostMapping("/event/order")
     public void makeOrderEvent(
             @RequestBody RequestOrderEventDto requestOrderEventDto,
             @RequestPart(value = "image", required = false) MultipartFile image)
             throws S3ImageFormatException {
-        s3ImageService.uploadImage(image);
-        adminOrderEventService.makeOrderEvent(requestOrderEventDto);
+
+        adminOrderEventService.makeOrderEvent(requestOrderEventDto,image);
     }
 
     @GetMapping("/event/order")

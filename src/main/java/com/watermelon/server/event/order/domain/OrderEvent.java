@@ -50,12 +50,17 @@ public class OrderEvent extends BaseEntity {
     }
 
 
-    public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
+    public static OrderEvent makeOrderEventWithOutImage(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
         OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
         return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
     }
 
+    public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String image){
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
+        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),image);
+        return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);
+    }
 
     public void changeOrderEventStatusByTime(LocalDateTime now){
         if(orderEventStatus.equals(OrderEventStatus.END)||orderEventStatus.equals(OrderEventStatus.CLOSED)) return;

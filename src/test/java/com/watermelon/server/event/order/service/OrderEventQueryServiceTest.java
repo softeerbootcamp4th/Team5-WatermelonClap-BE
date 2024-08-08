@@ -39,9 +39,9 @@ class OrderEventQueryServiceTest {
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
-        unOpenedOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        unOpenedOrderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
         openEvents.add(unOpenedOrderEvent);
-        OrderEvent openedOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        OrderEvent openedOrderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
         openedOrderEvent.openEvent();
         unOpenEvents.add(openedOrderEvent);
         Assertions.assertThat(openEvents.size()).isEqualTo(1);
