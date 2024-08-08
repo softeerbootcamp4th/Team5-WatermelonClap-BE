@@ -3,8 +3,10 @@ package com.watermelon.server.event.lottery;
 import com.watermelon.server.BaseIntegrationTest;
 import com.watermelon.server.event.lottery.auth.service.TestTokenVerifier;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
+import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
 import com.watermelon.server.event.lottery.parts.domain.Parts;
 import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
+import com.watermelon.server.event.lottery.parts.repository.LotteryApplierPartsRepository;
 import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
 import com.watermelon.server.event.lottery.repository.LotteryApplierRepository;
 import org.assertj.core.api.Assertions;
@@ -26,15 +28,12 @@ public class LotteryIntegrationTest extends BaseIntegrationTest {
     @Autowired
     private PartsRepository partsRepository;
 
+    @Autowired
+    private LotteryApplierPartsRepository lotteryApplierPartsRepository;
+
     @BeforeEach
     void setUp() {
-        partsRepository.save(Parts.builder()
-                .name("parts")
-                .category(PartsCategory.WHEEL)
-                .description("휠입니다.")
-                .imgSrc("src")
-                .build()
-        );
+        partsRepository.saveAll(Parts.createAllParts());
     }
 
     @Test
@@ -54,15 +53,20 @@ public class LotteryIntegrationTest extends BaseIntegrationTest {
     void partsLotteryPolicyTest() throws Exception {
 
         //given
-        Assertions.assertThat(partsRepository.count()).isEqualTo(1);
+        LotteryApplier lotteryApplier = saveTestLotteryApplier();
+        for(PartsCategory partsCategory:PartsCategory.values()){
+            Parts parts = partsRepository.save(Parts.createTestCategoryParts(partsCategory));
+            lotteryApplierPartsRepository.save(
+                    LotteryApplierParts.createApplierParts(true, lotteryApplier, parts)
+            );
+        }
 
         //when
         postPartsLotteryRequestTestUser();
+        boolean expected = findTestLotteryApplier().isPartsApplier();
 
         //then
-        LotteryApplier lotteryApplier = findTestLotteryApplier();
-        Assertions.assertThat(lotteryApplier.isPartsApplier()).isTrue();
-
+        Assertions.assertThat(expected).isTrue();
 
     }
 
@@ -76,6 +80,12 @@ public class LotteryIntegrationTest extends BaseIntegrationTest {
     @DisplayName("[예정] 공유한 링크를 통해 컬렉션 페이지에 방문한 사람에게는 장착된 파츠만 전달한다.")
     void test3() {
 
+    }
+
+    private LotteryApplier saveTestLotteryApplier() {
+        LotteryApplier lotteryApplier = LotteryApplier.createLotteryApplier(TestTokenVerifier.TEST_UID);
+        lotteryApplierRepository.save(lotteryApplier);
+        return lotteryApplier;
     }
 
     private LotteryApplier findTestLotteryApplier() {
