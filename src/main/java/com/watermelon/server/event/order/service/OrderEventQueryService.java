@@ -3,6 +3,7 @@ package com.watermelon.server.event.order.service;
 
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
+import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.repository.QuizRepository;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,9 @@ public class OrderEventQueryService {
         return responseOrderEventDtos;
     }
     @Transactional(readOnly = true)
-    public ResponseOrderEventDto getOrderEvent(Long orderEventId){
-        Optional<OrderEvent> orderEvent = orderEventRepository.findById(orderEventId);
-        return ResponseOrderEventDto.forUser(orderEvent.get());
+    public ResponseOrderEventDto getOrderEvent(Long orderEventId) throws WrongOrderEventFormatException {
+        OrderEvent orderEvent = orderEventRepository.findById(orderEventId).orElseThrow(WrongOrderEventFormatException::new);
+        return ResponseOrderEventDto.forUser(orderEvent);
     }
 
 

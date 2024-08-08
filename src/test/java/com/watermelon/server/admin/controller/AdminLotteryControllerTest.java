@@ -1,10 +1,13 @@
 package com.watermelon.server.admin.controller;
 
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.watermelon.server.ControllerTest;
 import com.watermelon.server.admin.dto.response.ResponseAdminLotteryWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseAdminPartsWinnerDto;
 import com.watermelon.server.admin.dto.response.ResponseLotteryApplierDto;
+import com.watermelon.server.event.lottery.parts.service.PartsService;
 import com.watermelon.server.event.lottery.service.LotteryService;
+import com.watermelon.server.event.lottery.service.LotteryWinnerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,11 +20,14 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.watermelon.server.Constants.*;
 import static org.mockito.Mockito.verify;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,7 +37,14 @@ class AdminLotteryControllerTest extends ControllerTest {
     @MockBean
     private LotteryService lotteryService;
 
+    @MockBean
+    private LotteryWinnerService lotteryWinnerService;
+
+    @MockBean
+    private PartsService partsService;
+
     @Test
+    @DisplayName("응모자 명단을 반환한다.")
     void getLotteryAppliers() throws Exception {
 
         //given
@@ -46,10 +59,23 @@ class AdminLotteryControllerTest extends ControllerTest {
 
         //when & then
         this.mockMvc.perform(get(PATH_ADMIN_APPLIER)
+                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                         .param(PARAM_PAGE, String.valueOf(TEST_PAGE_NUMBER))
                         .param(PARAM_SIZE, String.valueOf(TEST_PAGE_SIZE))
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER));
+                .andDo(document(DOCUMENT_NAME_ADMIN_APPLIER,
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .description("응모자 명단 조회")
+                                        .requestHeaders(
+                                                headerWithName(HEADER_NAME_AUTHORIZATION).description("Bearer token for authentication"))
+                                        .queryParameters(
+                                                parameterWithName(PARAM_PAGE).description("페이지"),
+                                                parameterWithName(PARAM_SIZE).description("페이지 크기")
+                                        )
+                                        .build()
+                        )
+                ));
 
     }
 
@@ -63,14 +89,14 @@ class AdminLotteryControllerTest extends ControllerTest {
                 ResponseAdminLotteryWinnerDto.createTestDto()
         );
 
-        Mockito.when(lotteryService.getAdminLotteryWinners())
+        Mockito.when(lotteryWinnerService.getAdminLotteryWinners())
                 .thenReturn(expected);
 
         //when & then
         this.mockMvc.perform(get(PATH_ADMIN_LOTTERY_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS));
+                .andDo(document(DOCUMENT_NAME_LOTTERY_WINNERS, resourceSnippetAuthed("추첨 당첨자 명단 조회")));
 
     }
 
@@ -84,14 +110,14 @@ class AdminLotteryControllerTest extends ControllerTest {
                 ResponseAdminPartsWinnerDto.createTestDto()
         );
 
-        Mockito.when(lotteryService.getAdminPartsWinners())
+        Mockito.when(partsService.getAdminPartsWinners())
                 .thenReturn(expected);
 
         //when & then
         this.mockMvc.perform(get(PATH_ADMIN_PARTS_WINNERS)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(content().json(objectMapper.writeValueAsString(expected)))
-                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS));
+                .andDo(document(DOCUMENT_NAME_PARTS_WINNERS, resourceSnippetAuthed("파츠 당첨자 명단 조회")));
 
     }
 
@@ -103,9 +129,10 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_ADMIN_LOTTERY_WINNER_CHECK, TEST_UID)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK));
+                .andDo(document(DOCUMENT_NAME_ADMIN_LOTTERY_WINNER_CHECK,
+                        resourceSnippetAuthed("추첨 당첨자 확인처리")));
 
-        verify(lotteryService).lotteryWinnerCheck(TEST_UID);
+        verify(lotteryWinnerService).lotteryWinnerCheck(TEST_UID);
 
     }
 
@@ -117,9 +144,10 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_ADMIN_PARTS_WINNER_CHECK, TEST_UID)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN)
                 ).andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK));
+                .andDo(document(DOCUMENT_NAME_ADMIN_PARTS_WINNER_CHECK,
+                        resourceSnippetAuthed("파츠 추첨 당첨자 확인처리")));
 
-        verify(lotteryService).partsWinnerCheck(TEST_UID);
+        verify(partsService).partsWinnerCheck(TEST_UID);
 
     }
 
@@ -130,7 +158,8 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_LOTTERY)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
                 .andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_LOTTERY));
+                .andDo(document(DOCUMENT_NAME_LOTTERY,
+                        resourceSnippetAuthed("추첨 이벤트 응모자에 대해 추첨")));
 
         verify(lotteryService).lottery();
 
@@ -143,9 +172,10 @@ class AdminLotteryControllerTest extends ControllerTest {
         this.mockMvc.perform(post(PATH_PARTS_LOTTERY)
                         .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
                 .andExpect(status().isOk())
-                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY));
+                .andDo(document(DOCUMENT_NAME_PARTS_LOTTERY,
+                        resourceSnippetAuthed("파츠 이벤트 응모자에 대해 추첨")));
 
-        verify(lotteryService).partsLottery();
+        verify(partsService).partsLottery();
 
     }
 
