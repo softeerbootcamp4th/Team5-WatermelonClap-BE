@@ -99,7 +99,7 @@ class OrderEventControllerTest extends ControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(responseOrderEventDtos)))
                 .andDo(print())
                 .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
-                        resourceSnippet("선착순 목록 조회")));
+                        resourceSnippet("선착순 이벤트 목록 조회")));
     }
     @Test
     @DisplayName("[DOC] 특정 선착순 이벤트를 가져온다")
@@ -114,7 +114,7 @@ class OrderEventControllerTest extends ControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(openResponse)))
                 .andDo(print())
                 .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
-                        resourceSnippet("선착순 목록 조회")));
+                        resourceSnippet("특정 선착순 이벤트 조회")));
     }
 
     @Test
