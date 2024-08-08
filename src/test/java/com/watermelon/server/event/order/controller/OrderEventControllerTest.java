@@ -2,12 +2,15 @@ package com.watermelon.server.event.order.controller;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.watermelon.server.ControllerTest;
+import com.watermelon.server.error.ApplyTicketWrongException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.domain.OrderEventStatus;
+import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.request.RequestOrderRewardDto;
 import com.watermelon.server.event.order.dto.request.RequestQuizDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
+import com.watermelon.server.event.order.error.WrongPhoneNumberFormatException;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
 import com.watermelon.server.event.order.service.OrderEventCommandService;
 import com.watermelon.server.event.order.service.OrderEventQueryService;
@@ -17,12 +20,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +44,7 @@ class OrderEventControllerTest extends ControllerTest {
     @MockBean
     private OrderEventRepository orderEventRepository;
 
-    private ResponseOrderEventDto openResponse;
+    private ResponseOrderEventDto openOrderEventResponse;
     private ResponseOrderEventDto soonOpenResponse;
     private ResponseOrderEventDto unOpenResponse;
     private OrderEvent soonOpenOrderEvent;
@@ -78,11 +81,11 @@ class OrderEventControllerTest extends ControllerTest {
         orderEvents.add(soonOpenOrderEvent);
         orderEvents.add(unOpenOrderEvent);
 
-        openResponse = ResponseOrderEventDto.forUser(openOrderEvent);
+        openOrderEventResponse = ResponseOrderEventDto.forUser(openOrderEvent);
         soonOpenResponse = ResponseOrderEventDto.forUser(soonOpenOrderEvent);
         unOpenResponse = ResponseOrderEventDto.forUser(unOpenOrderEvent);
 
-        responseOrderEventDtos.add(openResponse);
+        responseOrderEventDtos.add(openOrderEventResponse);
         responseOrderEventDtos.add(soonOpenResponse);
         responseOrderEventDtos.add(unOpenResponse);
 
@@ -106,19 +109,59 @@ class OrderEventControllerTest extends ControllerTest {
     void getOrderEvent() throws Exception {
         final String PATH = "/event/order/{eventId}";
         final String DOCUMENT_NAME ="event/order/{eventId}";
-        System.out.println(openResponse);
-        Mockito.when(orderEventQueryService.getOrderEvent(openResponse.getEventId())).thenReturn(openResponse);
+        System.out.println(openOrderEventResponse);
+        Mockito.when(orderEventQueryService.getOrderEvent(openOrderEventResponse.getEventId())).thenReturn(openOrderEventResponse);
 
-        mockMvc.perform(RestDocumentationRequestBuilders.get(PATH,openResponse.getEventId()))
+        mockMvc.perform(RestDocumentationRequestBuilders.get(PATH, openOrderEventResponse.getEventId()))
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(openResponse)))
+                .andExpect(content().json(objectMapper.writeValueAsString(openOrderEventResponse)))
                 .andDo(print())
                 .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
                         resourceSnippet("특정 선착순 이벤트 조회")));
     }
 
     @Test
-    void makeApplyTicket() {
+    void makeApplyTicket() throws Exception {
+        final String Path = "/event/order/{eventId}/{quizId}/apply";
+        final String DOCUMENT_NAME ="event/order/{eventId}/{quizId}/apply";
+
+
+        String applyTicket = "applyTicket";
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post(Path,
+                openOrderEventResponse.getEventId(),
+                openOrderEventResponse.getQuiz().getQuizId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234")))
+                                .header("ApplyTicket",applyTicket))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
+                        resourceSnippet("선착순 퀴즈 번호 제출")));
+
+//        Mockito.doThrow(WrongPhoneNumberFormatException.class).when(orderEventCommandService).makeOrderEventWinner(any(),any(),any());
+//        mockMvc.perform(RestDocumentationRequestBuilders.post(Path,
+//                                openOrderEventResponse.getEventId(),
+//                                openOrderEventResponse.getQuiz().getQuizId())
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234")))
+//                        .header("ApplyTicket",applyTicket))
+//                .andExpect(status().isUnprocessableEntity())
+//                .andDo(print())
+//                .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
+//                        resourceSnippet("선착순 퀴즈 번호 제출")));
+//
+//        Mockito.doThrow(ApplyTicketWrongException.class).when(orderEventCommandService).makeOrderEventWinner(any(),any(),any());
+//        mockMvc.perform(RestDocumentationRequestBuilders.post(Path,
+//                                openOrderEventResponse.getEventId(),
+//                                openOrderEventResponse.getQuiz().getQuizId())
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(OrderEventWinnerRequestDto.makeWithPhoneNumber("01012341234")))
+//                        .header("ApplyTicket",applyTicket))
+//                .andExpect(status().isUnauthorized())
+//                .andDo(print())
+//                .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
+//                        resourceSnippet("선착순 퀴즈 번호 제출")));
     }
 
     @Test
