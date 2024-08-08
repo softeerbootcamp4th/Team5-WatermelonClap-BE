@@ -5,6 +5,7 @@ import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
 import com.watermelon.server.event.lottery.parts.domain.Parts;
 import com.watermelon.server.event.lottery.parts.domain.PartsCategory;
 import com.watermelon.server.event.lottery.parts.repository.LotteryApplierPartsRepository;
+import com.watermelon.server.event.lottery.parts.repository.PartsRepository;
 import com.watermelon.server.event.lottery.parts.service.LotteryApplierPartsServiceImpl;
 import com.watermelon.server.event.lottery.service.LotteryApplierService;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +33,9 @@ class LotteryApplierPartsServiceImplTest {
 
     @Mock
     private LotteryApplierPartsRepository lotteryApplierPartsRepository;
+
+    @Mock
+    private PartsRepository partsRepository;
 
     @Mock
     private LotteryApplierService lotteryApplierService;
@@ -107,25 +111,43 @@ class LotteryApplierPartsServiceImplTest {
         assertThat(capturedArgument.isEquipped()).isFalse();
     }
 
-    @DisplayName("파츠 응모권 부여 테스트")
-    @ParameterizedTest
-    @CsvSource({
-            "true", "false"
-    })
-    void addPartsAndGetHasAllPartsCase(boolean hasAllParts) {
+    @Test
+    @DisplayName("모든 종류의 파츠를 모으면 파츠 응모권을 부여한다.")
+    void addPartsAndGetHasAllPartsCase() {
 
         //given
         LotteryApplier lotteryApplier = Mockito.mock(LotteryApplier.class);
         Parts parts = Mockito.mock(Parts.class);
-        Mockito.when(lotteryApplierPartsRepository.hasAllCategoriesParts(lotteryApplier)).thenReturn(hasAllParts);
+        Mockito.when(partsRepository.count()).thenReturn(4L);
+        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsByLotteryApplier(lotteryApplier))
+                .thenReturn(4L);
 
         //when
         lotteryApplierPartsService.addPartsAndGet(lotteryApplier, parts);
 
         //then
-        if(hasAllParts) verify(lotteryApplierService).applyLotteryApplier(lotteryApplier);
-        else verify(lotteryApplierService, never()).applyLotteryApplier(lotteryApplier);
+        verify(lotteryApplierService).applyLotteryApplier(lotteryApplier);
 
     }
+
+    @Test
+    @DisplayName("모든 종류의 파츠를 모으지 않으면 파츠 응모권을 부여하지 않는다.")
+    void addPartsAndGetHasNotAllPartsCase() {
+
+        //given
+        LotteryApplier lotteryApplier = Mockito.mock(LotteryApplier.class);
+        Parts parts = Mockito.mock(Parts.class);
+        Mockito.when(partsRepository.count()).thenReturn(4L);
+        Mockito.when(lotteryApplierPartsRepository.countDistinctPartsByLotteryApplier(lotteryApplier))
+                .thenReturn(3L);
+
+        //when
+        lotteryApplierPartsService.addPartsAndGet(lotteryApplier, parts);
+
+        //then
+        verify(lotteryApplierService, never()).applyLotteryApplier(lotteryApplier);
+
+    }
+
 
 }

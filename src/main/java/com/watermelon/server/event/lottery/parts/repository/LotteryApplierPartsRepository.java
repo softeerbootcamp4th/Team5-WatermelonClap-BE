@@ -3,6 +3,7 @@ package com.watermelon.server.event.lottery.parts.repository;
 import com.watermelon.server.event.lottery.domain.LotteryApplier;
 import com.watermelon.server.event.lottery.parts.domain.LotteryApplierParts;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,5 +15,6 @@ public interface LotteryApplierPartsRepository extends JpaRepository<LotteryAppl
 
     Optional<LotteryApplierParts> findLotteryApplierPartsByLotteryApplierUidAndPartsId(String lotteryApplierUid,Long partsId);
 
-    boolean hasAllCategoriesParts(LotteryApplier lotteryApplier);
+    long countDistinctPartsByLotteryApplier(LotteryApplier lotteryApplier);
+
 }
