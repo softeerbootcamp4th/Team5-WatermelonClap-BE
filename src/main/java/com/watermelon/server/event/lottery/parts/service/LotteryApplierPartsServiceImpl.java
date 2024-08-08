@@ -28,7 +28,7 @@ public class LotteryApplierPartsServiceImpl implements LotteryApplierPartsServic
         //만약 모든 카테고리의 파츠를 모았다면
         if(hasAllCategoriesParts(lotteryApplier)) {
             //파츠 응모 처리 후 저장
-            lotteryApplierService.applyLotteryApplier(lotteryApplier);
+            lotteryApplierService.applyPartsLotteryApplier(lotteryApplier);
         }
 
         return lotteryApplierPartsRepository.save(
