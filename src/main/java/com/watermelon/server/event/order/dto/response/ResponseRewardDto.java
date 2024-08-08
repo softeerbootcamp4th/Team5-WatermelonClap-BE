@@ -20,4 +20,13 @@ public class ResponseRewardDto {
                 .imgSrc(orderEventReward.getImgSrc())
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "ResponseRewardDto{" +
+                "rewardId=" + rewardId +
+                ", name='" + name + '\'' +
+                ", imgSrc='" + imgSrc + '\'' +
+                '}';
+    }
 }

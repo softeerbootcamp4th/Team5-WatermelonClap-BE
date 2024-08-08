@@ -35,4 +35,13 @@ public class ResponseQuizDto {
         this.imgSrc = imgSrc;
         this.answer = answer;
     }
+
+    @Override
+    public String toString() {
+        return "ResponseQuizDto{" +
+                "quizId=" + quizId +
+                ", imgSrc='" + imgSrc + '\'' +
+                ", answer='" + answer + '\'' +
+                '}';
+    }
 }

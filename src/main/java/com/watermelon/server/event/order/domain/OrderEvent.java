@@ -40,6 +40,7 @@ public class OrderEvent extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
     OrderEvent(int winnerCount, LocalDateTime startDate, LocalDateTime endDate, Quiz quiz, OrderEventReward orderEventReward){
         this.winnerCount = winnerCount;
         this.endDate = endDate;
@@ -48,7 +49,6 @@ public class OrderEvent extends BaseEntity {
         this.orderEventReward = orderEventReward;
         this.orderEventStatus = OrderEventStatus.UPCOMING;
     }
-
 
     public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());

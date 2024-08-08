@@ -6,6 +6,7 @@ import com.watermelon.server.event.order.dto.request.OrderEventWinnerRequestDto;
 import com.watermelon.server.event.order.dto.request.RequestAnswerDto;
 import com.watermelon.server.event.order.dto.response.ResponseApplyTicketDto;
 import com.watermelon.server.event.order.error.NotDuringEventPeriodException;
+import com.watermelon.server.event.order.error.WrongPhoneNumberFormatException;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 import com.watermelon.server.event.order.repository.OrderEventRepository;
@@ -32,8 +33,9 @@ public class OrderEventCommandService {
         this.orderEventWinnerService = orderEventWinnerService;
         this.orderResultCommandService = orderResultCommandService;
         this.orderEventCheckService = orderEventCheckService;
-        setOrderEventCheckService();
+        findOrderEventToMakeInProgress();
     }
+
     @Transactional
     public ResponseApplyTicketDto makeApplyTicket(RequestAnswerDto requestAnswerDto , Long orderEventId, Long quizId) throws WrongOrderEventFormatException, NotDuringEventPeriodException {
         orderEventCheckService.checkingInfoErrors(orderEventId,quizId);
@@ -45,18 +47,17 @@ public class OrderEventCommandService {
         return orderResultCommandService.isOrderResultFullElseMake(orderEventId);
     }
     @Transactional
-    public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException {
+    public void makeOrderEventWinner(String applyTicket, Long eventId, OrderEventWinnerRequestDto orderEventWinnerRequestDto) throws ApplyTicketWrongException, WrongOrderEventFormatException, WrongPhoneNumberFormatException {
         OrderEvent orderEvent = orderEventRepository.findById(eventId).orElseThrow(WrongOrderEventFormatException::new);
         orderEventWinnerService.makeWinner(orderEvent, orderEventWinnerRequestDto,"payLoad.applyAnswer",applyTicket);
     }
 
-    public void setOrderEventCheckService(){
+    @Transactional
+    public void findOrderEventToMakeInProgress(){
         //현재 OrderEvent의 상태를 주기적으로 변경
         List<OrderEvent> orderEvent = orderEventRepository.findAll();
         if(orderEvent.isEmpty()) return; // 이벤트 없을시 스킵
         OrderEvent currentOrderEvent = orderEvent.get(0); // 여기서 현재 이벤트를 검증해야함
-        this.orderEventCheckService.refreshInforMation(currentOrderEvent);
+        this.orderEventCheckService.refreshOrderEventInProgress(currentOrderEvent);
     }
-
-
 }
