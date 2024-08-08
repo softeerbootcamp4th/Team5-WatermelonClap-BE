@@ -50,7 +50,7 @@ public class OrderEvent extends BaseEntity {
         this.orderEventStatus = OrderEventStatus.UPCOMING;
     }
 
-    public static OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
+    public static OrderEvent makeOrderEventWithOutImage(RequestOrderEventDto requestOrderEventDto){
         Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
         OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
         return new OrderEvent(requestOrderEventDto.getWinnerCount(), requestOrderEventDto.getStartDate(), requestOrderEventDto.getEndDate(),quiz,reward);

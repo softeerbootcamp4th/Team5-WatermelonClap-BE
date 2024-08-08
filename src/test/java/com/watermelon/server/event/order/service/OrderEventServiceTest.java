@@ -42,7 +42,7 @@ class OrderEventServiceTest {
     private OrderEvent orderEvent;
     @BeforeEach
     @DisplayName("선착순 이벤트 생성")
-    public void makeOrderEventsWithOutImage(){
+    public void makeOrderEventsWithOutImageWithOutImage(){
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
