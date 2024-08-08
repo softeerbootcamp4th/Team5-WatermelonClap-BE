@@ -1,6 +1,7 @@
 package com.watermelon.server.admin.service;
 
 
+import com.watermelon.server.admin.exception.S3ImageFormatException;
 import com.watermelon.server.event.order.domain.OrderEvent;
 
 import com.watermelon.server.event.order.domain.OrderEventWinner;
@@ -12,6 +13,7 @@ import com.watermelon.server.event.order.repository.OrderEventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminOrderEventService {
     private final OrderEventRepository orderEventRepository;
+    private final S3ImageService s3ImageService;
 
 
     @Transactional(readOnly = true)
@@ -43,8 +46,9 @@ public class AdminOrderEventService {
     }
 
     @Transactional
-    public OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto){
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+    public OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto, MultipartFile image) throws S3ImageFormatException {
+        String rewardImage = s3ImageService.uploadImage(image);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithImage(requestOrderEventDto,rewardImage);
         return orderEventRepository.save(newOrderEvent);
     }
 }

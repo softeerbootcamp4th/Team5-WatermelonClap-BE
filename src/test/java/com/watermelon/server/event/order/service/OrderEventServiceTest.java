@@ -20,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -43,11 +42,11 @@ class OrderEventServiceTest {
     private OrderEvent orderEvent;
     @BeforeEach
     @DisplayName("선착순 이벤트 생성")
-    public void makeOrderEvents(){
+    public void makeOrderEventsWithOutImageWithOutImage(){
         RequestQuizDto requestQuizDto = RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpen10HoursLater(requestQuizDto,requestOrderRewardDto);
-        orderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        orderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
         orderEventRepository.save(orderEvent);
     }
 
@@ -76,7 +75,7 @@ class OrderEventServiceTest {
         RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
         RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
         RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second(requestQuizDto, requestOrderRewardDto);
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEvent(requestOrderEventDto);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
         orderEventRepository.save(newOrderEvent);
         Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
         Thread.sleep(2000L);

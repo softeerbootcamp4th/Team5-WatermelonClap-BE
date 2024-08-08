@@ -3,10 +3,10 @@ package com.watermelon.server.event.order.dto.request;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class RequestOrderEventDto {
     private LocalDateTime startDate;
@@ -15,6 +15,15 @@ public class RequestOrderEventDto {
 
     private RequestQuizDto requestQuizDto;
     private RequestOrderRewardDto requestOrderRewardDto;
+
+    @Builder
+    public RequestOrderEventDto(LocalDateTime startDate, LocalDateTime endDate, int winnerCount, RequestQuizDto requestQuizDto, RequestOrderRewardDto requestOrderRewardDto) {
+        this.startDate = startDate.truncatedTo(ChronoUnit.SECONDS);
+        this.endDate = endDate.truncatedTo(ChronoUnit.SECONDS);
+        this.winnerCount = winnerCount;
+        this.requestQuizDto = requestQuizDto;
+        this.requestOrderRewardDto = requestOrderRewardDto;
+    }
 
     public static RequestOrderEventDto makeForTestOpen10HoursLater(RequestQuizDto requestQuizDto, RequestOrderRewardDto requestOrderRewardDto){
         return RequestOrderEventDto.builder()
