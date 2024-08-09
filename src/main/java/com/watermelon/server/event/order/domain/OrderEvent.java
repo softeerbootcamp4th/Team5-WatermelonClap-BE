@@ -54,8 +54,8 @@ public class OrderEvent extends BaseEntity {
 
 
     public static OrderEvent makeOrderEventWithOutImage(RequestOrderEventDto requestOrderEventDto){
-        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
-        OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getRequestOrderRewardDto());
+        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getQuiz());
+        OrderEventReward reward = OrderEventReward.makeReward(requestOrderEventDto.getReward());
         return OrderEvent.builder()
                 .quiz(quiz)
                 .startDate(requestOrderEventDto.getStartDate())
@@ -65,8 +65,8 @@ public class OrderEvent extends BaseEntity {
                 .build();
     }
     public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String rewardImgSrc,String quizImgSrc){
-        Quiz quiz = Quiz.makeQuizWithImage(requestOrderEventDto.getRequestQuizDto(),quizImgSrc);
-        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),rewardImgSrc);
+        Quiz quiz = Quiz.makeQuizWithImage(requestOrderEventDto.getQuiz(),quizImgSrc);
+        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getReward(),rewardImgSrc);
         return OrderEvent.builder()
                 .quiz(quiz)
                 .startDate(requestOrderEventDto.getStartDate())
@@ -77,8 +77,8 @@ public class OrderEvent extends BaseEntity {
     }
 
     public static OrderEvent makeOrderEventWithInputIdForDocumentation(RequestOrderEventDto requestOrderEventDto, Long id){
-        Quiz quiz = Quiz.makeQuizInputId(requestOrderEventDto.getRequestQuizDto(),id);
-        OrderEventReward reward = OrderEventReward.makeRewardInputId(requestOrderEventDto.getRequestOrderRewardDto(),id);
+        Quiz quiz = Quiz.makeQuizInputId(requestOrderEventDto.getQuiz(),id);
+        OrderEventReward reward = OrderEventReward.makeRewardInputId(requestOrderEventDto.getReward(),id);
         return OrderEvent.builder()
                 .id(id)
                 .quiz(quiz)
