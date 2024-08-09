@@ -10,7 +10,7 @@ class AdminOrderEventControllerTest {
 
     @DisplayName("선착순 이벤트 생성")
     @Test
-    void makeOrderEvent() {
+    void makeOrderEventWithOutImageWithOutImage() {
     }
 
     @DisplayName("퀴즈 정답 존재 확인")

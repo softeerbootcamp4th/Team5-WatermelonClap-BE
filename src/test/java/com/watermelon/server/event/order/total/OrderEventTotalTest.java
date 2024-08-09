@@ -17,7 +17,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static java.lang.Math.log;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -44,20 +43,20 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp(){
-        openOrderEvent = OrderEvent.makeOrderEvent(
+        openOrderEvent = OrderEvent.makeOrderEventWithOutImage(
                 RequestOrderEventDto.makeForTestOpened(
                         RequestQuizDto.makeForTest(),
                         RequestOrderRewardDto.makeForTest()
                 )
         );
-        soonOpenOrderEvent = OrderEvent.makeOrderEvent(
+        soonOpenOrderEvent = OrderEvent.makeOrderEventWithOutImage(
                 RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second
                                 (
                         RequestQuizDto.makeForTest(),
                         RequestOrderRewardDto.makeForTest()
                                 )
                 );
-        unOpenOrderEvent = OrderEvent.makeOrderEvent(
+        unOpenOrderEvent = OrderEvent.makeOrderEventWithOutImage(
                 RequestOrderEventDto.makeForTestOpen10HoursLater
                         (
                                 RequestQuizDto.makeForTest(),
@@ -71,6 +70,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
         orderEventRepository.deleteAll();
         orderResultQueryService.getOrderResultRset().clear();
     }
+
 
     @Test
     @DisplayName("[통합] 선착순 이벤트 오픈된 이벤트 가져오기 - quiz = not exist")

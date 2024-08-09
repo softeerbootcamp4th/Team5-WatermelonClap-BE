@@ -84,11 +84,12 @@ jobs:
           username: ${{secrets.SSH_USER}}
           script: |
             
-            docker stop watermelon
+            
             docker pull ${{ secrets.DOCKER_USERNAME }}/watermelon:latest
             docker tag ${{ secrets.DOCKER_USERNAME }}/watermelon:latest watermelon:latest
-          
-            docker run -i -d --log-driver=awslogs --log-opt awslogs-region=ap-northeast-2 --log-opt awslogs-group=watermelon-cloudwatch  --log-opt awslogs-stream=watermelon-api --name watermelon -p 8080:8080 watermelon:latest
+            docker stop $(docker ps -a -q) 
+            
+            docker run -i -d --log-driver=awslogs --log-opt awslogs-region=ap-northeast-2 --log-opt awslogs-group=watermelon-cloudwatch  --log-opt awslogs-stream=watermelon-api -p 8080:8080 watermelon:latest
             
             docker rm $(docker ps --filter 'status=exited' -a -q)
             # 실행 중이지 않으 모든 컨테인 삭제
