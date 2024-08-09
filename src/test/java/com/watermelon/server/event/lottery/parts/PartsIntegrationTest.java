@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static com.watermelon.server.Constants.*;
 import static com.watermelon.server.common.constants.PathConstants.PARTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("[통합] 파츠 통합 테스트")
 public class PartsIntegrationTest extends BaseIntegrationTest {
@@ -49,6 +50,22 @@ public class PartsIntegrationTest extends BaseIntegrationTest {
 
         //then
         Assertions.assertThat(expected).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("파츠 뽑기권이 없으면 429 에러를 반환한다.")
+    void partsLotteryNotRemainCountExceptionTest() throws Exception {
+
+        //given
+        postPartsLotteryRequestTestUser();
+
+        //when
+        mvc.perform(post(PARTS)
+                .header( HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER+HEADER_VALUE_SPACE+TestTokenVerifier.TEST_VALID_TOKEN)
+        )
+                //then
+                .andExpect(status().isTooManyRequests());
 
     }
 

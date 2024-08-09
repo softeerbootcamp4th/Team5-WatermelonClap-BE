@@ -74,9 +74,7 @@ class PartsServiceImplTest {
     void drawPartsFailureCase(){
 
         //given
-        LotteryApplier applier = LotteryApplier.builder()
-                .remainChance(0)
-                .build();
+        LotteryApplier applier = LotteryApplier.createHasNoRemainChance(TEST_UID);
 
         when(lotteryService.applyAndGet(TEST_UID)).thenReturn(applier);
 

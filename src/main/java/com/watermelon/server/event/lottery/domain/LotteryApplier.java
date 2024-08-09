@@ -110,4 +110,11 @@ public class LotteryApplier extends BaseEntity {
         this.remainChance--;
     }
 
+    public static LotteryApplier createHasNoRemainChance(String uid){
+        return LotteryApplier.builder()
+                .uid(uid)
+                .remainChance(0)
+                .build();
+    }
+
 }
