@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Scheduler {
     private final OrderEventSchedulingService orderEventSchedulingService;
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 60000)
     public void checkEventStart(){
         log.info("Checking events by scheduled");
         orderEventSchedulingService.changeOrderStatusByTime();
