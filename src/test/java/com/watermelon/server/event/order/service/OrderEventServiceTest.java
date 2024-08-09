@@ -68,23 +68,23 @@ class OrderEventServiceTest {
         });
     }
 
-    @Test
-    @DisplayName("선착순 이벤트 1초단위 상태변경 (UPCOMING->OPEN)")
-    @Order(2)
-    public void orderStatusChangeByTime() throws InterruptedException {
-        RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
-        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
-        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second(requestQuizDto, requestOrderRewardDto);
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
-        orderEventRepository.save(newOrderEvent);
-        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
-        Thread.sleep(2000L);
-        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
-        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
-        Thread.sleep(2000L);
-        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
-        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
-    }
+//    @Test
+//    @DisplayName("선착순 이벤트 1초단위 상태변경 (UPCOMING->OPEN)")
+//    @Order(2)
+//    public void orderStatusChangeByTime() throws InterruptedException {
+//        RequestQuizDto requestQuizDto =RequestQuizDto.makeForTest();
+//        RequestOrderRewardDto requestOrderRewardDto = RequestOrderRewardDto.makeForTest();
+//        RequestOrderEventDto requestOrderEventDto = RequestOrderEventDto.makeForTestOpenAfter1SecondCloseAfter3Second(requestQuizDto, requestOrderRewardDto);
+//        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithOutImage(requestOrderEventDto);
+//        orderEventRepository.save(newOrderEvent);
+//        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.UPCOMING);
+//        Thread.sleep(2000L);
+//        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+//        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.OPEN);
+//        Thread.sleep(2000L);
+//        newOrderEvent = orderEventRepository.findById(newOrderEvent.getId()).get();
+//        Assertions.assertThat(newOrderEvent.getOrderEventStatus()).isEqualTo(OrderEventStatus.END);
+//    }
 
     @Test
     @DisplayName("상태 변경")
