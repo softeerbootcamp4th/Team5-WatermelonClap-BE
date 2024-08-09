@@ -24,6 +24,12 @@ public class Quiz {
                 .answer(requestQuizDto.getAnswer())
                 .build();
     }
+    public static Quiz makeQuizWithImage(RequestQuizDto requestQuizDto,String imgSrc){
+        return Quiz.builder()
+                .answer(requestQuizDto.getAnswer())
+                .imgSrc(imgSrc)
+                .build();
+    }
 
     public static Quiz makeQuizInputId(RequestQuizDto requestQuizDto,Long id){
         return Quiz.builder()
@@ -35,8 +41,9 @@ public class Quiz {
 
 
     @Builder
-    public Quiz(String answer,Long id) {
+    public Quiz(String answer,Long id,String imgSrc) {
 
+        this.imgSrc = imgSrc;
         this.answer = answer;
         this.id = id;
     }
