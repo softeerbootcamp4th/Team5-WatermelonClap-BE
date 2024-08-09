@@ -41,8 +41,8 @@ public class PartsServiceImpl implements PartsService {
         //applier 조회 및 응모 처리
         LotteryApplier applier = lotteryService.applyAndGet(uid);
 
-        //찬스가 남았는지 검사
-        applier.hasRemainChanceOrThrow();
+        //응모 횟수 감소, 없으면 예외 반환.
+        applier.drawParts();
 
         //파츠 뽑기
         Parts parts = getRandomParts();

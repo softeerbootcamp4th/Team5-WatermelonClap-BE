@@ -67,14 +67,6 @@ public class LotteryApplier extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean hasRemainChance(){
-        return remainChance > 0;
-    }
-
-    public void hasRemainChanceOrThrow(){
-        if(!hasRemainChance()) throw new PartsDrawLimitExceededException();
-    }
-
     public void applyLottery(){
         this.isLotteryApplier = true;
     }
@@ -111,6 +103,11 @@ public class LotteryApplier extends BaseEntity {
      */
     public void applyPartsLottery(){
         this.isPartsApplier = true;
+    }
+
+    public void drawParts(){
+        if(remainChance == 0) throw new PartsDrawLimitExceededException();
+        this.remainChance--;
     }
 
 }
