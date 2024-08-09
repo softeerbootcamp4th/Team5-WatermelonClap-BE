@@ -64,9 +64,9 @@ public class OrderEvent extends BaseEntity {
                 .winnerCount(requestOrderEventDto.getWinnerCount())
                 .build();
     }
-    public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String rewardImage){
-        Quiz quiz = Quiz.makeQuiz(requestOrderEventDto.getRequestQuizDto());
-        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),rewardImage);
+    public static OrderEvent makeOrderEventWithImage(RequestOrderEventDto requestOrderEventDto,String rewardImgSrc,String quizImgSrc){
+        Quiz quiz = Quiz.makeQuizWithImage(requestOrderEventDto.getRequestQuizDto(),quizImgSrc);
+        OrderEventReward reward = OrderEventReward.makeRewardWithImage(requestOrderEventDto.getRequestOrderRewardDto(),rewardImgSrc);
         return OrderEvent.builder()
                 .quiz(quiz)
                 .startDate(requestOrderEventDto.getStartDate())
