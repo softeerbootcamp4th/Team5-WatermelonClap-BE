@@ -8,6 +8,7 @@ import com.watermelon.server.event.order.dto.request.RequestOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventDto;
 import com.watermelon.server.event.order.dto.response.ResponseOrderEventWinnerDto;
 import com.watermelon.server.event.order.error.WrongOrderEventFormatException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,9 @@ public class AdminOrderEventController {
     private final AdminOrderEventService adminOrderEventService;
     @PostMapping("/event/order")
     public ResponseOrderEventDto makeOrderEvent(
-            @RequestPart(value = "orderEvent") RequestOrderEventDto requestOrderEventDto,
-            @RequestPart(value = "rewardImage", required = false) MultipartFile rewardImage,
-            @RequestPart(value = "quizImage", required = false) MultipartFile quizImage)
+            @RequestPart("orderEvent") @Valid RequestOrderEventDto requestOrderEventDto,
+            @RequestPart("rewardImage") MultipartFile rewardImage,
+            @RequestPart("quizImage") MultipartFile quizImage)
             throws S3ImageFormatException {
 
         return adminOrderEventService.makeOrderEvent(requestOrderEventDto,rewardImage,quizImage);

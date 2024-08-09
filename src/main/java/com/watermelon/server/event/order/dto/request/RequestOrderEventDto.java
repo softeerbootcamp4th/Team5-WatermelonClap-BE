@@ -1,5 +1,6 @@
 package com.watermelon.server.event.order.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,6 @@ public class RequestOrderEventDto {
         this.quiz = quiz;
         this.reward = reward;
     }
-
 
 
 
@@ -53,5 +53,15 @@ public class RequestOrderEventDto {
                 .endDate(LocalDateTime.now().plusSeconds(3))
                 .winnerCount(100)
                 .build();
+    }
+    @Override
+    public String toString() {
+        return "RequestOrderEventDto{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", winnerCount=" + winnerCount +
+                ", quiz=" + quiz +
+                ", reward=" + reward +
+                '}';
     }
 }
