@@ -24,7 +24,7 @@ public class AdminOrderEventController {
     private final AdminOrderEventService adminOrderEventService;
     @PostMapping("/event/order")
     public void makeOrderEvent(
-            RequestOrderEventDto requestOrderEventDto,
+            @RequestPart(value = "orderEvent") RequestOrderEventDto requestOrderEventDto,
             @RequestPart(value = "rewardImage", required = false) MultipartFile rewardImage,
             @RequestPart(value = "quizImage", required = false) MultipartFile quizImage)
             throws S3ImageFormatException {
