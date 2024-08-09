@@ -26,6 +26,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        log.debug("preHandle");
         String token = AuthUtils.parseAuthenticationHeaderValue(
                 request.getHeader(HEADER_AUTHORIZATION)
         );
