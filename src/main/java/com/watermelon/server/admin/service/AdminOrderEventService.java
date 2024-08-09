@@ -46,9 +46,11 @@ public class AdminOrderEventService {
     }
 
     @Transactional
-    public OrderEvent makeOrderEvent(RequestOrderEventDto requestOrderEventDto, MultipartFile image) throws S3ImageFormatException {
-        String rewardImage = s3ImageService.uploadImage(image);
-        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithImage(requestOrderEventDto,rewardImage);
-        return orderEventRepository.save(newOrderEvent);
+    public ResponseOrderEventDto makeOrderEvent(RequestOrderEventDto requestOrderEventDto, MultipartFile rewardImage,MultipartFile quizImage) throws S3ImageFormatException {
+        String rewardImgSrc = s3ImageService.uploadImage(rewardImage);
+        String quizImgSrc = s3ImageService.uploadImage(quizImage);
+        OrderEvent newOrderEvent = OrderEvent.makeOrderEventWithImage(requestOrderEventDto,rewardImgSrc,quizImgSrc);
+        orderEventRepository.save(newOrderEvent);
+        return ResponseOrderEventDto.forAdmin(newOrderEvent);
     }
 }
