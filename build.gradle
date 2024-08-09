@@ -83,7 +83,7 @@ openapi3 {
 	title = 'Watermelon REST API'
 	description = 'Watermelon API 문서입니다.'
 	version = '0.1.0'
-	servers = [ { url = 'http://43.202.54.29:808' } ]
+	servers = [ { url = 'http://43.202.54.29:8080' } ]
 	format = 'yaml'
 	contact = {
 		name = 'watermelon'
