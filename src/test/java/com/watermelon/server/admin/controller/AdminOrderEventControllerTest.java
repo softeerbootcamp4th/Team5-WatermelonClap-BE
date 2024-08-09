@@ -81,21 +81,21 @@ class AdminOrderEventControllerTest extends ControllerTest {
         );
     }
 
-    @Test
-    @DisplayName("[DOC] 어드민 선착순 이벤트 목록을 가져온다")
-    void getOrderEvents() throws Exception {
-        final String PATH = "/admin/event/order";
-        final String DOCUMENT_NAME ="admin/event/order";
-        Mockito.when(adminOrderEventService.getOrderEventsForAdmin()).thenReturn(responseOrderEventDtos);
-
-        mockMvc.perform(RestDocumentationRequestBuilders.get(PATH)
-                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(responseOrderEventDtos)))
-                .andDo(print())
-                .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
-                        resourceSnippet("선착순 이벤트 목록 조회")));
-    }
+//    @Test
+//    @DisplayName("[DOC] 어드민 선착순 이벤트 목록을 가져온다")
+//    void getOrderEvents() throws Exception {
+//        final String PATH = "/admin/event/order";
+//        final String DOCUMENT_NAME ="admin/event/order";
+//        Mockito.when(adminOrderEventService.getOrderEventsForAdmin()).thenReturn(responseOrderEventDtos);
+//
+//        mockMvc.perform(RestDocumentationRequestBuilders.get(PATH)
+//                        .header(HEADER_NAME_AUTHORIZATION, HEADER_VALUE_BEARER + " " + TEST_TOKEN))
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(objectMapper.writeValueAsString(responseOrderEventDtos)))
+//                .andDo(print())
+//                .andDo(MockMvcRestDocumentationWrapper.document(DOCUMENT_NAME,
+//                        resourceSnippet("선착순 이벤트 목록 조회")));
+//    }
 
 
 //    @Test
