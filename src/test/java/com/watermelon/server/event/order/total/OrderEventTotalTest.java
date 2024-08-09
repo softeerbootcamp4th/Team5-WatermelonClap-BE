@@ -71,6 +71,7 @@ public class OrderEventTotalTest extends BaseIntegrationTest {
         orderResultQueryService.getOrderResultRset().clear();
     }
 
+
     @Test
     @DisplayName("[통합] 선착순 이벤트 오픈된 이벤트 가져오기 - quiz = not exist")
     public void getOpenOrderEvent() throws Exception {

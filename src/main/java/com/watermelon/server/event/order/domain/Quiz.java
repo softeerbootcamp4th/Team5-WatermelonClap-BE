@@ -25,9 +25,20 @@ public class Quiz {
                 .build();
     }
 
+    public static Quiz makeQuizInputId(RequestQuizDto requestQuizDto,Long id){
+        return Quiz.builder()
+                .id(id)
+                .answer(requestQuizDto.getAnswer())
+                .build();
+    }
+
+
+
     @Builder
-    public Quiz(String answer) {
+    public Quiz(String answer,Long id) {
+
         this.answer = answer;
+        this.id = id;
     }
 
     public boolean isCorrect(String answer){

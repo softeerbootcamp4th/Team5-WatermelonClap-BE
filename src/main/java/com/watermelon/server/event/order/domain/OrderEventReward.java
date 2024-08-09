@@ -32,6 +32,12 @@ public class OrderEventReward {
                 .name(requestOrderRewardDto.getName())
                 .build();
     }
+    public static OrderEventReward makeRewardInputId(RequestOrderRewardDto requestOrderRewardDto,Long id){
+        return OrderEventReward.builder()
+                .id(id)
+                .name(requestOrderRewardDto.getName())
+                .build();
+    }
 
     public static OrderEventReward makeRewardWithImage(RequestOrderRewardDto requestOrderRewardDto, String imgSrc){
         return OrderEventReward.builder()
@@ -40,8 +46,9 @@ public class OrderEventReward {
                 .build();
     }
     @Builder
-    public OrderEventReward(String name, String imgSrc) {
+    public OrderEventReward(Long id, String name, String imgSrc) {
         this.name = name;
+        this.id = id;
         this.imgSrc = imgSrc;
     }
 }
